@@ -28,6 +28,7 @@ import frc.robot.subsystems.MotorController;
  */
 
 
+@SuppressWarnings("unused")
 public class RobotContainer {
   MotorController m_motor1 = new MotorController(1, Motor.defaultConfig);
 
@@ -74,7 +75,7 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_controller1.leftBumper().onTrue(m_motor1.runForward()).onFalse(m_motor1.stopMotor());
+    m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
     m_controller2.button(0).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
   }
 
