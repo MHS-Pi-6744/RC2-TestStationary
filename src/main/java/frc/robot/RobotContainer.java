@@ -76,7 +76,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller2.button(0).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
   }
 
   public Command getAutonomousCommand() {
