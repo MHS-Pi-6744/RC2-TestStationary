@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -87,5 +89,10 @@ public final class Constants {
   public static final class MotorConstants {
     public static final double k_motorSpeed = 0.6; // percent
     public static final double k_slowMotor = 0.1; // percent
+  }
+
+  public static final class VisionConstants {
+    public static final AprilTagFieldLayout kTagLayout = 
+      AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
   }
 }
