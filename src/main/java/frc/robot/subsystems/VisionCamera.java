@@ -27,6 +27,11 @@ public class VisionCamera extends SubsystemBase {
         v_camera.setLED(VisionLEDMode.kDefault);
     }
 
+    /**
+     * @return a {@link Command} that uses the
+     * {@link PhotonCamera#takeInputSnapshot()}
+     * method to take a screenshot
+     */
     public Command screenshot() {
         return run(
             () -> takePicture()
