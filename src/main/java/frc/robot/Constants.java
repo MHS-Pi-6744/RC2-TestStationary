@@ -8,7 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants.NeoMotorConstants;
+//import frc.robot.Constants.NeoMotorConstants; does nothing
 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
@@ -84,6 +84,7 @@ public final class Constants {
 
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
+    public static final double kVortexKv = 565;   // rpm/V
   }
 
   // Coral shooter command constants
