@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +17,9 @@ public class MotorController extends SubsystemBase{
     // The shooter motor
     private SparkMax m_otor;
     private RelativeEncoder e_ncoder;
+    private SparkClosedLoopController p_motor;
+
+    private double m_setpoint;
 
     private String s_motorName;
 
@@ -23,6 +28,7 @@ public class MotorController extends SubsystemBase{
         s_motorName = "Motor #" + canID;
         m_otor = new SparkMax(canID, MotorType.kBrushless);
         e_ncoder = m_otor.getEncoder(); 
+        p_motor = m_otor.getClosedLoopController();
 
         // Apply the configuration settings to the shooter motor SPARK MAX   
         // - kResetSafeParameters is used to get the SPARK MAX to a known state. This
@@ -32,13 +38,37 @@ public class MotorController extends SubsystemBase{
         //     mid-operation.
      
         m_otor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_setpoint = 0;
         e_ncoder.setPosition(0);
     }
 
     //Shooter Commands
+    public boolean atTargetPosition() {
+        return Math.abs(avgEncodePos() - m_setpoint) < 1;
+    }
+    public double avgEncodePos() {
+        return (e_ncoder.getPosition());
+    }
+    public void setTargetPosition(double setpoint) {
+        m_setpoint = setpoint;
+        moveToSetpoint();
+    }
+    public void moveToSetpoint() {
+        p_motor.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
+    }
     public Command stopMotor(){
         return run(
         () -> m_otor.set(0));
+    }
+
+    public Command resetPos(){
+        return run(
+            () -> e_ncoder.setPosition(0));
+    }
+
+    public Command setPos(double position){
+        return run(
+            () -> setTargetPosition(position));
     }
 
     /**

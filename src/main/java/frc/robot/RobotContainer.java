@@ -55,6 +55,9 @@ public class RobotContainer {
     NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
     NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
     NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());
+    NamedCommands.registerCommand("Reset Position", m_motor1.resetPos());
+    NamedCommands.registerCommand("Set Position", m_motor1.setPos(50));
+
 
     //m_chooser
 
@@ -77,6 +80,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
     m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+
+    m_controller1.povRight().onTrue(m_motor1.setPos(50)).onFalse(m_motor1.resetPos());
+    m_controller2.button(2).onTrue(m_motor1.setPos(50)).onFalse(m_motor1.resetPos());
   }
 
   public Command getAutonomousCommand() {
