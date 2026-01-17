@@ -19,6 +19,7 @@ import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
+import frc.robot.subsystems.VisionCamera;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -31,6 +32,7 @@ import frc.robot.subsystems.MotorController;
 @SuppressWarnings("unused")
 public class RobotContainer {
   MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
+  VisionCamera   v_camera2 = new VisionCamera("Cam2");
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
@@ -77,6 +79,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
     m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_controller1.a().onTrue(v_camera2.screenshot());
   }
 
   public Command getAutonomousCommand() {
