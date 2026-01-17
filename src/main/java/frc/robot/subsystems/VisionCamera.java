@@ -41,23 +41,5 @@ public class VisionCamera extends SubsystemBase {
     @Override
     public void periodic() {
         result = v_camera.getLatestResult();
-        int id = -1;
-        double yaw = -1;
-        double pitch = -1;
-        double skew = -1;
-
-        SmartDashboard.putBoolean(s_cameraName + " Is Connected?", v_camera.isConnected());
-        SmartDashboard.putBoolean(s_cameraName + " Has Targets?", result.hasTargets());
-        if (result.hasTargets()) {
-            PhotonTrackedTarget bestTarget = result.getBestTarget();
-            id = bestTarget.getFiducialId();
-            yaw = bestTarget.getYaw();
-            pitch = bestTarget.getPitch();
-            skew = bestTarget.getSkew();
-        }
-        SmartDashboard.putNumber(s_cameraName + " Best Target", id);
-        SmartDashboard.putNumber(s_cameraName + " Best Target Yaw", yaw);
-        SmartDashboard.putNumber(s_cameraName + " Best Target Pitch", pitch);
-        SmartDashboard.putNumber(s_cameraName + " Best Target Skew", skew);
     }
 }
