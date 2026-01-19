@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
     /*
-     * Apply the appropriate configurations to the SPARKs.
+     * Apply the appropriate configurations to the SPARKs. 
      *
      * kResetSafeParameters is used to get the SPARK to a known state. This
      * is useful in case the SPARK is replaced.
