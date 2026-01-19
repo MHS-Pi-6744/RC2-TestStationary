@@ -51,8 +51,7 @@ public class MotorController extends SubsystemBase {
 
     e_ncoder.setPosition(0);
 
-    // e_shepherd.setPosition(e_cal.getPosition());
-    // e_sheep.setPosition(e_cal.getPosition());
+    e_ncoder.setPosition(e_cal.getPosition());
   }
 
   public boolean atTargetPosition() {
@@ -61,20 +60,21 @@ public class MotorController extends SubsystemBase {
 
   public void setthepos() {
     while(e_ncoder.getPosition() < 25){
-      m_otor.set(1);
-    }
-    while(e_ncoder.getPosition() > 25){
-      m_otor.set(-1);
+      m_otor.set(0.4);
     }
       m_otor.set(0);
+  }
+//I am going to change this so that it is one function
+  public void settheposback() {
+    while(e_ncoder.getPosition() > 25){
+      m_otor.set(-0.4);
+    }
+    m_otor.set(0);
   }
 
   public void resetthepos() {
     while(e_ncoder.getPosition() > 0){
-      m_otor.set(-1);
-    }
-    while(e_ncoder.getPosition() < 0){
-      m_otor.set(1);
+      m_otor.set(-0.4);
     }
     m_otor.set(0);
   }
@@ -108,6 +108,9 @@ public class MotorController extends SubsystemBase {
 
   public Command setElevator() {
     return run(() -> setthepos());
+  }
+  public Command setElevatorBack() {
+    return run(() -> settheposback());
   }
 
   public void setArmCoastMode(){
