@@ -59,6 +59,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Set Position", m_motor1.setPos(50));*/
     NamedCommands.registerCommand("Reset Position", m_motor1.resetElevator());
     NamedCommands.registerCommand("Set Position", m_motor1.slowBottom());
+    NamedCommands.registerCommand("Set Elevator", m_motor1.setElevator());
 
 
     //m_chooser
@@ -87,7 +88,8 @@ public class RobotContainer {
 
     m_controller2.button(2).onTrue(m_motor1.setPos(50)).onFalse(m_motor1.resetPos());*/
     m_controller1.leftBumper().onTrue(m_motor1.resetElevator());
-    m_controller1.rightBumper().onTrue(m_motor1.slowBottom());
+    m_controller1.rightBumper().onTrue(m_motor1.setElevator());
+    m_controller1.rightTrigger().onTrue(m_motor1.slowBottom());
   }
 
   public Command getAutonomousCommand() {

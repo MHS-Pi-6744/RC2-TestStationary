@@ -33,8 +33,6 @@ public class MotorController extends SubsystemBase {
 
   private String s_motorName;
 
-  
-
   public MotorController(int canID, SparkMaxConfig config) {
     s_motorName = "Motor #" + canID;
     m_otor = new SparkMax(canID, MotorType.kBrushless);
@@ -61,10 +59,29 @@ public class MotorController extends SubsystemBase {
     return Math.abs(avgEncoderPos() - m_setpoint) < 1;
   }
 
+  public void setthepos() {
+    while(e_ncoder.getPosition() < 25){
+      m_otor.set(1);
+    }
+    while(e_ncoder.getPosition() > 25){
+      m_otor.set(-1);
+    }
+      m_otor.set(0);
+  }
+
+  public void resetthepos() {
+    while(e_ncoder.getPosition() > 0){
+      m_otor.set(-1);
+    }
+    while(e_ncoder.getPosition() < 0){
+      m_otor.set(1);
+    }
+    m_otor.set(0);
+  }
+
   public double avgEncoderPos() {
     return (e_ncoder.getPosition() / 2);
   }
-
   public void setTargetPosition(double setpoint) {
     m_setpoint = setpoint;
     moveToSetpoint();
@@ -79,14 +96,18 @@ public class MotorController extends SubsystemBase {
   }
 
   public Command resetElevator() {
-    return run(() -> e_ncoder.setPosition(0));
-  };
+    return run(() -> resetthepos());
+  }
 
   public Command slowBottom() {
     return startEnd(
       () -> m_otor.set(-0.1),
       () -> m_otor.set(0)
       );
+  }
+
+  public Command setElevator() {
+    return run(() -> setthepos());
   }
 
   public void setArmCoastMode(){
