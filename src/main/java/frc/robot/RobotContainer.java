@@ -79,7 +79,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
     m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller1.a().onTrue(v_camera2.screenshot());
+    m_controller1.a().toggleOnTrue(v_camera2.screenshot());
   }
 
   public Command getAutonomousCommand() {
