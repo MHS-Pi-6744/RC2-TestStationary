@@ -87,5 +87,6 @@ public final class Constants {
   public static final class MotorConstants {
     public static final double k_motorSpeed = 0.6; // percent
     public static final double k_slowMotor = 0.1; // percent
+    public static final double setpoint = 0;
   }
 }
