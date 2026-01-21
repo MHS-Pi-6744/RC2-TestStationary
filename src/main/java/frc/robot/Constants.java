@@ -94,9 +94,9 @@ public final class Constants {
   }
 
  public static final class ShooterSubsystemConstants {
-    public static final int kFeederMotorCanId = 5;    // SPARK Flex CAN ID
-    public static final int kFlywheelMotorCanId = 15;  // SPARK Flex CAN ID (Right)
-    public static final int kFlywheelFollowerMotorCanId = 16;  // SPARK Flex CAN ID (Left)
+    public static final int kFeederMotorCanId = 11;    // SPARKmax CAN ID
+    public static final int kFlywheelMotorCanId = 15;  // SPARKmax CAN ID (Right)
+    public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
 
     public static final class FeederSetpoints {
       public static final double kFeed = 0.95;

@@ -42,8 +42,7 @@ public class RobotContainer {
   // The driver's controller
   CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
   CommandGenericHID m_controller2 = new CommandGenericHID(OIConstants.kDriverController2Port);
-  // TODO: Make Guitar Hero Guitar work somehow
-  // CommandGenericHID m_guitar = new CommandGenericHID(3);
+
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
