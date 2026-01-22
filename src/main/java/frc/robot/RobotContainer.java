@@ -19,6 +19,7 @@ import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
+import frc.robot.Constants.CanId;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,7 +31,7 @@ import frc.robot.subsystems.MotorController;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
+  MotorController m_motor1 = new MotorController(CanId.climbmotor, Motor.defaultConfig);
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();

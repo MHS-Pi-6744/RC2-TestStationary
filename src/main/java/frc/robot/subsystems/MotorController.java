@@ -55,6 +55,7 @@ public class MotorController extends SubsystemBase {
     //e_ncoder.setPosition(0);
 
     e_ncoder.setPosition(e_cal.getPosition());
+
   }
 
   public boolean atTargetPosition() {
@@ -62,34 +63,32 @@ public class MotorController extends SubsystemBase {
   }
 
   public void setthepos() {
-    while(e_ncoder.getPosition() < 25){
-      boolean ran = true;
-      m_otor.set(0.4);
+    while(e_ncoder.getPosition() < MotorConstants.finalpoint){
+      m_otor.set(MotorConstants.k_motorSpeed);
     }
-    while(e_ncoder.getPosition() > 25){
-      if(ran){
-        break;
-      }
-      m_otor.set(-0.4);
+    m_otor.set(0);
+  }
+  
+  public void settheposrev() {
+    while(e_ncoder.getPosition() > MotorConstants.finalpoint){
+      m_otor.set(-MotorConstants.k_motorSpeed);
     }
       m_otor.set(0);
-      boolean ran = false;
   }
 
   public void resetthepos() {
-    while(e_ncoder.getPosition() > 0){
-      boolean ran = true;
-      m_otor.set(-0.4);
-    }
-    while(e_ncoder.getPosition() < 0){
-      if(ran){
-        break;
-      }
-      m_otor.set(0.4);
+    while(e_ncoder.getPosition() > MotorConstants.setpoint){
+      m_otor.set(-MotorConstants.k_motorSpeed);
     }
     m_otor.set(0);
-    boolean ran = false;
-  }
+    }
+  
+    public void resettheposrev() {
+      while(e_ncoder.getPosition() < MotorConstants.setpoint){
+        m_otor.set(MotorConstants.k_motorSpeed);
+      }
+      m_otor.set(0);
+    }
 
   public double avgEncoderPos() {
     return (e_ncoder.getPosition() / 2);
@@ -109,7 +108,9 @@ public class MotorController extends SubsystemBase {
   }
 
   public Command resetElevator() {
-    return run(() -> resetthepos());
+    return startEnd(
+      () -> resetthepos(),
+      () -> resettheposrev());
   }
 
   public Command slowBottom() {
@@ -120,9 +121,10 @@ public class MotorController extends SubsystemBase {
   }
 
   public Command setElevator() {
-    return run(() -> setthepos());
+    return startEnd(
+      () -> setthepos(),
+      () -> settheposrev());
   }
-
   public void setArmCoastMode(){
     SparkMaxConfig c_mod = new SparkMaxConfig();
     c_mod.idleMode(IdleMode.kCoast);

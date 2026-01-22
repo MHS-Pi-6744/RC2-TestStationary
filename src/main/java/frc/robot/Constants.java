@@ -85,8 +85,13 @@ public final class Constants {
 
   // Coral shooter command constants
   public static final class MotorConstants {
-    public static final double k_motorSpeed = 0.6; // percent
+    public static final double k_motorSpeed = 0.4; // percent
     public static final double k_slowMotor = 0.1; // percent
     public static final double setpoint = 0;
+    public static final double finalpoint = 25;
+  }
+
+  public static final class CanId {
+    public static final int climbmotor = 3;
   }
 }
