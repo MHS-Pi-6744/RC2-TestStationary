@@ -63,31 +63,17 @@ public class MotorController extends SubsystemBase {
   }
 
   public void setthepos() {
-    while(e_ncoder.getPosition() < MotorConstants.finalpoint){
+    while(e_ncoder.getPosition() < MotorConstants.finalpoint-5){
       m_otor.set(MotorConstants.k_motorSpeed);
     }
     m_otor.set(0);
   }
-  
-  public void settheposrev() {
-    while(e_ncoder.getPosition() > MotorConstants.finalpoint){
-      m_otor.set(-MotorConstants.k_motorSpeed);
-    }
-      m_otor.set(0);
-  }
 
   public void resetthepos() {
-    while(e_ncoder.getPosition() > MotorConstants.setpoint){
+    while(e_ncoder.getPosition() > MotorConstants.setpoint+5){
       m_otor.set(-MotorConstants.k_motorSpeed);
     }
     m_otor.set(0);
-    }
-  
-    public void resettheposrev() {
-      while(e_ncoder.getPosition() < MotorConstants.setpoint){
-        m_otor.set(MotorConstants.k_motorSpeed);
-      }
-      m_otor.set(0);
     }
 
   public double avgEncoderPos() {
@@ -108,9 +94,8 @@ public class MotorController extends SubsystemBase {
   }
 
   public Command resetElevator() {
-    return startEnd(
-      () -> resetthepos(),
-      () -> resettheposrev());
+    return run(
+      () -> resetthepos());
   }
 
   public Command slowBottom() {
@@ -121,9 +106,8 @@ public class MotorController extends SubsystemBase {
   }
 
   public Command setElevator() {
-    return startEnd(
-      () -> setthepos(),
-      () -> settheposrev());
+    return run(
+      () -> setthepos());
   }
   public void setArmCoastMode(){
     SparkMaxConfig c_mod = new SparkMaxConfig();
