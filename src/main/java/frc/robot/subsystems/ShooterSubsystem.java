@@ -31,9 +31,9 @@ public class ShooterSubsystem extends SubsystemBase {
   private SparkClosedLoopController flywheelController = flywheelMotor.getClosedLoopController();
   private RelativeEncoder flywheelEncoder = flywheelMotor.getEncoder();
 
-  private SparkMax flywheelFollowerMotor =
+  /*private SparkMax flywheelFollowerMotor =
       new SparkMax(ShooterSubsystemConstants.kFlywheelFollowerMotorCanId, MotorType.kBrushless);
-
+*/
   // Initialize feeder SPARK. We will use open loop control for this so we don't need a closed loop
   // controller like above.
   private SparkMax feederMotor =
@@ -58,10 +58,10 @@ public class ShooterSubsystem extends SubsystemBase {
         Configs.ShooterSubsystem.flywheelConfig,
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
-    flywheelFollowerMotor.configure(
+    /* flywheelFollowerMotor.configure(
         Configs.ShooterSubsystem.flywheelFollowerConfig,
         ResetMode.kResetSafeParameters,
-        PersistMode.kPersistParameters);
+        PersistMode.kPersistParameters);*/
     feederMotor.configure(
         Configs.ShooterSubsystem.feederConfig,
         ResetMode.kResetSafeParameters,
@@ -164,8 +164,8 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter | Feeder | Applied Output", feederMotor.getAppliedOutput());
     SmartDashboard.putNumber("Shooter | Flywheel | Applied Output", flywheelMotor.getAppliedOutput());
     SmartDashboard.putNumber("Shooter | Flywheel | Current", flywheelMotor.getOutputCurrent());
-    SmartDashboard.putNumber("Shooter | Flywheel Follower | Applied Output", flywheelFollowerMotor.getAppliedOutput());
-    SmartDashboard.putNumber("Shooter | Flywheel Follower | Current", flywheelFollowerMotor.getOutputCurrent());
+  /*SmartDashboard.putNumber("Shooter | Flywheel Follower | Applied Output", flywheelFollowerMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Shooter | Flywheel Follower | Current", flywheelFollowerMotor.getOutputCurrent());*/
 
     SmartDashboard.putNumber("Shooter | Flywheel | Target Velocity", flywheelTargetVelocity);
     SmartDashboard.putNumber("Shooter | Flywheel | Actual Velocity", flywheelEncoder.getVelocity());
