@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 //import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.MotorConstants;
 
 public class MotorController extends SubsystemBase {
   private SparkMax m_otor;
@@ -33,6 +34,8 @@ public class MotorController extends SubsystemBase {
 
   private String s_motorName;
 
+  public boolean ran;
+
   public MotorController(int canID, SparkMaxConfig config) {
     s_motorName = "Motor #" + canID;
     m_otor = new SparkMax(canID, MotorType.kBrushless);
@@ -41,7 +44,7 @@ public class MotorController extends SubsystemBase {
 
    // m_otor.configure(c_shepherd, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
-    m_setpoint = 0;
+    m_setpoint = MotorConstants.setpoint;
 
     p_motor = m_otor.getClosedLoopController();
 
@@ -49,10 +52,10 @@ public class MotorController extends SubsystemBase {
 
     e_cal = m_otor.getAbsoluteEncoder();
 
-    e_ncoder.setPosition(0);
+    //e_ncoder.setPosition(0);
 
-    // e_shepherd.setPosition(e_cal.getPosition());
-    // e_sheep.setPosition(e_cal.getPosition());
+    e_ncoder.setPosition(e_cal.getPosition());
+
   }
 
   public boolean atTargetPosition() {
@@ -60,28 +63,23 @@ public class MotorController extends SubsystemBase {
   }
 
   public void setthepos() {
-    while(e_ncoder.getPosition() < 25){
-      m_otor.set(1);
-    }
-    while(e_ncoder.getPosition() > 25){
-      m_otor.set(-1);
-    }
-      m_otor.set(0);
-  }
-
-  public void resetthepos() {
-    while(e_ncoder.getPosition() > 0){
-      m_otor.set(-1);
-    }
-    while(e_ncoder.getPosition() < 0){
-      m_otor.set(1);
+    while(e_ncoder.getPosition() < MotorConstants.finalpoint-5){
+      m_otor.set(MotorConstants.k_motorSpeed);
     }
     m_otor.set(0);
   }
 
+  public void resetthepos() {
+    while(e_ncoder.getPosition() > MotorConstants.setpoint+5){
+      m_otor.set(-MotorConstants.k_motorSpeed);
+    }
+    m_otor.set(0);
+    }
+
   public double avgEncoderPos() {
     return (e_ncoder.getPosition() / 2);
   }
+
   public void setTargetPosition(double setpoint) {
     m_setpoint = setpoint;
     moveToSetpoint();
@@ -96,7 +94,8 @@ public class MotorController extends SubsystemBase {
   }
 
   public Command resetElevator() {
-    return run(() -> resetthepos());
+    return run(
+      () -> resetthepos());
   }
 
   public Command slowBottom() {
@@ -107,9 +106,9 @@ public class MotorController extends SubsystemBase {
   }
 
   public Command setElevator() {
-    return run(() -> setthepos());
+    return run(
+      () -> setthepos());
   }
-
   public void setArmCoastMode(){
     SparkMaxConfig c_mod = new SparkMaxConfig();
     c_mod.idleMode(IdleMode.kCoast);
@@ -132,7 +131,6 @@ public class MotorController extends SubsystemBase {
     SmartDashboard.putBoolean("At Target", atTargetPosition());
     SmartDashboard.putNumber(s_motorName + " Output", m_otor.getAppliedOutput());
     SmartDashboard.putNumber(s_motorName + " Current", m_otor.getOutputCurrent());
-
     SmartDashboard.putNumber(s_motorName + " Position", e_ncoder.getPosition());
     SmartDashboard.putNumber(s_motorName + " Velocity", e_ncoder.getVelocity());
   }
