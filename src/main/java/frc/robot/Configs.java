@@ -50,8 +50,8 @@ public static final class ShooterSubsystem {
       flywheelConfig.closedLoop
         .maxMotion
           // Set MAXMotion parameters for MAXMotion Velocity control
-          .cruiseVelocity(5000)
-          .maxAcceleration(10000)
+          .cruiseVelocity(540)
+          .maxAcceleration(2000)
           .allowedProfileError(1);
 
       // Constants.NeoMotorConstants.kVortexKv is in rpm/V. feedforward.kV is in V/rpm sort we take
