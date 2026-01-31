@@ -17,7 +17,7 @@ public final class Configs {
 
     public static final class IntakeSubsystem {
         public static final SparkMaxConfig intakeConfig = new SparkMaxConfig();
-        public static final SparkMaxConfig conveyorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig pivotConfig = new SparkMaxConfig();
 
         static {
             // Configure basic settings of the intake
@@ -27,8 +27,8 @@ public final class Configs {
                 .openLoopRampRate(0.5)
                 .smartCurrentLimit(40);
             
-            conveyorConfig
-                .inverted(true)
+            pivotConfig
+                .inverted(false)
                 .idleMode(IdleMode.kCoast)
                 .openLoopRampRate(0.5)
                 .smartCurrentLimit(40);

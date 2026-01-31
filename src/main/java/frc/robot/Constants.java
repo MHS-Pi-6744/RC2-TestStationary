@@ -16,14 +16,13 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static final class IntakeSubsystemConstants {
     public static final int kIntakeMotorCanId = 2;    // SPARK MAX CAN ID
-    public static final int kConveyorMotorCanId = 4;  // SPARK MAX CAN ID
+    public static final int kPivotMotorCanId = 4;  // SPARK MAX CAN ID
 
     public static final class IntakeSetpoints {
       public static final double kIntake = 0.6;
-      public static final double kExtake = -0.6;
     }
 
-    public static final class ConveyorSetpoints {
+    public static final class PivotSetPoints {
       public static final double kIntake = 0.7;
       public static final double kExtake = -0.7;
     }
