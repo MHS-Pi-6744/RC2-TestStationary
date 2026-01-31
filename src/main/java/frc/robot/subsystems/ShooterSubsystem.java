@@ -116,7 +116,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public Command runFlywheelCommand() {
     return this.startEnd(
         () -> {
-          this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
         },
         () -> {
           this.setFlywheelVelocity(0.0);
@@ -130,7 +130,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public Command runFeederCommand() {
     return this.startEnd(
         () -> {
-          this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
           this.setFeederPower(FeederSetpoints.kFeed);
         }, () -> {
           this.setFlywheelVelocity(0.0);
@@ -144,12 +144,12 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public Command runShooterCommand() {
     return this.startEnd(
-      () -> this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm),
+      () -> this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent),
       () -> flywheelMotor.stopMotor()
     ).until(isFlywheelSpinning).andThen(
       this.startEnd(
         () -> {
-          this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
           this.setFeederPower(FeederSetpoints.kFeed);
         }, () -> {
           flywheelMotor.stopMotor();
