@@ -37,7 +37,8 @@ public final class Constants {
     }
     
     public static final class FlywheelSetpoints {
-      public static final double kShootRpm = 80;
+//This is a percentage variable🙏 don't be hamza
+      public static final double kShootRpm = 100;
       public static final double kVelocityTolerance = 100;
     }
   }
