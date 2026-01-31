@@ -61,7 +61,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
-     * {@link Command}} to run the intake and conveyor motors. When the
+     * {@link Command} to run the intake and conveyor motors. When the
      * {@link Command} is interrupted, e.g. the button is released,
      * the motors will stop
      * 
