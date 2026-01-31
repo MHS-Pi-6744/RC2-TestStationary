@@ -82,7 +82,7 @@ public class RobotContainer {
     m_controller2.button(1).onTrue(
       m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
 
-    m_controller1.rightBumper().onTrue(
+    m_controller1.a().onTrue(
       intakeSubsystem.runIntakeCommand());
 
     m_controller1.povUp().onTrue(
