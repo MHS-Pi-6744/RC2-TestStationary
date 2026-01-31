@@ -16,8 +16,6 @@ public final class Constants {
     // would be to square controller inputs that vary from 0 t0 1
   }
 
-
-
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 500;
     public static final double kVortexKv = 565;   // rpm/V
@@ -28,7 +26,7 @@ public final class Constants {
     public static final double k_motorSpeed = 0.6; // percent
     public static final double k_slowMotor = 0.1; // percent
   }
-
+  // CAN ID for shooter
  public static final class ShooterSubsystemConstants {
     public static final int kFeederMotorCanId = 6;    // SPARKmax CAN ID
     public static final int kFlywheelMotorCanId = 4;  // SPARKmax CAN ID (Right)
@@ -37,9 +35,10 @@ public final class Constants {
     public static final class FeederSetpoints {
       public static final double kFeed = 0.15;
     }
-
+    
     public static final class FlywheelSetpoints {
 //This is a percentage variable🙏 don't be hamza
+//Hamza here, the message above is correct
       public static final double kShootPercent = 100;
       public static final double kVelocityTolerance = 100;
     }
