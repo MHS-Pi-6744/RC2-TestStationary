@@ -14,6 +14,21 @@ import edu.wpi.first.math.util.Units;
  * should be declared globally (i.e. public static). Do not put anything functional in this class.
  */
 public final class Constants {
+  public static final class IntakeSubsystemConstants {
+    public static final int kIntakeMotorCanId = 2;    // SPARK MAX CAN ID
+    public static final int kConveyorMotorCanId = 4;  // SPARK MAX CAN ID
+
+    public static final class IntakeSetpoints {
+      public static final double kIntake = 0.6;
+      public static final double kExtake = -0.6;
+    }
+
+    public static final class ConveyorSetpoints {
+      public static final double kIntake = 0.7;
+      public static final double kExtake = -0.7;
+    }
+  }
+
   public static final class DriveConstants {
     // Maximum driving speed commands - These are the maximum speeds that can be requested by 
     // the driver or autonomous, they are not the maximum speed cababiity of the robot.

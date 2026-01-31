@@ -14,4 +14,24 @@ public final class Configs {
                 .smartCurrentLimit(50);
         }
     }
+
+    public static final class IntakeSubsystem {
+        public static final SparkMaxConfig intakeConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig conveyorConfig = new SparkMaxConfig();
+
+        static {
+            // Configure basic settings of the intake
+            intakeConfig
+                .inverted(false)
+                .idleMode(IdleMode.kCoast)
+                .openLoopRampRate(0.5)
+                .smartCurrentLimit(40);
+            
+            conveyorConfig
+                .inverted(true)
+                .idleMode(IdleMode.kCoast)
+                .openLoopRampRate(0.5)
+                .smartCurrentLimit(40);
+        }
+    }
 }

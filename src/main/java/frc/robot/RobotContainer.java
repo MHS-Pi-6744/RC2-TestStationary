@@ -19,6 +19,7 @@ import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -31,6 +32,7 @@ import frc.robot.subsystems.MotorController;
 @SuppressWarnings("unused")
 public class RobotContainer {
   MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
+  IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
@@ -75,8 +77,14 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_controller1.leftBumper().onTrue(
+      m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_controller2.button(1).onTrue(
+      m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_controller1.povDown().onTrue(
+      intakeSubsystem.runIntakeCommand());
+    m_controller1.povUp().onTrue(
+      intakeSubsystem.runExtakeCommand());
   }
 
   public Command getAutonomousCommand() {
