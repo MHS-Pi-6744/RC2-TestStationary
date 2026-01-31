@@ -82,11 +82,11 @@ public class ShooterSubsystem extends SubsystemBase {
    * Trigger: Is the flywheel spinning at the required velocity?
    */
   public final Trigger isFlywheelSpinning = new Trigger(
-      () -> isFlywheelAt(5000) || flywheelEncoder.getVelocity() > 5000
+      () -> isFlywheelAt(3000) || flywheelEncoder.getVelocity() > 3000
   );
 
   public final Trigger isFlywheelSpinningBackwards = new Trigger(
-      () -> isFlywheelAt(-5000) || flywheelEncoder.getVelocity() < -5000
+      () -> isFlywheelAt(-3000) || flywheelEncoder.getVelocity() < -3000
   );
 
   /** 
@@ -116,7 +116,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public Command runFlywheelCommand() {
     return this.startEnd(
         () -> {
-          this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
         },
         () -> {
           this.setFlywheelVelocity(0.0);
@@ -130,7 +130,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public Command runFeederCommand() {
     return this.startEnd(
         () -> {
-          this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
           this.setFeederPower(FeederSetpoints.kFeed);
         }, () -> {
           this.setFlywheelVelocity(0.0);
@@ -144,12 +144,12 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public Command runShooterCommand() {
     return this.startEnd(
-      () -> this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm),
+      () -> this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent),
       () -> flywheelMotor.stopMotor()
     ).until(isFlywheelSpinning).andThen(
       this.startEnd(
         () -> {
-          this.setFlywheelVelocity(FlywheelSetpoints.kShootRpm);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
           this.setFeederPower(FeederSetpoints.kFeed);
         }, () -> {
           flywheelMotor.stopMotor();
@@ -172,6 +172,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     SmartDashboard.putBoolean("Is Flywheel Spinning", isFlywheelSpinning.getAsBoolean());
     SmartDashboard.putBoolean("Is Flywheel Stopped", isFlywheelStopped.getAsBoolean());
+    SmartDashboard.putNumber("Flywheel Percentage", FlywheelSetpoints.kShootPercent);
   }
 
 }
