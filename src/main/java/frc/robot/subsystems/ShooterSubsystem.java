@@ -172,6 +172,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     SmartDashboard.putBoolean("Is Flywheel Spinning", isFlywheelSpinning.getAsBoolean());
     SmartDashboard.putBoolean("Is Flywheel Stopped", isFlywheelStopped.getAsBoolean());
+    SmartDashboard.putNumber("Flywheel Percentage", FlywheelSetpoints.kShootPercent);
   }
 
 }
