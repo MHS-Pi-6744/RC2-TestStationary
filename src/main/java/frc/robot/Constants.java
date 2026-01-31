@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+//import frc.robot.Constants.NeoMotorConstants; does nothing
 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
@@ -56,6 +57,8 @@ public final class Constants {
         / kDrivingMotorReduction;
   }
 
+
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverController2Port = 1;
@@ -80,7 +83,8 @@ public final class Constants {
   }
 
   public static final class NeoMotorConstants {
-    public static final double kFreeSpeedRpm = 5676;
+    public static final double kFreeSpeedRpm = 500;
+    public static final double kVortexKv = 565;   // rpm/V
   }
 
   // Coral shooter command constants
@@ -88,4 +92,22 @@ public final class Constants {
     public static final double k_motorSpeed = 0.6; // percent
     public static final double k_slowMotor = 0.1; // percent
   }
+
+ public static final class ShooterSubsystemConstants {
+    public static final int kFeederMotorCanId = 6;    // SPARKmax CAN ID
+    public static final int kFlywheelMotorCanId = 4;  // SPARKmax CAN ID (Right)
+   // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
+
+    public static final class FeederSetpoints {
+      public static final double kFeed = 0.15;
+    }
+
+    public static final class FlywheelSetpoints {
+      public static final double kShootRpm = 500;
+      public static final double kVelocityTolerance = 100;
+    }
+  }
+
+
+  
 }
