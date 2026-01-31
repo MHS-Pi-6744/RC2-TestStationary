@@ -30,7 +30,7 @@ public static final class ShooterSubsystem {
     static {
       // Configure basic setting of the flywheel motors
       flywheelConfig
-        .inverted(true)
+        .inverted(false)
         .idleMode(IdleMode.kCoast)
         .closedLoopRampRate(1.0)
         .openLoopRampRate(1.0)
@@ -65,7 +65,7 @@ public static final class ShooterSubsystem {
 
       // Configure basic setting of the feeder motor
       feederConfig
-        .inverted(true)
+        .inverted(false)
         .idleMode(IdleMode.kCoast)
         .openLoopRampRate(1.0)
         .smartCurrentLimit(60);
