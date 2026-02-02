@@ -1,3 +1,4 @@
-# RC2-TestBed
+# Shooter Feature
 
-Code for the Mehlville RC TestBed.
+
+This is the code for the shooter subsystem
