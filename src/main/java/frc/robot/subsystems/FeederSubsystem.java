@@ -52,35 +52,11 @@ public class FeederSubsystem extends SubsystemBase {
         Configs.ShooterSubsystem.feederConfig,
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
-
-    // Zero flywheel encoder on initialization
-
-    System.out.println("---> ShooterSubsystem initialized");
   }
-  /** 
-   * Trigger: Is the flywheel spinning at the required velocity?
-   */
-
-  /** 
-   * Trigger: Is the flywheel stopped?
-   */
-
-  /**
-   * Drive the flywheels to their set velocity. This will use MAXMotion
-   * velocity control which will allow for a smooth acceleration and deceleration to the mechanism's
-   * setpoint.
-   */
   /** Set the feeder motor power in the range of [-1, 1]. */
   private void setFeederPower(double power) {
     feederMotor.set(power);
   }
-  
-  /**
-   * Command to run the flywheel motors. When the command is interrupted, e.g. the button is released,
-   * the motors will stop.
-   */
-
-
   /**
    * Command to run the feeder and flywheel motors. When the command is interrupted, e.g. the button is released,
    * the motors will stop.
