@@ -24,8 +24,6 @@ private static final  double nominalVoltage = 12.0;
     }
 
 public static final class ShooterSubsystem {
-    public static final SparkFlexConfig flywheelConfig = new SparkFlexConfig();
-    public static final SparkFlexConfig flywheelFollowerConfig = new SparkFlexConfig();
     public static final SparkFlexConfig feederConfig = new SparkFlexConfig();
 
     static {
