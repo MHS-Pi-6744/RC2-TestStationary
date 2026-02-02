@@ -2,60 +2,12 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
-
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
-
+package frc.robot; 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
  * should be declared globally (i.e. public static). Do not put anything functional in this class.
  */
 public final class Constants {
-  public static final class DriveConstants {
-    // Maximum driving speed commands - These are the maximum speeds that can be requested by 
-    // the driver or autonomous, they are not the maximum speed cababiity of the robot.
-    public static final double kMaxSpeedMetersPerSecond = 3; // originally 4.8    TUNING
-    public static final double kMaxAngularSpeed = 1.5*Math.PI ; // radians per second    originally 2*Pi   TUNING
-
-    // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(24.5);
-    // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(24.5);
-    // Distance between front and back wheels on robot
-    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
-
-    // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
-    public static final double kFrontRightChassisAngularOffset = 0;
-    public static final double kBackLeftChassisAngularOffset = Math.PI;
-    public static final double kBackRightChassisAngularOffset = Math.PI / 2;
-  }
-
-  public static final class ModuleConstants {
-    /** The MAXSwerve module can be configured with one of three pinion gears: 12T,
-    * 13T, or 14T. This changes the drive speed of the module (a pinion gear with
-    * more teeth will result in a robot that drives faster).
-    */
-    public static final int kDrivingMotorPinionTeeth = 12;
-
-    // Calculations required for driving motor conversion factors and feed forward
-    public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.0762;
-    public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
-    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
-    // teeth on the bevel pinion
-    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
-    public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
-        / kDrivingMotorReduction;
-  }
-
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverController2Port = 1;
@@ -64,23 +16,9 @@ public final class Constants {
     // would be to square controller inputs that vary from 0 t0 1
   }
 
-  public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 1;  // originally 3  TUNING
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1; // originally 3  TUNING
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI/2; // originally Pi  TUNING
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI; // originally Pi  TUNING
-
-    public static final double kPXController = 1;  //  TUNING
-    public static final double kPYController = 1;  //  TUNING
-    public static final double kPThetaController = 1; //   TUNING
-
-    // Constraint for the motion profiled robot angle controller
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
-        kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-  }
-
   public static final class NeoMotorConstants {
-    public static final double kFreeSpeedRpm = 5676;
+    public static final double kFreeSpeedRpm = 500;
+    public static final double kVortexKv = 565;   // rpm/V
   }
 
   // Coral shooter command constants
@@ -88,4 +26,24 @@ public final class Constants {
     public static final double k_motorSpeed = 0.6; // percent
     public static final double k_slowMotor = 0.1; // percent
   }
+  // CAN ID for shooter
+ public static final class ShooterSubsystemConstants {
+    public static final int kFeederMotorCanId = 6;    // SPARKmax CAN ID
+    public static final int kFlywheelMotorCanId = 4;  // SPARKmax CAN ID (Right)
+   // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
+
+    public static final class FeederSetpoints {
+      public static final double kFeed = 0.15;
+    }
+    
+    public static final class FlywheelSetpoints {
+//This is a percentage variable🙏 don't be hamza
+//Hamza here, the message above is correct
+      public static final double kShootPercent = 100;
+      public static final double kVelocityTolerance = 100;
+    }
+  }
+
+
+  
 }
