@@ -19,7 +19,7 @@ import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
 
 
 /**
@@ -33,7 +33,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 @SuppressWarnings("unused")
 public class RobotContainer {
   MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
-  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  private final FeederSubsystem m_shooter = new FeederSubsystem();
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
   }
