@@ -19,6 +19,7 @@ import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 
 
@@ -33,7 +34,8 @@ import frc.robot.subsystems.FeederSubsystem;
 @SuppressWarnings("unused")
 public class RobotContainer {
   MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
-  private final FeederSubsystem m_shooter = new FeederSubsystem();
+  private final FeederSubsystem m_feeder = new FeederSubsystem();
+  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
   }
@@ -78,7 +80,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
     m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller1.x().toggleOnTrue(m_shooter.runFeederCommand()); 
+    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
+    m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand()); 
   }
 
   public Command getAutonomousCommand() {
