@@ -41,7 +41,6 @@ public class RobotContainer {
  
   // The driver's controller
   CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
-  CommandGenericHID m_controller2 = new CommandGenericHID(OIConstants.kDriverController2Port);
   // TODO: Make Guitar Hero Guitar work somehow
   // CommandGenericHID m_guitar = new CommandGenericHID(3);
 
@@ -79,15 +78,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_controller1.leftBumper().onTrue(
       m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller2.button(1).onTrue(
-      m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
 
-    m_controller1.a().toggleOnTrue(
+    m_controller1.a().whileTrue(
       intakeSubsystem.runIntakeCommand());
 
-    m_controller1.povUp().toggleOnTrue(
+    m_controller1.povUp().whileTrue(
       intakeSubsystem.runForwardPivot());
-    m_controller1.povDown().toggleOnTrue(
+    m_controller1.povDown().whileTrue(
       intakeSubsystem.runBackwardPivot());
   }
 
