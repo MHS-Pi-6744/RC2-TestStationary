@@ -58,7 +58,7 @@ public class FeederSubsystem extends SubsystemBase {
   }
   /** Set the feeder motor power in the range of [-1, 1]. */
   private void setFeederPower(double power) {
-    feederMotor.set(power);
+      feederMotor.set(power);
   }
 
   /**
@@ -66,12 +66,12 @@ public class FeederSubsystem extends SubsystemBase {
    * the motors will stop.
    */
   public Command runFeederCommand() {
-    return this.startEnd(
-        () -> {
-          this.setFeederPower(FeederSetpoints.kFeed);
-        }, () -> {
-          this.setFeederPower(0.0);
-        }).withName("Feeding");
+      return this.startEnd(
+          () -> {
+            this.setFeederPower(FeederSetpoints.kFeed);
+            }, () -> {
+            this.setFeederPower(0.0);
+            }).withName("Feeding");
   }
 
   /**
@@ -80,8 +80,8 @@ public class FeederSubsystem extends SubsystemBase {
    */
   @Override
   public void periodic() {
-    // Display subsystem values
-    SmartDashboard.putNumber("Shooter | Feeder | Applied Output", feederMotor.getAppliedOutput());
+      // Display subsystem values
+      SmartDashboard.putNumber("Shooter | Feeder | Applied Output", feederMotor.getAppliedOutput());
   }
 
 }
