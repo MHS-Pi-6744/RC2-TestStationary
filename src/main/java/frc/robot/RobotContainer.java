@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
@@ -40,7 +41,7 @@ public class RobotContainer {
     SmartDashboard.updateValues();
   }
 
- 
+  private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
   // The driver's controller
   CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
   CommandGenericHID m_controller2 = new CommandGenericHID(OIConstants.kDriverController2Port);
@@ -81,7 +82,7 @@ public class RobotContainer {
     m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
     m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
     m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
-    m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand()); 
+    m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
   }
 
   public Command getAutonomousCommand() {
