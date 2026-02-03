@@ -1,9 +1,15 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.PersistMode;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
+import com.revrobotics.sim.SparkAbsoluteEncoderSim;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
+import com.revrobotics.spark.SparkRelativeEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,11 +22,18 @@ import frc.robot.Configs;
 
 public class IntakeSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
-    private SparkMax intakeMotor =
+    private SparkMax m_intakeMotor =
         new SparkMax(IntakeSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
 
-    private SparkMax pivotMotor =
+    private SparkMax m_pivotMotor =
         new SparkMax(IntakeSubsystemConstants.kPivotMotorCanId, MotorType.kBrushless);
+
+    private SparkAbsoluteEncoder ae_pivotMotor;
+    private RelativeEncoder re_pivotMotor;
+
+    private SparkClosedLoopController p_pivotMotor;
+
+    private double m_setpoint;
 
     public IntakeSubsystem() {
         /*
@@ -33,31 +46,39 @@ public class IntakeSubsystem extends SubsystemBase {
         * the SPARK loses power. This is useful for power cycles that may occur
         * mid-operation.
         */
-        intakeMotor.configure(
+        m_intakeMotor.configure(
             Configs.IntakeSubsystem.intakeConfig,
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
         
-        pivotMotor.configure(
+        m_pivotMotor.configure(
             Configs.IntakeSubsystem.pivotConfig,
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
+
+        m_setpoint = PivotSetPoints.kStartPosition;
+
+        p_pivotMotor = m_pivotMotor.getClosedLoopController();
         
+        re_pivotMotor = m_pivotMotor.getEncoder();
+        ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
+
+        re_pivotMotor.setPosition(0);
+
         System.out.println("---> IntakeSubsystem initialized");
     }
 
-    /** Set the intake motor power in the range of [-1, 1]. 
-     * @author Pubert
-    */
-    private void setIntakePower(double power) {
-        intakeMotor.set(power);
+    public boolean atTargetPoint() {
+        return Math.abs(re_pivotMotor.getPosition() - m_setpoint) < PivotSetPoints.kPositionTolerance;
     }
 
-    /** Set the conveyor motor power in the range of [-1, 1]. 
-     * @author Pubert
-    */
-    private void setPivotPower(double power) {
-        pivotMotor.set(power);
+    public void setTargetPosition(double setpos) {
+        m_setpoint = setpos;
+        moveToSetPoint();
+    }
+
+    public void moveToSetPoint() {
+        p_pivotMotor.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
     }
 
     /**
@@ -69,11 +90,10 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runIntakeCommand() {
         return this.startEnd(
-            () -> {
-                this.setIntakePower(IntakeSetpoints.kIntake);
-            }, () -> {
-                this.setIntakePower(0);
-        }).withName("Intaking");
+            () -> m_intakeMotor.set(IntakeSetpoints.kIntake),
+            () -> m_intakeMotor.set(0)
+        )
+        .withName("Intaking");
     }
 
     /**
@@ -82,12 +102,10 @@ public class IntakeSubsystem extends SubsystemBase {
      * @author Pubert
      */
     public Command runForwardPivot() {
-        return this.startEnd(
-            () -> {
-                this.setPivotPower(PivotSetPoints.kIntake);
-            }, () -> {
-                this.setPivotPower(0.0);
-        }).withName("Moving Pivot Forward");
+        return this.run(
+            () -> setTargetPosition(90.0)
+        )
+        .withName("Moving Pivot Forward");
     }
 
     /**
@@ -96,18 +114,16 @@ public class IntakeSubsystem extends SubsystemBase {
      * @author Pubert
      */
     public Command runBackwardPivot() {
-        return this.startEnd(
-            () -> {
-                this.setPivotPower(PivotSetPoints.kExtake);
-            }, () -> {
-                this.setPivotPower(0.0);
-            }).withName("Moving Pivot Backward");
+        return this.run(
+                () -> setTargetPosition(0.0)
+            )
+            .withName("Moving Pivot Backward");
     }
 
     @Override
     public void periodic() {
         // Display subsystem values
-        SmartDashboard.putNumber("Intake | Intake | Applied Output", intakeMotor.getAppliedOutput());
-        SmartDashboard.putNumber("Pivot | Pivot | Applied Output", pivotMotor.getAppliedOutput());
+        SmartDashboard.putNumber("Intake | Intake | Applied Output", m_intakeMotor.getAppliedOutput());
+        SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
     }
 }

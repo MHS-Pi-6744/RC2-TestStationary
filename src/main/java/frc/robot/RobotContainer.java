@@ -31,7 +31,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
+  MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
   IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   public void updateshuffleboard(){
@@ -82,12 +82,12 @@ public class RobotContainer {
     m_controller2.button(1).onTrue(
       m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
 
-    m_controller1.a().onTrue(
+    m_controller1.a().toggleOnTrue(
       intakeSubsystem.runIntakeCommand());
 
-    m_controller1.povUp().onTrue(
+    m_controller1.povUp().toggleOnTrue(
       intakeSubsystem.runForwardPivot());
-    m_controller1.povDown().onTrue(
+    m_controller1.povDown().toggleOnTrue(
       intakeSubsystem.runBackwardPivot());
   }
 
