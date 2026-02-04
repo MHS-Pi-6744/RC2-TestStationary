@@ -83,5 +83,4 @@ public class FeederSubsystem extends SubsystemBase {
       // Display subsystem values
       SmartDashboard.putNumber("Shooter | Feeder | Applied Output", feederMotor.getAppliedOutput());
   }
-
 }

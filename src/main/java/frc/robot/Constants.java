@@ -2,7 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot; 
+package frc.robot;
+
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
  * should be declared globally (i.e. public static). Do not put anything functional in this class.
@@ -43,7 +46,14 @@ public final class Constants {
       public static final double kVelocityTolerance = 100;
     }
   }
-
+public static final class climbConstants {
+    public static final double k_motorSpeed = 0.4; // percent
+    public static final double k_slowMotor = 0.1; // percent
+    // 1:16 Ratio
+    public static final double setpoint = 0;
+    public static final double finalpoint = 16 ; 
+    public static final double climbid = 2;
+  }
 
   
 }

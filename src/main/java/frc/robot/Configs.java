@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.revrobotics.spark.FeedbackSensor;
+import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -42,9 +43,8 @@ public static final class ShooterSubsystem {
         .idleMode(IdleMode.kCoast)
         .openLoopRampRate(1.0)
         .smartCurrentLimit(60);
+
+        
     }
   }
-
-
-
 }
