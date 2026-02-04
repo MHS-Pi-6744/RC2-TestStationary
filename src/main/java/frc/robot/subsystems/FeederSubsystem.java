@@ -19,7 +19,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs;
 import frc.robot.Constants.ShooterSubsystemConstants.FeederSetpoints;
+import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants;
+import frc.robot.subsystems.ShooterSubsystem;
+
 
 public class FeederSubsystem extends SubsystemBase {
   
@@ -55,41 +58,29 @@ public class FeederSubsystem extends SubsystemBase {
   }
   /** Set the feeder motor power in the range of [-1, 1]. */
   private void setFeederPower(double power) {
-    feederMotor.set(power);
+      feederMotor.set(power);
   }
+
   /**
    * Command to run the feeder and flywheel motors. When the command is interrupted, e.g. the button is released,
    * the motors will stop.
    */
   public Command runFeederCommand() {
-    return this.startEnd(
-        () -> {
-          this.setFeederPower(FeederSetpoints.kFeed);
-        }, () -> {
-          this.setFeederPower(0.0);
-        }).withName("Feeding");
+      return this.startEnd(
+          () -> {
+            this.setFeederPower(FeederSetpoints.kFeed);
+            }, () -> {
+            this.setFeederPower(0.0);
+            }).withName("Feeding");
   }
 
   /**
    * Meta-command to operate the shooter. The Flywheel starts spinning up and when it reaches
    * the desired speed it starts the Feeder.
    */
-  public Command runShooterCommand() {
-    return this.run(
-      () -> 
-      this.startEnd(
-        () -> {
-          this.setFeederPower(FeederSetpoints.kFeed);
-        }, () -> {
-          feederMotor.stopMotor();
-        })
-    ).withName("Shooting");
-  }
-
   @Override
   public void periodic() {
-    // Display subsystem values
-    SmartDashboard.putNumber("Shooter | Feeder | Applied Output", feederMotor.getAppliedOutput());
+      // Display subsystem values
+      SmartDashboard.putNumber("Shooter | Feeder | Applied Output", feederMotor.getAppliedOutput());
   }
-
 }
