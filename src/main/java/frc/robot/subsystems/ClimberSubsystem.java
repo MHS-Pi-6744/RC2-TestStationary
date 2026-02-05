@@ -56,7 +56,9 @@ public class ClimberSubsystem extends SubsystemBase {
         re_pivotMotor = m_pivotMotor.getEncoder();
         ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
 
-        re_pivotMotor.setPosition(0);
+        re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
+
+        //re_pivotMotor.setPosition(0);
 
         System.out.println("---> IntakeSubsystem initialized");
     }
@@ -68,6 +70,10 @@ public class ClimberSubsystem extends SubsystemBase {
     public void setTargetPosition(double setpos) {
         m_setpoint = setpos;
         moveToSetPoint();
+    }
+
+    public void setit() {
+      re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
     }
 
     public void moveToSetPoint() {
@@ -86,6 +92,13 @@ public class ClimberSubsystem extends SubsystemBase {
      * 
      * @author Pubert
      */
+
+    public Command setabs(){
+      return this.run(
+          () -> setTargetPosition(ae_pivotMotor.getPosition())
+      )
+      .withName("Setting");
+    }
     public Command runForwardPivot() {
         return this.run(
             () -> setTargetPosition(90.0)
@@ -109,5 +122,7 @@ public class ClimberSubsystem extends SubsystemBase {
     public void periodic() {
         // Display subsystem values
         SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
+        SmartDashboard.putNumber("Absolute Pos", ae_pivotMotor.getPosition());
+        SmartDashboard.putNumber("Relative Pos", re_pivotMotor.getPosition());
     }
 }

@@ -70,8 +70,8 @@ public static final class ClimbSubsystemConstants {
 
       public static final double kZeroOffest = 0.420;
 
-      public static final double kPositionConversionFactor = 6;
-      public static final double kVelocityConversionFactor = 6;
+      public static final double kPositionConversionFactor = 360/16;
+      public static final double kVelocityConversionFactor = 360/16;
 
 
       /** Sets the Idle mode of the motors.

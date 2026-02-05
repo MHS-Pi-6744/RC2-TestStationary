@@ -87,6 +87,7 @@ public class RobotContainer {
    // m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
     m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
     m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+    m_controller1.b().onTrue(m_climbMotor.setabs());
   }
 
   public Command getAutonomousCommand() {

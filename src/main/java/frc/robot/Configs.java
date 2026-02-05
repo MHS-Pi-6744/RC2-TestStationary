@@ -68,8 +68,10 @@ public static final class ShooterSubsystem {
                 .inverted(false);
             pivotConfig.absoluteEncoder
                 .inverted(false)
+                .positionConversionFactor(360)
+                .velocityConversionFactor(360)
                 .zeroOffset(PivotSetPoints.kZeroOffest)
-                .zeroCentered(true);
+                .zeroCentered(false);
             pivotConfig.encoder
             .positionConversionFactor(PivotSetPoints.kPositionConversionFactor)
             .velocityConversionFactor(PivotSetPoints.kVelocityConversionFactor);
