@@ -34,7 +34,7 @@ public final class Constants {
       public static final double kZeroOffest = 0.420;
 
       public static final double kPositionConversionFactor = 6;
-      public static final double kVelocityConversionFactor = 6;
+      public static final double kVelocityConversionFactor = 10;
 
 
       /** Sets the Idle mode of the motors.
@@ -72,12 +72,6 @@ public final class Constants {
       * @apiNote This really shouldn't ever go above an inch.
       */
       public static final double kPositionTolerance = 0.75;
-
-      public static final double kStageLoad = 7.86;
-      public static final double kStageL1 = 6.61;
-      public static final double kStageL2 = 13.65;
-      public static final double kStageL3 = 22;
-      public static final double kStageAlgae = 6.61;
     }
   }
 
