@@ -15,11 +15,16 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -34,15 +39,20 @@ public class RobotContainer {
   MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
   IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
+  private final FeederSubsystem m_feeder = new FeederSubsystem();
+  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  private final ClimberSubsystem m_climbMotor = new ClimberSubsystem();
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
   }
 
- 
+  private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
   // The driver's controller
   CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
   // TODO: Make Guitar Hero Guitar work somehow
   // CommandGenericHID m_guitar = new CommandGenericHID(3);
+  CommandGenericHID m_controller2 = new CommandGenericHID(OIConstants.kDriverController2Port);
+
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -86,6 +96,12 @@ public class RobotContainer {
       intakeSubsystem.runForwardPivot());
     m_controller1.povDown().whileTrue(
       intakeSubsystem.runBackwardPivot());
+  //  m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
+    m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.resetClimber());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.setClimber());
   }
 
   public Command getAutonomousCommand() {
@@ -99,5 +115,9 @@ public class RobotContainer {
     System.out.println("Git Date:" + BuildConstants.GIT_DATE);
     System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
   };
+ 
+  
+
+
   
 }
