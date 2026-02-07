@@ -34,9 +34,6 @@ public class ShooterSubsystem extends SubsystemBase {
       new SparkMax(ShooterSubsystemConstants.kFlywheelFollowerMotorCanId, MotorType.kBrushless);
 */
 
-  // Speed % and Feeder 
-  private double kShootPercent = 100;
-
 
   // Member variables for subsystem state management
   private double flywheelTargetVelocity = 0.0;
@@ -106,24 +103,13 @@ public class ShooterSubsystem extends SubsystemBase {
   public Command runFlywheelCommand() {
     return this.startEnd(
         () -> {
-          this.setFlywheelVelocity(kShootPercent);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
         },
         () -> {
           this.setFlywheelVelocity(0.0);
         }).withName("Spinning Up Flywheel");
   }
 
-  // Speeds up the flywheel
-  public Command speedUpCommand() {
-      return null;
-    
-  }
-
-  public Command slowDownCommand () throws InterruptedException {
-      --kShootPercent;
-      Thread.sleep(1000);
-      return null;
-  }
 
  
   /**
@@ -131,12 +117,12 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public Command runShooterCommand() {
     return this.startEnd(
-      () -> this.setFlywheelVelocity(kShootPercent),
+      () -> this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent),
       () -> flywheelMotor.stopMotor()
     ).until(isFlywheelSpinning).andThen(
       this.startEnd(
         () -> {
-          this.setFlywheelVelocity(kShootPercent);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
         }, () -> {
           flywheelMotor.stopMotor();
         })
@@ -156,6 +142,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     SmartDashboard.putBoolean("Is Flywheel Spinning", isFlywheelSpinning.getAsBoolean());
     SmartDashboard.putBoolean("Is Flywheel Stopped", isFlywheelStopped.getAsBoolean());
-    SmartDashboard.putNumber("Flywheel Percentage", kShootPercent);
+    SmartDashboard.putNumber("Flywheel Percentage", FlywheelSetpoints.kShootPercent);
   }
 }
