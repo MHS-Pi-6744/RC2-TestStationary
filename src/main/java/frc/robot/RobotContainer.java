@@ -61,10 +61,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
+    /*NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
     NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
     NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());
+    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/
 
     //m_chooser
 
@@ -85,8 +85,6 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_controller1.leftBumper().onTrue(
-      m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
 
     m_controller1.a().whileTrue(
       intakeSubsystem.runIntakeCommand());
@@ -102,6 +100,8 @@ public class RobotContainer {
     m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
     m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
     m_controller1.b().onTrue(m_climbMotor.setabs());
+    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
+    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
   }
 
   public Command getAutonomousCommand() {

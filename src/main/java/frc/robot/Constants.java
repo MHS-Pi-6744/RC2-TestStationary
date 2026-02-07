@@ -17,8 +17,8 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static final class IntakeSubsystemConstants {
-    public static final int kIntakeMotorCanId = 4;    // SPARK MAX CAN ID
-    public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
+    public static final int kIntakeMotorCanId = 11;    // SPARK MAX CAN ID
+    public static final int kPivotMotorCanId = 4;  // SPARK MAX CAN ID
 
     public static final class IntakeSetpoints {
       public static final double kIntake = 0.6; // Intake speed Units???
@@ -137,7 +137,7 @@ public final class Constants {
   // CAN ID for shooter
  public static final class ShooterSubsystemConstants {
     public static final int kFeederMotorCanId = 6;    // SPARKmax CAN ID
-    public static final int kFlywheelMotorCanId = 4;  // SPARKmax CAN ID (Right)
+    public static final int kFlywheelMotorCanId = 2;  // SPARKmax CAN ID (Right)
    // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
 
     public static final class FeederSetpoints {
@@ -147,13 +147,12 @@ public final class Constants {
     public static final class FlywheelSetpoints {
 //This is a percentage variable🙏 don't be hamza
 //Hamza here, the message above is correct
-      public static final double kShootPercent = 100;
       public static final double kVelocityTolerance = 100;
     }
   }
   
 public static final class ClimbSubsystemConstants {
-    public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
+    public static final int kPivotMotorCanId = 15;  // SPARK MAX CAN ID
 
     public static final class PivotSetPoints {
       public static final double kStartPosition = 0;
