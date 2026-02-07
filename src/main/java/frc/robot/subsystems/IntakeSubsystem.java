@@ -87,7 +87,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void moveToSetPoint() {
-        p_pivotMotor.setSetpoint(distancePivotAbsAndSetPoint(), ControlType.kMAXMotionPositionControl);
+        p_pivotMotor.setSetpoint(m_setpoint, ControlType.kMAXMotionPositionControl);
     }
 
     /**
@@ -118,7 +118,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     public Command runForwardPivot() {
         return this.run(
-            () -> setTargetPosition(90.0)
+            () -> setTargetPosition(90.0) // TODO: Have SetPos be a constant.
         )
         .withName("Moving Pivot Forward");
     }
