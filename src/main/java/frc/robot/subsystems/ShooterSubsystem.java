@@ -141,7 +141,7 @@ public class ShooterSubsystem extends SubsystemBase {
     );
   }
 
-  public Command slowUpCommand() {
+  public Command slowDownCommand() {
     new WaitCommand(0.5);
     return this.run(
       () -> {
