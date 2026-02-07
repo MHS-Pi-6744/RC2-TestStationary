@@ -73,13 +73,13 @@ public class IntakeSubsystem extends SubsystemBase {
     //    re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
     }
 
-    public boolean atTargetPoint() {
-        return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
-    }
+//    public boolean atTargetPoint() {
+//        return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
+//    }
 
-    public double distancePivotAbsAndSetPoint(){
+//    public double distancePivotAbsAndSetPoint(){
     //    return re_pivotMotor.getPosition() - m_setpoint;
-    }
+//    }
 
     public void setTargetPosition(double setpos) {
         m_setpoint = setpos;
