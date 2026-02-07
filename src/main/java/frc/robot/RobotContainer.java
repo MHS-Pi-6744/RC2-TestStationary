@@ -15,12 +15,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 
 
 /**
@@ -34,16 +37,17 @@ import frc.robot.subsystems.ShooterSubsystem;
 @SuppressWarnings("unused")
 public class RobotContainer {
   //MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
-  private final FeederSubsystem m_feeder = new FeederSubsystem();
+ private final FeederSubsystem m_feeder = new FeederSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final ClimberSubsystem m_climbMotor = new ClimberSubsystem();
   IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
   }
 
- 
+  private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
   // The driver's controller
   CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
   // TODO: Make Guitar Hero Guitar work somehow
@@ -57,10 +61,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-  /*NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
+    NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
     NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
     NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/
+    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());
 
     //m_chooser
 
@@ -81,6 +85,8 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
+    m_controller1.leftBumper().onTrue(
+      m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
 
     m_controller1.a().whileTrue(
       intakeSubsystem.runIntakeCommand());
