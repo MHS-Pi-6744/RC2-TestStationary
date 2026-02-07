@@ -6,11 +6,116 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
+
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
  * should be declared globally (i.e. public static). Do not put anything functional in this class.
  */
 public final class Constants {
+  public static final class IntakeSubsystemConstants {
+    public static final int kIntakeMotorCanId = 4;    // SPARK MAX CAN ID
+    public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
+
+    public static final class IntakeSetpoints {
+      public static final double kIntake = 0.6; // Intake speed Units???
+    }
+
+    public static final class PivotSetPoints {
+      public static final double kStartPosition = 0;
+      public static final double kEndPosition = 90; // Degrees
+
+      public static final int kCurrentLimit = 50;
+
+      public static final double kZeroOffest = 0.420;
+
+      public static final double kPositionConversionFactor = 6;
+      public static final double kVelocityConversionFactor = 10;
+
+
+      /** Sets the Idle mode of the motors.
+      * @apiNote This should remain as {@link IdleMode#kBrake}
+      * unless you want to manually rotate the motors
+      */
+      public static final IdleMode kIdleMode = IdleMode.kBrake;
+
+      // Deprecated, but still nice:
+      // In Desmos,
+      // y=0.37037x+19.5\left\{0<\ x<27\right\}
+      // y=0.6842x+11.0265\left\{27<x<65\right\}
+      // is the approximate position curve for the elevator
+      // where x is in Degrees of PCF1 and y is in Inches
+      // Measured from the top of the shooter
+
+      public static final double kMaxVelocity = 3072;
+      public static final double kMaxAcceleration = 1536;
+
+      public static final double kP = 0.50000000;
+      public static final double kI = 0.00000000;
+      public static final double kD = 0.00000000;
+    
+      /** The soft limit for the elevator going forward.
+      * @apiNote This soft limit should NEVER go above 24
+      */
+      public static final double kFwdSoftLimit = 23;
+      /** The soft limit for the elevator going backward.
+      * @apiNote This soft limit should NEVER go below 1
+      */
+      public static final double kRevSoftLimit = -23;
+
+      /** The allowed tolerance for the elevator
+      * @apiNote This value is in inches
+      * @apiNote This really shouldn't ever go above an inch.
+      */
+      public static final double kPositionTolerance = 0.75;
+    }
+  }
+
+  public static final class DriveConstants {
+    // Maximum driving speed commands - These are the maximum speeds that can be requested by 
+    // the driver or autonomous, they are not the maximum speed cababiity of the robot.
+    public static final double kMaxSpeedMetersPerSecond = 3; // originally 4.8    TUNING
+    public static final double kMaxAngularSpeed = 1.5*Math.PI ; // radians per second    originally 2*Pi   TUNING
+
+    // Chassis configuration
+    public static final double kTrackWidth = Units.inchesToMeters(24.5);
+    // Distance between centers of right and left wheels on robot
+    public static final double kWheelBase = Units.inchesToMeters(24.5);
+    // Distance between front and back wheels on robot
+    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+
+    // Angular offsets of the modules relative to the chassis in radians
+    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
+    public static final double kFrontRightChassisAngularOffset = 0;
+    public static final double kBackLeftChassisAngularOffset = Math.PI;
+    public static final double kBackRightChassisAngularOffset = Math.PI / 2;
+  }
+
+  public static final class ModuleConstants {
+    /** The MAXSwerve module can be configured with one of three pinion gears: 12T,
+    * 13T, or 14T. This changes the drive speed of the module (a pinion gear with
+    * more teeth will result in a robot that drives faster).
+    */
+    public static final int kDrivingMotorPinionTeeth = 12;
+
+    // Calculations required for driving motor conversion factors and feed forward
+    public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
+    public static final double kWheelDiameterMeters = 0.0762;
+    public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
+    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
+    // teeth on the bevel pinion
+    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
+    public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
+        / kDrivingMotorReduction;
+  }
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverController2Port = 1;
