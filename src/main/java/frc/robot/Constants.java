@@ -17,7 +17,7 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static final class IntakeSubsystemConstants {
-    public static final int kIntakeMotorCanId = 4;    // SPARK MAX CAN ID
+    public static final int kIntakeMotorCanId = 11;    // SPARK MAX CAN ID
     public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
 
     public static final class IntakeSetpoints {
@@ -32,8 +32,8 @@ public final class Constants {
 
       public static final double kZeroOffest = 0.420;
 
-      public static final double kPositionConversionFactor = 6;
-      public static final double kVelocityConversionFactor = 10;
+      public static final double kPositionConversionFactor = 360/16;
+      public static final double kVelocityConversionFactor = 360/16;
 
 
       /** Sets the Idle mode of the motors.
@@ -153,7 +153,7 @@ public final class Constants {
   }
   
 public static final class ClimbSubsystemConstants {
-    public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
+    public static final int kPivotMotorCanId = 15;  // SPARK MAX CAN ID
 
     public static final class PivotSetPoints {
       public static final double kStartPosition = 0;
