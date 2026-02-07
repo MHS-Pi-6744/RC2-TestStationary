@@ -32,8 +32,8 @@ public final class Constants {
 
       public static final double kZeroOffest = 0.420;
 
-      public static final double kPositionConversionFactor = 6;
-      public static final double kVelocityConversionFactor = 10;
+      public static final double kPositionConversionFactor = 360/16;
+      public static final double kVelocityConversionFactor = 360/16;
 
 
       /** Sets the Idle mode of the motors.
@@ -151,7 +151,7 @@ public final class Constants {
       public static final double kVelocityTolerance = 100;
     }
   }
-
+  
 public static final class ClimbSubsystemConstants {
     public static final int kPivotMotorCanId = 15;  // SPARK MAX CAN ID
 

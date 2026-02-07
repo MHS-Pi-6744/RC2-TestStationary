@@ -48,15 +48,14 @@ private static final  double nominalVoltage = 12.0;
             pivotConfig.absoluteEncoder
                 .inverted(false)
                 .zeroOffset(PivotSetPoints.kZeroOffest)
-                .zeroCentered(true);
-            pivotConfig.absoluteEncoder
+                .zeroCentered(true)
                 .positionConversionFactor(360)
                 .velocityConversionFactor(360);
             pivotConfig.encoder
             .positionConversionFactor(PivotSetPoints.kPositionConversionFactor)
             .velocityConversionFactor(PivotSetPoints.kVelocityConversionFactor);
             pivotConfig.closedLoop
-                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .pid(PivotSetPoints.kP, PivotSetPoints.kI, PivotSetPoints.kD)
                 .outputRange(-1, 1)
                 .maxMotion    

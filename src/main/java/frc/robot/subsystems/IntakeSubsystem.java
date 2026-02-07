@@ -63,9 +63,14 @@ public class IntakeSubsystem extends SubsystemBase {
         re_pivotMotor = m_pivotMotor.getEncoder();
         ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
 
-        re_pivotMotor.setPosition(ae_pivotMotor.getPosition() - m_setpoint);
+        re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
 
         System.out.println("---> IntakeSubsystem initialized");
+    }
+
+    public void setit()
+    {
+        re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
     }
 
     public boolean atTargetPoint() {
@@ -73,7 +78,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public double distancePivotAbsAndSetPoint(){
-        return ae_pivotMotor.getPosition() - m_setpoint;
+        return re_pivotMotor.getPosition() - m_setpoint;
     }
 
     public void setTargetPosition(double setpos) {
@@ -105,6 +110,12 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * @author Pubert
      */
+    public Command setabs(){
+      return this.run(
+          () -> setit()
+      )
+      .withName("Setting");
+    }
     public Command runForwardPivot() {
         return this.run(
             () -> setTargetPosition(90.0)

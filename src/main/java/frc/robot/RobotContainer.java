@@ -37,10 +37,11 @@ import frc.robot.subsystems.ClimberSubsystem;
 @SuppressWarnings("unused")
 public class RobotContainer {
   //MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
-  private final FeederSubsystem m_feeder = new FeederSubsystem();
+ private final FeederSubsystem m_feeder = new FeederSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final ClimberSubsystem m_climbMotor = new ClimberSubsystem();
   IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
@@ -60,10 +61,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-  /*NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
+  /*  NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
     NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
     NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/
+    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/ 
 
     //m_chooser
 
