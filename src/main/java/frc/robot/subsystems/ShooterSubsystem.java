@@ -35,12 +35,14 @@ public class ShooterSubsystem extends SubsystemBase {
       new SparkMax(ShooterSubsystemConstants.kFlywheelFollowerMotorCanId, MotorType.kBrushless);
 */
 
-  // Speed % and Feeder 
-  private double kShootPercent = 100;
+  
+
 
 
   // Member variables for subsystem state management
   private double flywheelTargetVelocity = 0.0;
+ // Speed % and Feeder 
+  private double kShootPercent = ShooterSubsystemConstants.FlywheelSetpoints.kShootPercent;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -123,7 +125,7 @@ public class ShooterSubsystem extends SubsystemBase {
      } 
     );
   }
-
+  // Slows down the flywheel
   public Command slowDownCommand ()  {
       new WaitCommand(0.5);
       return this.run(
@@ -150,6 +152,7 @@ public class ShooterSubsystem extends SubsystemBase {
         })
     ).withName("Shooting");
   }
+
 
   @Override
   public void periodic() {

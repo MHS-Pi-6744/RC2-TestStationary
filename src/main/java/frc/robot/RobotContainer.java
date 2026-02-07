@@ -61,10 +61,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    /*NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
+  /*  NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
     NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
     NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/
+    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/ 
 
     //m_chooser
 

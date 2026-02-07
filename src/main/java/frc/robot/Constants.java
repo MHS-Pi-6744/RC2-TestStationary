@@ -18,7 +18,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static final class IntakeSubsystemConstants {
     public static final int kIntakeMotorCanId = 11;    // SPARK MAX CAN ID
-    public static final int kPivotMotorCanId = 4;  // SPARK MAX CAN ID
+    public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
 
     public static final class IntakeSetpoints {
       public static final double kIntake = 0.6; // Intake speed Units???
@@ -32,8 +32,8 @@ public final class Constants {
 
       public static final double kZeroOffest = 0.420;
 
-      public static final double kPositionConversionFactor = 6;
-      public static final double kVelocityConversionFactor = 10;
+      public static final double kPositionConversionFactor = 360/16;
+      public static final double kVelocityConversionFactor = 360/16;
 
 
       /** Sets the Idle mode of the motors.
@@ -147,6 +147,7 @@ public final class Constants {
     public static final class FlywheelSetpoints {
 //This is a percentage variable🙏 don't be hamza
 //Hamza here, the message above is correct
+      public static final double kShootPercent = 50;
       public static final double kVelocityTolerance = 100;
     }
   }
