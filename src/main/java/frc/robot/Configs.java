@@ -10,7 +10,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
 
-import frc.robot.Constants.ClimbSubsystemConstants.PivotSetPoints;
+import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
 
 //import frc.robot.Constants.ModuleConstants; Doesn't do anything
 
