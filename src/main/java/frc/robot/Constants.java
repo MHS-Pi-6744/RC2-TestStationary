@@ -46,19 +46,8 @@ public final class Constants {
       public static final double kVelocityTolerance = 100;
     }
   }
-
-
-public static final class climbConstants {
-    public static final double k_motorSpeed = 0.4; // percent
-    public static final double k_slowMotor = 0.1; // percent
-    // 1:16 Ratio
-    public static final double setpoint = 0;
-    public static final double finalpoint = 16 ; 
-    public static final double climbid = 2;
-  }
-
+  
 public static final class ClimbSubsystemConstants {
-    public static final int kIntakeMotorCanId = 4;    // SPARK MAX CAN ID
     public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
 
     public static final class PivotSetPoints {

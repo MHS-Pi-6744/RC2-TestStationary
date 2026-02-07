@@ -60,6 +60,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
         //re_pivotMotor.setPosition(0);
 
+        setit();
+
         System.out.println("---> IntakeSubsystem initialized");
     }
 
@@ -95,7 +97,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public Command setabs(){
       return this.run(
-          () -> setTargetPosition(ae_pivotMotor.getPosition())
+          () -> setit()
       )
       .withName("Setting");
     }
