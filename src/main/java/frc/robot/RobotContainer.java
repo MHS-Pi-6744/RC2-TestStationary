@@ -15,15 +15,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.FeederSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
 
 
 /**
@@ -46,7 +43,7 @@ public class RobotContainer {
     SmartDashboard.updateValues();
   }
 
-  private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
+ 
   // The driver's controller
   CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
   // TODO: Make Guitar Hero Guitar work somehow
