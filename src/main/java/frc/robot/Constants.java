@@ -21,14 +21,13 @@ public final class Constants {
     public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
 
     public static final class IntakeSetpoints {
-      public static final double kIntake = 0.6;
+      public static final double kIntake = 0.6; // Intake speed Units???
     }
 
     public static final class PivotSetPoints {
       public static final double kStartPosition = 0;
-      public static final double kEndPosition = 90;
+      public static final double kEndPosition = 90; // Degrees
 
-      public static final int kStartingPosition = 0;
       public static final int kCurrentLimit = 50;
 
       public static final double kZeroOffest = 0.420;

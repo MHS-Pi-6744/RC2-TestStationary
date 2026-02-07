@@ -63,13 +63,17 @@ public class IntakeSubsystem extends SubsystemBase {
         re_pivotMotor = m_pivotMotor.getEncoder();
         ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
 
-        re_pivotMotor.setPosition(0);
+        re_pivotMotor.setPosition(ae_pivotMotor.getPosition() - m_setpoint);
 
         System.out.println("---> IntakeSubsystem initialized");
     }
 
     public boolean atTargetPoint() {
-        return Math.abs(re_pivotMotor.getPosition() - m_setpoint) < PivotSetPoints.kPositionTolerance;
+        return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
+    }
+
+    public double distancePivotAbsAndSetPoint(){
+        return ae_pivotMotor.getPosition() - m_setpoint;
     }
 
     public void setTargetPosition(double setpos) {
@@ -78,7 +82,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void moveToSetPoint() {
-        p_pivotMotor.setSetpoint(m_setpoint, ControlType.kMAXMotionPositionControl);
+        p_pivotMotor.setSetpoint(distancePivotAbsAndSetPoint(), ControlType.kMAXMotionPositionControl);
     }
 
     /**
@@ -125,5 +129,9 @@ public class IntakeSubsystem extends SubsystemBase {
         // Display subsystem values
         SmartDashboard.putNumber("Intake | Intake | Applied Output", m_intakeMotor.getAppliedOutput());
         SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
+
+
+        SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
+        SmartDashboard.putNumber("Pivot Absolute pos", ae_pivotMotor.getPosition());
     }
 }
