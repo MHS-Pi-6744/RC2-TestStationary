@@ -95,7 +95,7 @@ public class RobotContainer {
     m_controller1.povDown().whileTrue(
       intakeSubsystem.runBackwardPivot());
 
-    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
+    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand2());
     m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
     m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
     m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());

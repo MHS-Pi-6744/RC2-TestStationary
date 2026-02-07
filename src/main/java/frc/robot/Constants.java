@@ -137,7 +137,7 @@ public final class Constants {
   // CAN ID for shooter
  public static final class ShooterSubsystemConstants {
     public static final int kFeederMotorCanId = 6;    // SPARKmax CAN ID
-    public static final int kFlywheelMotorCanId = 2;  // SPARKmax CAN ID (Right)
+    public static final int kFlywheelMotorCanId = 4;  // SPARKmax CAN ID (Right)
    // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
 
     public static final class FeederSetpoints {

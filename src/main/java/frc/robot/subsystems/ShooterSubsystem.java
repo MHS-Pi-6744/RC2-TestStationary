@@ -120,18 +120,14 @@ public class ShooterSubsystem extends SubsystemBase {
   public Command speedUpCommand() { 
     new WaitCommand(0.5);
     return this.run(
-     () -> {
-      ++kShootPercent;
-     } 
+     () -> ++kShootPercent
     );
   }
   // Slows down the flywheel
   public Command slowDownCommand ()  {
       new WaitCommand(0.5);
       return this.run(
-        () -> {
-          --kShootPercent;
-        }
+        () -> --kShootPercent
       );
   }
 
@@ -151,6 +147,12 @@ public class ShooterSubsystem extends SubsystemBase {
           flywheelMotor.stopMotor();
         })
     ).withName("Shooting");
+  }
+
+  public Command runShooterCommand2() {
+    return this.run(
+      () -> setFlywheelVelocity(kShootPercent)
+    );
   }
 
 
