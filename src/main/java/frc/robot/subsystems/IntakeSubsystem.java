@@ -110,6 +110,12 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * @author Pubert
      */
+    public Command setabs(){
+      return this.run(
+          () -> setit()
+      )
+      .withName("Setting");
+    }
     public Command runForwardPivot() {
         return this.run(
             () -> setTargetPosition(90.0)
