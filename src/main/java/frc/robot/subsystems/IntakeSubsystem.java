@@ -65,6 +65,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
         re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
 
+        setit();
+
         System.out.println("---> IntakeSubsystem initialized");
     }
 

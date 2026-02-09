@@ -48,7 +48,7 @@ private static final  double nominalVoltage = 12.0;
             pivotConfig.absoluteEncoder
                 .inverted(false)
                 .zeroOffset(PivotSetPoints.kZeroOffest)
-                .zeroCentered(true)
+                .zeroCentered(false)
                 .positionConversionFactor(360)
                 .velocityConversionFactor(360);
             pivotConfig.encoder
