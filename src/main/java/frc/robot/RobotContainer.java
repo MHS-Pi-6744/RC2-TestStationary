@@ -25,6 +25,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.SystemSelect;
+import frc.robot.SystemSelect;
 
 
 /**
@@ -104,6 +105,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
 if(SystemSelect.isIntake){
+if(SystemSelect.isIntake){
     m_controller1.a().whileTrue(
       intakeSubsystem.runIntakeCommand());
 
@@ -124,9 +126,23 @@ if(SystemSelect.isClimber){
 }
 
 if(SystemSelect.isShooter){
+}
+
+if(SystemSelect.isFeeder){
+  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+}
+
+if(SystemSelect.isClimber){
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+}
+
+if(SystemSelect.isShooter){
     m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
     m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
     m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
+}
+
 }
 
   }
