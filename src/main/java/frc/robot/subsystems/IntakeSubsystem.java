@@ -3,11 +3,9 @@ package frc.robot.subsystems;
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
-import com.revrobotics.sim.SparkAbsoluteEncoderSim;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
-import com.revrobotics.spark.SparkRelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 
@@ -112,12 +110,6 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * @author Pubert
      */
-    public Command setabs(){
-      return this.run(
-          () -> setit()
-      )
-      .withName("Setting");
-    }
     public Command runForwardPivot() {
         return this.run(
             () -> setTargetPosition(90.0) // TODO: Have SetPos be a constant.

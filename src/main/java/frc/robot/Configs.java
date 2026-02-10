@@ -36,11 +36,11 @@ private static final  double nominalVoltage = 12.0;
         static {
             // Configure basic settings of the intake
             intakeConfig
-                .inverted(false)
+                .inverted(true)
                 .idleMode(IdleMode.kCoast)
                 .openLoopRampRate(0.5)
                 .smartCurrentLimit(40);
-            
+                     
             pivotConfig
                 .idleMode(PivotSetPoints.kIdleMode)
                 .smartCurrentLimit(PivotSetPoints.kCurrentLimit)
