@@ -24,6 +24,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.SystemSelect;
 
 
 /**
@@ -37,11 +38,11 @@ import frc.robot.subsystems.ClimberSubsystem;
 @SuppressWarnings("unused")
 public class RobotContainer {
   //MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
- private final FeederSubsystem m_feeder = new FeederSubsystem();
+
+  private final FeederSubsystem m_feeder = new FeederSubsystem();
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final ClimberSubsystem m_climbMotor = new ClimberSubsystem();
   IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
@@ -55,7 +56,6 @@ public class RobotContainer {
 
   //m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -86,6 +86,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+if(SystemSelect.isIntake){
     m_controller1.a().whileTrue(
       intakeSubsystem.runIntakeCommand());
 
@@ -94,14 +95,23 @@ public class RobotContainer {
 
     m_controller1.povDown().whileTrue(
       intakeSubsystem.runBackwardPivot());
+}
 
+if(SystemSelect.isFeeder){
+  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+}
+
+if(SystemSelect.isClimber){
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+}
+
+if(SystemSelect.isShooter){
     m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
     m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
     m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
-    m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
-    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
-    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
-    m_controller1.b().onTrue(m_climbMotor.setabs());
+}
+
   }
 
   public Command getAutonomousCommand() {
