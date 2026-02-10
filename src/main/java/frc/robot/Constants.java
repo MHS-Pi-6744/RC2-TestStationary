@@ -8,7 +8,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+//import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -30,9 +30,9 @@ public final class Constants {
 
       public static final int kCurrentLimit = 50;
 
-      public static final double kZeroOffest = 0.420;
+      public static final double kZeroOffest = 0.420; //units? For stationary testbed motor
 
-      public static final double kPositionConversionFactor = 360/16;
+      public static final double kPositionConversionFactor = 360/16; // For stationary test bed motor
       public static final double kVelocityConversionFactor = 360/16;
 
 
@@ -40,7 +40,7 @@ public final class Constants {
       * @apiNote This should remain as {@link IdleMode#kBrake}
       * unless you want to manually rotate the motors
       */
-      public static final IdleMode kIdleMode = IdleMode.kBrake;
+      public static final IdleMode kIdleMode = IdleMode.kBrake; 
 
       // Deprecated, but still nice:
       // In Desmos,
