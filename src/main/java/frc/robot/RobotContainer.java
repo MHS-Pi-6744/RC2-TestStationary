@@ -150,7 +150,6 @@ if(SystemSelect.isShooter){
     return m_chooser.getSelected();
   }
 
-
   public void printGitData() {
     System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
     System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
