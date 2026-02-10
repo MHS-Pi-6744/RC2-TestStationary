@@ -104,7 +104,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
 if(SystemSelect.isIntake){
-if(SystemSelect.isIntake){
     m_controller1.a().whileTrue(
       intakeSubsystem.runIntakeCommand());
 
@@ -115,16 +114,9 @@ if(SystemSelect.isIntake){
       intakeSubsystem.runBackwardPivot());
 }
 
-if(SystemSelect.isFeeder){
-  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
-}
-
 if(SystemSelect.isClimber){
     m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
     m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
-}
-
-if(SystemSelect.isShooter){
 }
 
 if(SystemSelect.isFeeder){
@@ -143,8 +135,6 @@ if(SystemSelect.isShooter){
 }
 
 }
-
-  }
 
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
