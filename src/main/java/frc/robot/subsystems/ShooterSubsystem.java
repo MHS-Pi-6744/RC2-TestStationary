@@ -1,0 +1,168 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.subsystems;
+
+import com.revrobotics.PersistMode;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Configs;
+import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
+import frc.robot.Constants.ShooterSubsystemConstants;
+
+public class ShooterSubsystem extends SubsystemBase {
+  
+  // Initialize flywheel SPARKs. We will use MAXMotion velocity control for the flywheel, so we also need to
+  // initialize the closed loop controllers and encoders.
+  private SparkMax flywheelMotor =
+      new SparkMax(ShooterSubsystemConstants.kFlywheelMotorCanId, MotorType.kBrushless);
+  private SparkClosedLoopController flywheelController = flywheelMotor.getClosedLoopController();
+  private RelativeEncoder flywheelEncoder = flywheelMotor.getEncoder();
+
+  /*private SparkMax flywheelFollowerMotor =
+      new SparkMax(ShooterSubsystemConstants.kFlywheelFollowerMotorCanId, MotorType.kBrushless);
+*/
+
+
+  // Member variables for subsystem state management
+  private double flywheelTargetVelocity = 0.0;
+
+  private double kShootPercent = ShooterSubsystemConstants.FlywheelSetpoints.kShootPercent;
+
+  /** Creates a new ShooterSubsystem. */
+  public ShooterSubsystem() {
+    /*
+     * Apply the appropriate configurations to the SPARKs. 
+     *
+     * kResetSafeParameters is used to get the SPARK to a known state. This
+     * is useful in case the SPARK is replaced.
+     *
+     * kPersistParameters is used to ensure the configuration is not lost when
+     * the SPARK loses power. This is useful for power cycles that may occur
+     * mid-operation.
+     */
+    flywheelMotor.configure(
+        Configs.ShooterSubsystem.flywheelConfig,
+        ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
+    /* flywheelFollowerMotor.configure(
+        Configs.ShooterSubsystem.flywheelFollowerConfig,
+        ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);*/
+    // Zero flywheel encoder on initialization
+    flywheelEncoder.setPosition(0);
+
+    System.out.println("---> ShooterSubsystem initialized");
+  }
+
+  private boolean isFlywheelAt(double velocity) {
+    return MathUtil.isNear(flywheelEncoder.getVelocity(), 
+            velocity, FlywheelSetpoints.kVelocityTolerance);
+  }
+
+  /** 
+   * Trigger: Is the flywheel spinning at the required velocity?
+   */
+  public final Trigger isFlywheelSpinning = new Trigger(
+      () -> isFlywheelAt(3000) || flywheelEncoder.getVelocity() > 3000
+  );
+
+  public final Trigger isFlywheelSpinningBackwards = new Trigger(
+      () -> isFlywheelAt(-3000) || flywheelEncoder.getVelocity() < -3000
+  );
+
+  /** 
+   * Trigger: Is the flywheel stopped?
+   */
+  public final Trigger isFlywheelStopped = new Trigger(() -> isFlywheelAt(0));
+
+  /**
+   * Drive the flywheels to their set velocity. This will use MAXMotion
+   * velocity control which will allow for a smooth acceleration and deceleration to the mechanism's
+   * setpoint.
+   */
+  private void setFlywheelVelocity(double velocity) {
+    flywheelController.setSetpoint(velocity, ControlType.kMAXMotionVelocityControl);
+    flywheelTargetVelocity = velocity;
+  }
+
+  
+  /**
+   * Command to run the flywheel motors. When the command is interrupted, e.g. the button is released,
+   * the motors will stop.
+   */
+  public Command runFlywheelCommand() {
+    return this.startEnd(
+        () -> {
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
+        },
+        () -> {
+          this.setFlywheelVelocity(0.0);
+        }).withName("Spinning Up Flywheel");
+  }
+
+
+ 
+  /**
+   * Meta-command to operate the shooter. The Flywheel starts spinning up
+   */
+  public Command runShooterCommand() {
+    return this.startEnd(
+      () -> this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent),
+      () -> flywheelMotor.stopMotor()
+    ).until(isFlywheelSpinning).andThen(
+      this.startEnd(
+        () -> {
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
+        }, () -> {
+          flywheelMotor.stopMotor();
+        })
+    ).withName("Shooting");
+  }
+
+  public Command speedUpCommand() {
+    new WaitCommand(0.5);
+    return this.run(
+      () -> {
+        ++kShootPercent;
+      }
+    );
+  }
+
+  public Command slowDownCommand() {
+    new WaitCommand(0.5);
+    return this.run(
+      () -> {
+        ++kShootPercent;
+      }
+    );
+  }
+
+  @Override
+  public void periodic() {
+    // Display subsystem values
+    SmartDashboard.putNumber("Shooter | Flywheel | Applied Output", flywheelMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Shooter | Flywheel | Current", flywheelMotor.getOutputCurrent());
+  /*SmartDashboard.putNumber("Shooter | Flywheel Follower | Applied Output", flywheelFollowerMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Shooter | Flywheel Follower | Current", flywheelFollowerMotor.getOutputCurrent());*/
+
+    SmartDashboard.putNumber("Shooter | Flywheel | Target Velocity", flywheelTargetVelocity);
+    SmartDashboard.putNumber("Shooter | Flywheel | Actual Velocity", flywheelEncoder.getVelocity());
+
+    SmartDashboard.putBoolean("Is Flywheel Spinning", isFlywheelSpinning.getAsBoolean());
+    SmartDashboard.putBoolean("Is Flywheel Stopped", isFlywheelStopped.getAsBoolean());
+    SmartDashboard.putNumber("Flywheel Percentage", FlywheelSetpoints.kShootPercent);
+  }
+}
