@@ -16,6 +16,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs;
 import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
@@ -37,6 +38,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   // Member variables for subsystem state management
   private double flywheelTargetVelocity = 0.0;
+
+  private double kShootPercent = ShooterSubsystemConstants.FlywheelSetpoints.kShootPercent;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -127,6 +130,24 @@ public class ShooterSubsystem extends SubsystemBase {
           flywheelMotor.stopMotor();
         })
     ).withName("Shooting");
+  }
+
+  public Command speedUpCommand() {
+    new WaitCommand(0.5);
+    return this.run(
+      () -> {
+        ++kShootPercent;
+      }
+    );
+  }
+
+  public Command slowDownCommand() {
+    new WaitCommand(0.5);
+    return this.run(
+      () -> {
+        ++kShootPercent;
+      }
+    );
   }
 
   @Override

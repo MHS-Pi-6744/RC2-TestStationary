@@ -20,9 +20,12 @@ import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.SystemSelect;
+import frc.robot.SystemSelect;
 
 
 /**
@@ -35,34 +38,53 @@ import frc.robot.subsystems.ClimberSubsystem;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
-  private final FeederSubsystem m_feeder = new FeederSubsystem();
-  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  private final ClimberSubsystem m_climbMotor = new ClimberSubsystem();
-  public void updateshuffleboard(){
-    SmartDashboard.updateValues();
-  }
-
-  private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
-  // The driver's controller
-  CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
-  CommandGenericHID m_controller2 = new CommandGenericHID(OIConstants.kDriverController2Port);
+  //MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
 
 
-  //m_chooser
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  
+  private FeederSubsystem m_feeder = new FeederSubsystem();
+    private ShooterSubsystem m_shooter = new ShooterSubsystem();
+        private ClimberSubsystem m_climbMotor = new ClimberSubsystem();
+        IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+      
+        public void updateshuffleboard(){
+          SmartDashboard.updateValues();
+        }
+      
+        private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
+        // The driver's controller
+        CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
+        // TODO: Make Guitar Hero Guitar work somehow
+      
+      
+        //m_chooser
+        SendableChooser<Command> m_chooser = new SendableChooser<>();
+      
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
+        /*  NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
+          NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
+          NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
+          NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/ 
+      
+          //m_chooser
+    if(SystemSelect.isFeeder){
+        m_feeder = null;
+    }
+    
+    if(SystemSelect.isShooter){
+        m_shooter = null;
+    }
 
+    if(SystemSelect.isClimber){
+        m_climbMotor = null;
+    }
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
-    NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
-    NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());
-
-    //m_chooser
+    if(SystemSelect.isIntake){
+        intakeSubsystem = null;
+    }
 
     m_chooser.addOption("Do Nothing", new Command(){});
     SmartDashboard.putData("Auto Chooser", m_chooser);
@@ -81,12 +103,48 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-  //  m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+
+if(SystemSelect.isIntake){
+if(SystemSelect.isIntake){
+    m_controller1.a().whileTrue(
+      intakeSubsystem.runIntakeCommand());
+
+    m_controller1.povUp().whileTrue(
+      intakeSubsystem.runForwardPivot());
+
+    m_controller1.povDown().whileTrue(
+      intakeSubsystem.runBackwardPivot());
+}
+
+if(SystemSelect.isFeeder){
+  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+}
+
+if(SystemSelect.isClimber){
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+}
+
+if(SystemSelect.isShooter){
+}
+
+if(SystemSelect.isFeeder){
+  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+}
+
+if(SystemSelect.isClimber){
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+}
+
+if(SystemSelect.isShooter){
+    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
+    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
     m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
-    m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
-    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.resetClimber());
-    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.setClimber());
+}
+
+}
+
   }
 
   public Command getAutonomousCommand() {
@@ -100,6 +158,8 @@ public class RobotContainer {
     System.out.println("Git Date:" + BuildConstants.GIT_DATE);
     System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
   };
+
+
  
   
 
