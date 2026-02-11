@@ -21,13 +21,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs;
 import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants;
+import frc.robot.Constants.canIDs;
 
 public class ShooterSubsystem extends SubsystemBase {
   
   // Initialize flywheel SPARKs. We will use MAXMotion velocity control for the flywheel, so we also need to
   // initialize the closed loop controllers and encoders.
   private SparkMax flywheelMotor =
-      new SparkMax(ShooterSubsystemConstants.kFlywheelMotorCanId, MotorType.kBrushless);
+      new SparkMax(canIDs.kFlywheelMotorCanId, MotorType.kBrushless);
   private SparkClosedLoopController flywheelController = flywheelMotor.getClosedLoopController();
   private RelativeEncoder flywheelEncoder = flywheelMotor.getEncoder();
 

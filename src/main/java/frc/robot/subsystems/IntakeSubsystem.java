@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.IntakeSubsystemConstants;
+import frc.robot.Constants.canIDs;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
 import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
 import frc.robot.Configs;
@@ -21,10 +22,10 @@ import frc.robot.Configs;
 public class IntakeSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
     private SparkMax m_intakeMotor =
-        new SparkMax(IntakeSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
+        new SparkMax(canIDs.kIntakeMotorCanId, MotorType.kBrushless);
 
     private SparkMax m_pivotMotor =
-        new SparkMax(IntakeSubsystemConstants.kPivotMotorCanId, MotorType.kBrushless);
+        new SparkMax(canIDs.kPivotMotorCanId, MotorType.kBrushless);
 
     private SparkAbsoluteEncoder ae_pivotMotor;
     private RelativeEncoder re_pivotMotor;
