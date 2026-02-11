@@ -1,9 +1,12 @@
+package frc.robot;
+
 public class SystemSelect {
-    public boolean isClimber = false;
+    public static boolean isClimber = false;
 
-    public boolean isFeeder = false;
+    public static boolean isFeeder = false;
 
-    public boolean isIntake = false;
+    public static boolean isIntake = false;
     
-    public boolean isShooter = false;
+    public static boolean isShooter = false;
+
 }

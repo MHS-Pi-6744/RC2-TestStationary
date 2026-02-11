@@ -39,34 +39,51 @@ import frc.robot.SystemSelect;
 public class RobotContainer {
   //MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
 
-  private final FeederSubsystem m_feeder = new FeederSubsystem();
-  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  private final ClimberSubsystem m_climbMotor = new ClimberSubsystem();
-  IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
-  public void updateshuffleboard(){
-    SmartDashboard.updateValues();
-  }
+  
+  private FeederSubsystem m_feeder = new FeederSubsystem();
+    private ShooterSubsystem m_shooter = new ShooterSubsystem();
+        private ClimberSubsystem m_climbMotor = new ClimberSubsystem();
+        IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+      
+        public void updateshuffleboard(){
+          SmartDashboard.updateValues();
+        }
+      
+        private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
+        // The driver's controller
+        CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
+        // TODO: Make Guitar Hero Guitar work somehow
+      
+      
+        //m_chooser
+        SendableChooser<Command> m_chooser = new SendableChooser<>();
+      
+        /**
+         * The container for the robot. Contains subsystems, OI devices, and commands.
+         */
+        public RobotContainer() {
+        /*  NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
+          NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
+          NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
+          NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/ 
+      
+          //m_chooser
+    if(SystemSelect.isFeeder){
+        m_feeder = null;
+    }
+    
+    if(SystemSelect.isShooter){
+        m_shooter = null;
+    }
 
-  private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
-  // The driver's controller
-  CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
-  // TODO: Make Guitar Hero Guitar work somehow
+    if(SystemSelect.isClimber){
+        m_climbMotor = null;
+    }
 
-
-  //m_chooser
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-  /*  NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
-    NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
-    NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/ 
-
-    //m_chooser
+    if(SystemSelect.isIntake){
+        intakeSubsystem = null;
+    }
 
     m_chooser.addOption("Do Nothing", new Command(){});
     SmartDashboard.putData("Auto Chooser", m_chooser);
@@ -97,6 +114,11 @@ if(SystemSelect.isIntake){
       intakeSubsystem.runBackwardPivot());
 }
 
+if(SystemSelect.isClimber){
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+}
+
 if(SystemSelect.isFeeder){
   m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
 }
@@ -112,12 +134,11 @@ if(SystemSelect.isShooter){
     m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
 }
 
-  }
+}
 
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
   }
-
 
   public void printGitData() {
     System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
@@ -125,6 +146,8 @@ if(SystemSelect.isShooter){
     System.out.println("Git Date:" + BuildConstants.GIT_DATE);
     System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
   };
+
+
  
   
 

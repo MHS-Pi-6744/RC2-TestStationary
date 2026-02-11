@@ -131,8 +131,15 @@ public final class Constants {
 
   // Coral shooter command constants
   public static final class MotorConstants {
-    public static final double k_motorSpeed = 0.6; // percent
+    public static final double k_motorSpeed = 0.4; // percent
     public static final double k_slowMotor = 0.1; // percent
+    // 1:16 Ratio
+    public static final double setpoint = 0;
+    public static final double finalpoint = 16 ; 
+  }
+
+  public static final class CanId {
+    public static final int climbmotor = 2;
   }
   // CAN ID for shooter
  public static final class ShooterSubsystemConstants {
@@ -147,7 +154,7 @@ public final class Constants {
     public static final class FlywheelSetpoints {
 //This is a percentage variable🙏 don't be hamza
 //Hamza here, the message above is correct
-      public static final double kShootPercent = 100;
+      public static final double kShootPercent = 50;
       public static final double kVelocityTolerance = 100;
     }
   }
