@@ -23,13 +23,13 @@ public class IntakeSubsystem extends SubsystemBase {
     private SparkMax m_intakeMotor =
         new SparkMax(IntakeSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
 
-    //private SparkMax m_pivotMotor =
-    //    new SparkMax(IntakeSubsystemConstants.kPivotMotorCanId, MotorType.kBrushless);
+    private SparkMax m_pivotMotor =
+        new SparkMax(IntakeSubsystemConstants.kPivotMotorCanId, MotorType.kBrushless);
 
-    //private SparkAbsoluteEncoder ae_pivotMotor;
-    //private RelativeEncoder re_pivotMotor;
+    private SparkAbsoluteEncoder ae_pivotMotor;
+    private RelativeEncoder re_pivotMotor;
 
-    //private SparkClosedLoopController p_pivotMotor;
+    private SparkClosedLoopController p_pivotMotor;
 
     private double m_setpoint;
 
@@ -49,35 +49,35 @@ public class IntakeSubsystem extends SubsystemBase {
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
         
-        //m_pivotMotor.configure(
-        //    Configs.IntakeSubsystem.pivotConfig,
-        //   ResetMode.kResetSafeParameters,
-        //    PersistMode.kPersistParameters);
+        m_pivotMotor.configure(
+             Configs.IntakeSubsystem.pivotConfig,
+             ResetMode.kResetSafeParameters,
+             PersistMode.kPersistParameters);
 
         m_setpoint = PivotSetPoints.kStartPosition;
 
-        //p_pivotMotor = m_pivotMotor.getClosedLoopController();
+        p_pivotMotor = m_pivotMotor.getClosedLoopController();
         
-        //re_pivotMotor = m_pivotMotor.getEncoder();
-        //ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
+        re_pivotMotor = m_pivotMotor.getEncoder();
+        ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
 
-        //re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
+        re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
 
         System.out.println("---> IntakeSubsystem initialized");
     }
 
     public void setit()
     {
-    //    re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
+       re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
     }
 
-//    public boolean atTargetPoint() {
-//        return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
-//    }
+     public boolean atTargetPoint() {
+         return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
+        }
 
-//    public double distancePivotAbsAndSetPoint(){
-    //    return re_pivotMotor.getPosition() - m_setpoint;
-//    }
+    public double distancePivotAbsAndSetPoint(){
+       return re_pivotMotor.getPosition() - m_setpoint;
+    }
 
     public void setTargetPosition(double setpos) {
         m_setpoint = setpos;
@@ -85,7 +85,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void moveToSetPoint() {
-    //    p_pivotMotor.setSetpoint(distancePivotAbsAndSetPoint(), ControlType.kMAXMotionPositionControl);
+        p_pivotMotor.setSetpoint(distancePivotAbsAndSetPoint(), ControlType.kMAXMotionPositionControl);
     }
 
     /**
@@ -131,10 +131,10 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
         // Display subsystem values
         SmartDashboard.putNumber("Intake | Intake | Applied Output", m_intakeMotor.getAppliedOutput());
-    //    SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
+        SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
 
 
-    //    SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
-    //    SmartDashboard.putNumber("Pivot Absolute pos", ae_pivotMotor.getPosition());
+          SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
+          SmartDashboard.putNumber("Pivot Absolute pos", ae_pivotMotor.getPosition());
     }
 }
