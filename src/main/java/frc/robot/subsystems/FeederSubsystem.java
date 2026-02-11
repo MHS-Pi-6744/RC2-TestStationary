@@ -23,7 +23,6 @@ import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-
 public class FeederSubsystem extends SubsystemBase {
   
   // Initialize flywheel SPARKs. We will use MAXMotion velocity control for the flywheel, so we also need to
@@ -34,6 +33,7 @@ public class FeederSubsystem extends SubsystemBase {
 */
   // Initialize feeder SPARK. We will use open loop control for this so we don't need a closed loop
   // controller like above.
+
   private SparkMax feederMotor =
       new SparkMax(ShooterSubsystemConstants.kFeederMotorCanId, MotorType.kBrushless);
 
@@ -51,14 +51,14 @@ public class FeederSubsystem extends SubsystemBase {
      * the SPARK loses power. This is useful for power cycles that may occur
      * mid-operation.
      */
-    feederMotor.configure(
+     feederMotor.configure(
         Configs.ShooterSubsystem.feederConfig,
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
   }
   /** Set the feeder motor power in the range of [-1, 1]. */
   private void setFeederPower(double power) {
-      feederMotor.set(power);
+        feederMotor.set(power);
   }
 
   /**

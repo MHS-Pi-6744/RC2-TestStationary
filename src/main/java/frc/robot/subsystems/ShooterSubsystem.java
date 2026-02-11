@@ -130,8 +130,6 @@ public class ShooterSubsystem extends SubsystemBase {
         () -> --kShootPercent
       );
   }
-
- 
   /**
    * Meta-command to operate the shooter. The Flywheel starts spinning up
    */
@@ -154,7 +152,6 @@ public class ShooterSubsystem extends SubsystemBase {
       () -> setFlywheelVelocity(kShootPercent)
     );
   }
-
 
   @Override
   public void periodic() {
