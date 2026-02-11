@@ -1,0 +1,5 @@
+Stationary system operating modes?
+- Shooter and feeder test 3 motors: single flywheel, feed motor, conveyor motor
+- Intake test - intake, pivot, feeder
+- Single motor tests
+- 3 shooter motor test no intake
