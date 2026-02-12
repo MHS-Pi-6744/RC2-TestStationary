@@ -26,7 +26,7 @@ public final class Constants {
     public static final int kFlywheelMotorCanId = 4;  //SPARKmax - The competition robot will have 3 Sparkflex controlled motors 
     public static final int kIntakeMotorCanId = 11;   //SPARKmax -
     public static final int kPivotMotorCanId = 2;     //SPARKmax -
-    public static final int climbmotor = 15;          //SPARKmax - Shouldn't this be kClimMotorCanId?  -Sr
+    public static final int kClimbMotorCanId = 15;    //SPARKmax - 
     // Others? PHD, RoboRio?
   }
 
