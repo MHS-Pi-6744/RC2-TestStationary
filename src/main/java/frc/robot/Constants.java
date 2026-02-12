@@ -150,9 +150,8 @@ public final class Constants {
       public static final double kFeed = 0.15;
     }
     
+    // Check these units - it looks to me like ShooterSubsystem is controlling in RPM???  Sr
     public static final class FlywheelSetpoints {
-//This is a percentage variable🙏 don't be hamza
-//Hamza here, the message above is correct
       public static final double kShootPercent = 50;
       public static final double kVelocityTolerance = 100;
     }
