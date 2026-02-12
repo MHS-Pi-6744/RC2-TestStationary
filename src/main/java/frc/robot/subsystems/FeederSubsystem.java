@@ -21,6 +21,7 @@ import frc.robot.Configs;
 import frc.robot.Constants.ShooterSubsystemConstants.FeederSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants;
+import frc.robot.Constants.canIDs;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class FeederSubsystem extends SubsystemBase {
@@ -35,7 +36,7 @@ public class FeederSubsystem extends SubsystemBase {
   // controller like above.
 
   private SparkMax feederMotor =
-      new SparkMax(ShooterSubsystemConstants.kFeederMotorCanId, MotorType.kBrushless);
+      new SparkMax(canIDs.kFeederMotorCanId, MotorType.kBrushless);
 
   // Member variables for subsystem state management
 
