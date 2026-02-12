@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.IntakeSubsystemConstants;
+import frc.robot.Constants.canIDs;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
 import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
 import frc.robot.Configs;
@@ -21,10 +22,10 @@ import frc.robot.Configs;
 public class IntakeSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
     private SparkMax m_intakeMotor =
-        new SparkMax(IntakeSubsystemConstants.kIntakeMotorCanId, MotorType.kBrushless);
+        new SparkMax(canIDs.kIntakeMotorCanId, MotorType.kBrushless);
 
     private SparkMax m_pivotMotor =
-        new SparkMax(IntakeSubsystemConstants.kPivotMotorCanId, MotorType.kBrushless);
+        new SparkMax(canIDs.kPivotMotorCanId, MotorType.kBrushless);
 
     private SparkAbsoluteEncoder ae_pivotMotor;
     private RelativeEncoder re_pivotMotor;
@@ -50,9 +51,9 @@ public class IntakeSubsystem extends SubsystemBase {
             PersistMode.kPersistParameters);
         
         m_pivotMotor.configure(
-            Configs.IntakeSubsystem.pivotConfig,
-            ResetMode.kResetSafeParameters,
-            PersistMode.kPersistParameters);
+             Configs.IntakeSubsystem.pivotConfig,
+             ResetMode.kResetSafeParameters,
+             PersistMode.kPersistParameters);
 
         m_setpoint = PivotSetPoints.kStartPosition;
 
@@ -68,15 +69,15 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void setit()
     {
-        re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
+       re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
     }
 
-    public boolean atTargetPoint() {
-        return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
-    }
+     public boolean atTargetPoint() {
+         return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
+        }
 
     public double distancePivotAbsAndSetPoint(){
-        return re_pivotMotor.getPosition() - m_setpoint;
+       return re_pivotMotor.getPosition() - m_setpoint;
     }
 
     public void setTargetPosition(double setpos) {
@@ -134,7 +135,7 @@ public class IntakeSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
 
 
-        SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
-        SmartDashboard.putNumber("Pivot Absolute pos", ae_pivotMotor.getPosition());
+          SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
+          SmartDashboard.putNumber("Pivot Absolute pos", ae_pivotMotor.getPosition());
     }
 }
