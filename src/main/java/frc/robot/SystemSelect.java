@@ -5,7 +5,7 @@ public class SystemSelect {
 
     public static boolean isFeeder = false;
 
-    public static boolean isIntake = false;
+    public static boolean isIntake = true;
     
     public static boolean isShooter = false;
 

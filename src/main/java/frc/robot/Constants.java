@@ -41,7 +41,7 @@ public final class Constants {
     /** @apiNote SPARKmax -
      * @apiNote This is the Pivot Motor of Intake Can ID */  
 
-    public static final int kPivotMotorCanId = 2;  
+    public static final int kPivotMotorCanId = 7;  
 
     /** @apiNote SPARKmax - 
      * @apiNote This is the Climber Motor Can ID */  
@@ -57,7 +57,7 @@ public final class Constants {
       /** @apiNote The Command for setting the motor speed
        * @apiNote PERCENTAGE???
        */
-      public static final double kIntake = 0.6; // Intake speed Units???
+      public static final double kIntake = 1; // Intake speed Units???
     }
 
     public static final class PivotSetPoints {

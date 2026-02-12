@@ -21,9 +21,9 @@ import frc.robot.Configs;
 
 public class IntakeSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
-    private SparkMax m_intakeMotor =
+    /*private SparkMax m_intakeMotor =
         new SparkMax(canIDs.kIntakeMotorCanId, MotorType.kBrushless);
-
+*/
     private SparkMax m_pivotMotor =
         new SparkMax(canIDs.kPivotMotorCanId, MotorType.kBrushless);
 
@@ -45,11 +45,11 @@ public class IntakeSubsystem extends SubsystemBase {
         * the SPARK loses power. This is useful for power cycles that may occur
         * mid-operation.
         */
-        m_intakeMotor.configure(
+       /* m_intakeMotor.configure(
             Configs.IntakeSubsystem.intakeConfig,
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
-        
+        */
         m_pivotMotor.configure(
              Configs.IntakeSubsystem.pivotConfig,
              ResetMode.kResetSafeParameters,
@@ -98,14 +98,14 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * @author Pubert
      */
-    public Command runIntakeCommand() {
+   /* public Command runIntakeCommand() {
         return this.startEnd(
             () -> m_intakeMotor.set(IntakeSetpoints.kIntake),
             () -> m_intakeMotor.set(0)
         )
         .withName("Intaking");
     }
-
+*/
     /**
      * {@link Command} to move the Pivot Motor forward.
      * 
@@ -133,7 +133,7 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // Display subsystem values
-        SmartDashboard.putNumber("Intake | Intake | Applied Output", m_intakeMotor.getAppliedOutput());
+       // SmartDashboard.putNumber("Intake | Intake | Applied Output", m_intakeMotor.getAppliedOutput());
         SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
 
 

@@ -61,8 +61,8 @@ private static final  double nominalVoltage = 12.0;
                 .maxMotion    
                 .cruiseVelocity(PivotSetPoints.kMaxVelocity)
                 .maxAcceleration(PivotSetPoints.kMaxAcceleration)
-                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
-                .allowedProfileError(PivotSetPoints.kPositionTolerance);
+                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal);
+               // .allowedProfileError(PivotSetPoints.kPositionTolerance);
             pivotConfig.softLimit
                 .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
                 .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
@@ -126,8 +126,8 @@ public static final class ShooterSubsystem {
                 .maxMotion    
                 .cruiseVelocity(PivotSetPoints.kMaxVelocity)
                 .maxAcceleration(PivotSetPoints.kMaxAcceleration)
-                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
-                .allowedProfileError(PivotSetPoints.kPositionTolerance);
+                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal);
+               // .allowedProfileError(PivotSetPoints.kPositionTolerance);
             pivotConfig.softLimit
                 .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
                 .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)

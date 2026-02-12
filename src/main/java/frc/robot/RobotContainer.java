@@ -116,8 +116,8 @@ public class RobotContainer {
 
 
 if(SystemSelect.isIntake){
-    m_controller1.a().whileTrue(
-      m_intake.runIntakeCommand());
+   // m_controller1.a().whileTrue(
+     // m_intake.runIntakeCommand());
 
     m_controller1.povUp().whileTrue(
       m_intake.runForwardPivot());
