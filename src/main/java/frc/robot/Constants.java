@@ -22,23 +22,48 @@ public final class Constants {
   //    For the new stationary test board set up (Feb12) the SPARKmaxes will have CAN IDs 5, 6, 7, 8, 9, 10
   //    Select the CAN ID that corresponds to your test set up here:
   public static final class canIDs{
-    public static final int kFeederMotorCanId = 6;    //SPARKmax - The competition robot will have 2 motors - conveyer and feeder to shooter
-    public static final int kFlywheelMotorCanId = 4;  //SPARKmax - The competition robot will have 3 Sparkflex controlled motors 
-    public static final int kIntakeMotorCanId = 11;   //SPARKmax -
-    public static final int kPivotMotorCanId = 2;     //SPARKmax -
-    public static final int climbmotor = 15;          //SPARKmax - Shouldn't this be kClimMotorCanId?  -Sr
+
+    /** @apiNote SPARKmax - The competition robot will have 2 motors - conveyer and feeder to shooter
+     *  @apiNote This is the Feeder Motor Can ID */
+
+    public static final int kFeederMotorCanId = 6;  
+
+    /** @apiNote SPARKmax - The competition robot will have 3 Sparkflex controlled motors
+     * @apiNote This is the Shooter Motor Can ID */
+
+    public static final int kFlywheelMotorCanId = 4; 
+
+    /** @apiNote SPARKmax -
+     * @apiNote This is the Intake Motor Can ID */
+
+    public static final int kIntakeMotorCanId = 11;
+
+    /** @apiNote SPARKmax -
+     * @apiNote This is the Pivot Motor of Intake Can ID */  
+
+    public static final int kPivotMotorCanId = 2;  
+
+    /** @apiNote SPARKmax - 
+     * @apiNote This is the Climber Motor Can ID */  
+
+    public static final int kClimbMotorCanId = 15; 
+
     // Others? PHD, RoboRio?
   }
 
   public static final class IntakeSubsystemConstants {
 
     public static final class IntakeSetpoints {
+      /** @apiNote The Command for setting the motor speed
+       * @apiNote PERCENTAGE???
+       */
       public static final double kIntake = 0.6; // Intake speed Units???
     }
 
     public static final class PivotSetPoints {
       public static final double kStartPosition = 0;
-      public static final double kEndPosition = 90; // Degrees
+      /** @apiNote DEGREES */
+      public static final double kEndPosition = 90; 
 
       public static final int kCurrentLimit = 50;
 
@@ -123,7 +148,8 @@ public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverController2Port = 1;
-    public static final double kDriveDeadband = 0.05;   //  TUNING
+    /** @apiNote TUNING */
+    public static final double kDriveDeadband = 0.05;
     // An additional driver control TUNING option to try 
     // would be to square controller inputs that vary from 0 t0 1
   }
@@ -152,14 +178,17 @@ public final class Constants {
     
     // Check these units - it looks to me like ShooterSubsystem is controlling in RPM???  Sr
     public static final class FlywheelSetpoints {
+
+      /** @apiNote This controls how much the shooter will spin
+       * @apiNote PERCENTAGE */
+      
       public static final double kShootPercent = 50;
       public static final double kVelocityTolerance = 100;
     }
   }
   
 public static final class ClimbSubsystemConstants {
-    public static final int kPivotMotorCanId = 15;  // SPARK MAX CAN ID
-
+  
     public static final class PivotSetPoints {
       public static final double kStartPosition = 0;
       public static final double kEndPosition = 90;
