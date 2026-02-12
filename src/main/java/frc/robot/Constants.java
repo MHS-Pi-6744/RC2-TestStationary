@@ -16,9 +16,16 @@ import edu.wpi.first.math.util.Units;
  * should be declared globally (i.e. public static). Do not put anything functional in this class.
  */
 public final class Constants {
-  public static final class IntakeSubsystemConstants {
+  public static final class canIDs{
+    public static final int kFeederMotorCanId = 6;    // SPARKmax CAN ID
+    public static final int kFlywheelMotorCanId = 4;
     public static final int kIntakeMotorCanId = 11;    // SPARK MAX CAN ID
-    public static final int kPivotMotorCanId = 2;  // SPARK MAX CAN ID
+    public static final int kPivotMotorCanId = 2;
+    public static final int climbmotor = 15;
+  }
+
+  public static final class IntakeSubsystemConstants {
+  // SPARK MAX CAN ID
 
     public static final class IntakeSetpoints {
       public static final double kIntake = 0.6; // Intake speed Units???
@@ -137,14 +144,9 @@ public final class Constants {
     public static final double setpoint = 0;
     public static final double finalpoint = 16 ; 
   }
-
-  public static final class CanId {
-    public static final int climbmotor = 2;
-  }
   // CAN ID for shooter
  public static final class ShooterSubsystemConstants {
-    public static final int kFeederMotorCanId = 6;    // SPARKmax CAN ID
-    public static final int kFlywheelMotorCanId = 4;  // SPARKmax CAN ID (Right)
+  // SPARKmax CAN ID (Right)
    // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
 
     public static final class FeederSetpoints {

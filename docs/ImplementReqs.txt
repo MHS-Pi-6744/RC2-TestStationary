@@ -1,6 +1,6 @@
-RC2 Implement Requirements
+RC2 Implement Requirements (+ some vision and auto)
 --------------------------
-Intake
+Intake -----------------------------
     Physical
         - 1 roller motor / SparkMax
         - 1 pivot motor / SparkMax
@@ -11,12 +11,12 @@ Intake
         - Roller speed control - 1 button press to switch from stopped to rolling & back?
         - Autonomous control?
 
-Feeder
+Feeder ------------------------------
     Physical
         - 1 NEO motor / SparkMax
     Function
 
-Shooter
+Shooter -----------------------------
     Physical
         - 3 motors driving 3 flywheels - NEO Vortex / SparkFlex
         - Each drivewheel is controlled independently
@@ -27,7 +27,7 @@ Shooter
         - Provide a method that can be called by the feeder to determine if the flywheel is at shoot speed
         - Speeds set as % of maximum motor speed
 
-Climber
+Climber ------------------------------
     Physical
         - 1 NEO 2.0? / SparkMax
         - May need absolute encoder to calibrate
@@ -36,9 +36,20 @@ Climber
         - 2 position control using trapezoidal control
         - Provides method to request position
 
-Driver Inputs-Commands
+Driver Inputs-Commands ------------------------
     Driver Controllers
     Button Box?
         A potential addition to driver station - here is where to describe buttons that may be needed.
+        - If we build a box up ahead of time, how many buttons should it have????????
         - 3 motor buttons enabling shooters 
     Autonomous Commands
+
+Vision / Navigation System ---------------------
+    Camera System
+    GPS system
+    Travel to location & orientation using PathPlanner
+    Travel to location & orientation using April tags 
+
+Autonomous -----------------------------------
+    Shoot a load
+    Climb
