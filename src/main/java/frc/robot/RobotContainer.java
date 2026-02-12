@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import com.pathplanner.lib.auto.NamedCommands;
 
 //import edu.wpi.first.wpilibj.Joystick;
@@ -40,17 +42,17 @@ public class RobotContainer {
   //MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
 
 
-  
-  private FeederSubsystem m_feeder = new FeederSubsystem();
-    private ShooterSubsystem m_shooter = new ShooterSubsystem();
-        private ClimberSubsystem m_climbMotor = new ClimberSubsystem();
-        IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
+    public static FeederSubsystem m_feeder;
+
+    public static ShooterSubsystem m_shooter;
+
+        public static ClimberSubsystem m_climbMotor;
+        public static IntakeSubsystem m_intake;
       
         public void updateshuffleboard(){
           SmartDashboard.updateValues();
         }
-      
-        private final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
         // The driver's controller
         CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
         // TODO: Make Guitar Hero Guitar work somehow
@@ -59,6 +61,11 @@ public class RobotContainer {
         //m_chooser
         SendableChooser<Command> m_chooser = new SendableChooser<>();
       
+
+          public final Trigger isFlywheelSpinning = new Trigger(
+      () -> SystemSelect.isShooter = true
+  );
+        
         /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
@@ -69,24 +76,26 @@ public class RobotContainer {
           NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/ 
       
           //m_chooser
-    if(SystemSelect.isFeeder){
-        m_feeder = null;
-    }
-    
-    if(SystemSelect.isShooter){
-        m_shooter = null;
-    }
-
-    if(SystemSelect.isClimber){
-        m_climbMotor = null;
-    }
-
-    if(SystemSelect.isIntake){
-        intakeSubsystem = null;
-    }
 
     m_chooser.addOption("Do Nothing", new Command(){});
     SmartDashboard.putData("Auto Chooser", m_chooser);
+
+    if(SystemSelect.isFeeder){
+      m_feeder = new FeederSubsystem();
+    }
+
+    if(SystemSelect.isShooter){
+      m_shooter = new ShooterSubsystem();
+      final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
+    }
+
+    if(SystemSelect.isClimber){
+        m_climbMotor = new ClimberSubsystem();
+    }
+
+    if(SystemSelect.isIntake){
+      m_intake = new IntakeSubsystem();
+    }
 
     // Configure the button bindings
     configureButtonBindings();
@@ -103,15 +112,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+      
+
+
 if(SystemSelect.isIntake){
     m_controller1.a().whileTrue(
-      intakeSubsystem.runIntakeCommand());
+      m_intake.runIntakeCommand());
 
     m_controller1.povUp().whileTrue(
-      intakeSubsystem.runForwardPivot());
+      m_intake.runForwardPivot());
 
     m_controller1.povDown().whileTrue(
-      intakeSubsystem.runBackwardPivot());
+      m_intake.runBackwardPivot());
 }
 
 if(SystemSelect.isClimber){
