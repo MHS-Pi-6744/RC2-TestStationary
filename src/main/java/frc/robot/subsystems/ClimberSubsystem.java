@@ -22,7 +22,7 @@ public class ClimberSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
 
     private SparkMax m_pivotMotor =
-        new SparkMax(canIDs.climbmotor, MotorType.kBrushless);
+        new SparkMax(canIDs.kClimbMotorCanId, MotorType.kBrushless);
 
     private SparkAbsoluteEncoder ae_pivotMotor;
     private RelativeEncoder re_pivotMotor;
