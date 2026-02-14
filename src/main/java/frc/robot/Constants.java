@@ -70,7 +70,7 @@ public final class Constants {
       public static final double kZeroOffest = 0.420; //units? For stationary testbed motor
 
       public static final double kPositionConversionFactor = 360/16; // For stationary test bed motor in deg
-      public static final double kVelocityConversionFactor = 360/16/60; // This is deg/sec 
+      public static final double kVelocityConversionFactor = kPositionConversionFactor/60; // This is deg/sec 
 
       public static final IdleMode kIdleMode = IdleMode.kBrake;
 
