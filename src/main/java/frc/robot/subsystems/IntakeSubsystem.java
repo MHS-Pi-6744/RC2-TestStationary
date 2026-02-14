@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.Constants.IntakeSubsystemConstants;
+//import frc.robot.Constants.IntakeSubsystemConstants;
 import frc.robot.Constants.canIDs;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
-import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
+//import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
 import frc.robot.Configs;
 
 public class IntakeSubsystem extends SubsystemBase {

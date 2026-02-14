@@ -15,7 +15,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Configs;
+//import frc.robot.Configs;
 //import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.MotorConstants;
 
@@ -28,7 +28,7 @@ public class MotorController extends SubsystemBase {
 
   private RelativeEncoder e_ncoder;
 
-  private SparkMaxConfig c_shepherd;
+  //private SparkMaxConfig c_shepherd;
 
   private double m_setpoint;
 

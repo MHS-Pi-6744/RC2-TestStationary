@@ -3,19 +3,19 @@ package frc.robot;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.FeedbackSensor;
+//import com.revrobotics.spark.FeedbackSensor;
 
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
+//import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
 
-import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
+//import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
 
 //import frc.robot.Constants.ModuleConstants; Doesn't do anything
 
 public final class Configs {
-private static final  double nominalVoltage = 12.0;
+//private static final  double nominalVoltage = 12.0;
 
 
     public static final class Motor {
