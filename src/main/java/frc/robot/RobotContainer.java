@@ -141,8 +141,8 @@ if(SystemSelect.isClimber){
 }
 
 if(SystemSelect.isShooter){
-    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
-    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
+    /* m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
+    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand()); */
     m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
 }
 

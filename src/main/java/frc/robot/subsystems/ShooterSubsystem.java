@@ -9,16 +9,17 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs;
+import frc.robot.Constants.ShooterSubsystemConstants.FeederSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants;
 import frc.robot.Constants.canIDs;
@@ -32,23 +33,21 @@ public class ShooterSubsystem extends SubsystemBase {
   private SparkClosedLoopController flywheelController = flywheelMotor.getClosedLoopController();
   private RelativeEncoder flywheelEncoder = flywheelMotor.getEncoder();
 
-  /*private SparkMax flywheelFollowerMotor =
-      new SparkMax(ShooterSubsystemConstants.kFlywheelFollowerMotorCanId, MotorType.kBrushless);
-*/
+  //private SparkMax flywheelFollowerMotor =
+     // new SparkMax(ShooterSubsystemConstants.kFlywheelFollowerMotorCanId, MotorType.kBrushless);
 
-  
-
-
+  // Initialize feeder SPARK. We will use open loop control for this so we don't need a closed loop
+  // controller like above.
+  private SparkMax feederMotor =
+      new SparkMax(canIDs.kFeederMotorCanId, MotorType.kBrushless);
 
   // Member variables for subsystem state management
   private double flywheelTargetVelocity = 0.0;
- // Speed % and Feeder 
-  private double kShootPercent = ShooterSubsystemConstants.FlywheelSetpoints.kShootPercent;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
     /*
-     * Apply the appropriate configurations to the SPARKs. 
+     * Apply the appropriate configurations to the SPARKs.
      *
      * kResetSafeParameters is used to get the SPARK to a known state. This
      * is useful in case the SPARK is replaced.
@@ -61,10 +60,15 @@ public class ShooterSubsystem extends SubsystemBase {
         Configs.ShooterSubsystem.flywheelConfig,
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
-    /* flywheelFollowerMotor.configure(
+   /* flywheelFollowerMotor.configure(
         Configs.ShooterSubsystem.flywheelFollowerConfig,
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);*/
+    feederMotor.configure(
+        Configs.ShooterSubsystem.feederConfig,
+        ResetMode.kResetSafeParameters,
+        PersistMode.kPersistParameters);
+
     // Zero flywheel encoder on initialization
     flywheelEncoder.setPosition(0);
 
@@ -80,11 +84,11 @@ public class ShooterSubsystem extends SubsystemBase {
    * Trigger: Is the flywheel spinning at the required velocity?
    */
   public final Trigger isFlywheelSpinning = new Trigger(
-      () -> isFlywheelAt(3000) || flywheelEncoder.getVelocity() > 3000
+      () -> isFlywheelAt(5000) || flywheelEncoder.getVelocity() > 5000
   );
 
   public final Trigger isFlywheelSpinningBackwards = new Trigger(
-      () -> isFlywheelAt(-3000) || flywheelEncoder.getVelocity() < -3000
+      () -> isFlywheelAt(-5000) || flywheelEncoder.getVelocity() < -5000
   );
 
   /** 
@@ -102,6 +106,10 @@ public class ShooterSubsystem extends SubsystemBase {
     flywheelTargetVelocity = velocity;
   }
 
+  /** Set the feeder motor power in the range of [-1, 1]. */
+  private void setFeederPower(double power) {
+    feederMotor.set(power);
+  }
   
   /**
    * Command to run the flywheel motors. When the command is interrupted, e.g. the button is released,
@@ -110,63 +118,62 @@ public class ShooterSubsystem extends SubsystemBase {
   public Command runFlywheelCommand() {
     return this.startEnd(
         () -> {
-          this.setFlywheelVelocity(kShootPercent);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
         },
         () -> {
           this.setFlywheelVelocity(0.0);
         }).withName("Spinning Up Flywheel");
   }
 
-  // Speeds up the flywheel
-  public Command speedUpCommand() { 
-    new WaitCommand(0.5);
-    return this.run(
-     () -> ++kShootPercent
-    );
-  }
-  // Slows down the flywheel
-  public Command slowDownCommand ()  {
-      new WaitCommand(0.5);
-      return this.run(
-        () -> --kShootPercent
-      );
-  }
   /**
-   * Meta-command to operate the shooter. The Flywheel starts spinning up
+   * Command to run the feeder and flywheel motors. When the command is interrupted, e.g. the button is released,
+   * the motors will stop.
+   */
+  public Command runFeederCommand() {
+    return this.startEnd(
+        () -> {
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
+          this.setFeederPower(FeederSetpoints.kFeed);
+        }, () -> {
+          this.setFlywheelVelocity(0.0);
+          this.setFeederPower(0.0);
+        }).withName("Feeding");
+  }
+
+  /**
+   * Meta-command to operate the shooter. The Flywheel starts spinning up and when it reaches
+   * the desired speed it starts the Feeder.
    */
   public Command runShooterCommand() {
     return this.startEnd(
-      () -> this.setFlywheelVelocity(25),
+      () -> this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent),
       () -> flywheelMotor.stopMotor()
     ).until(isFlywheelSpinning).andThen(
       this.startEnd(
         () -> {
-          this.setFlywheelVelocity(25);
+          this.setFlywheelVelocity(FlywheelSetpoints.kShootPercent);
+        //  this.setFeederPower(FeederSetpoints.kFeed);
         }, () -> {
           flywheelMotor.stopMotor();
+         // feederMotor.stopMotor();
         })
     ).withName("Shooting");
-  }
-
-  public Command runShooterCommand2() {
-    return this.run(
-      () -> setFlywheelVelocity(kShootPercent)
-    );
   }
 
   @Override
   public void periodic() {
     // Display subsystem values
+   // SmartDashboard.putNumber("Shooter | Feeder | Applied Output", feederMotor.getAppliedOutput());
     SmartDashboard.putNumber("Shooter | Flywheel | Applied Output", flywheelMotor.getAppliedOutput());
     SmartDashboard.putNumber("Shooter | Flywheel | Current", flywheelMotor.getOutputCurrent());
-  /*SmartDashboard.putNumber("Shooter | Flywheel Follower | Applied Output", flywheelFollowerMotor.getAppliedOutput());
-    SmartDashboard.putNumber("Shooter | Flywheel Follower | Current", flywheelFollowerMotor.getOutputCurrent());*/
+  //  SmartDashboard.putNumber("Shooter | Flywheel Follower | Applied Output", flywheelFollowerMotor.getAppliedOutput());
+  //  SmartDashboard.putNumber("Shooter | Flywheel Follower | Current", flywheelFollowerMotor.getOutputCurrent());
 
     SmartDashboard.putNumber("Shooter | Flywheel | Target Velocity", flywheelTargetVelocity);
     SmartDashboard.putNumber("Shooter | Flywheel | Actual Velocity", flywheelEncoder.getVelocity());
 
     SmartDashboard.putBoolean("Is Flywheel Spinning", isFlywheelSpinning.getAsBoolean());
     SmartDashboard.putBoolean("Is Flywheel Stopped", isFlywheelStopped.getAsBoolean());
-    SmartDashboard.putNumber("Flywheel Percentage", kShootPercent);
   }
+
 }
