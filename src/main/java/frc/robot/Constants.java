@@ -31,7 +31,7 @@ public final class Constants {
     /** @apiNote SPARKmax - The competition robot will have 3 Sparkflex controlled motors
      * @apiNote This is the Shooter Motor Can ID */
 
-    public static final int kFlywheelMotorCanId = 4; 
+    public static final int kFlywheelMotorCanId = 8; 
 
     /** @apiNote SPARKmax -
      * @apiNote This is the Intake Motor Can ID */

@@ -7,6 +7,6 @@ public class SystemSelect {
 
     public static boolean isIntake = false;
     
-    public static boolean isShooter = false;
+    public static boolean isShooter = true;
 
 }

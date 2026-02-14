@@ -136,12 +136,12 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public Command runShooterCommand() {
     return this.startEnd(
-      () -> this.setFlywheelVelocity(kShootPercent),
+      () -> this.setFlywheelVelocity(25),
       () -> flywheelMotor.stopMotor()
     ).until(isFlywheelSpinning).andThen(
       this.startEnd(
         () -> {
-          this.setFlywheelVelocity(kShootPercent);
+          this.setFlywheelVelocity(25);
         }, () -> {
           flywheelMotor.stopMotor();
         })
