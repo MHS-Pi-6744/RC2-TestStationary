@@ -13,17 +13,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.Constants.IntakeSubsystemConstants;
+//import frc.robot.Constants.IntakeSubsystemConstants;
 import frc.robot.Constants.canIDs;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
-import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
+//import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
 import frc.robot.Configs;
 
 public class IntakeSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
-    private SparkMax m_intakeMotor =
+    /*private SparkMax m_intakeMotor =
         new SparkMax(canIDs.kIntakeMotorCanId, MotorType.kBrushless);
-
+*/
     private SparkMax m_pivotMotor =
         new SparkMax(canIDs.kPivotMotorCanId, MotorType.kBrushless);
 
@@ -45,11 +45,11 @@ public class IntakeSubsystem extends SubsystemBase {
         * the SPARK loses power. This is useful for power cycles that may occur
         * mid-operation.
         */
-        m_intakeMotor.configure(
+       /* m_intakeMotor.configure(
             Configs.IntakeSubsystem.intakeConfig,
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
-        
+        */
         m_pivotMotor.configure(
              Configs.IntakeSubsystem.pivotConfig,
              ResetMode.kResetSafeParameters,
@@ -63,6 +63,8 @@ public class IntakeSubsystem extends SubsystemBase {
         ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
 
         re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
+
+        setit();
 
         System.out.println("---> IntakeSubsystem initialized");
     }
@@ -86,7 +88,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void moveToSetPoint() {
-        p_pivotMotor.setSetpoint(distancePivotAbsAndSetPoint(), ControlType.kMAXMotionPositionControl);
+        p_pivotMotor.setSetpoint(m_setpoint, ControlType.kMAXMotionPositionControl);
     }
 
     /**
@@ -96,14 +98,14 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * @author Pubert
      */
-    public Command runIntakeCommand() {
+   /* public Command runIntakeCommand() {
         return this.startEnd(
             () -> m_intakeMotor.set(IntakeSetpoints.kIntake),
             () -> m_intakeMotor.set(0)
         )
         .withName("Intaking");
     }
-
+*/
     /**
      * {@link Command} to move the Pivot Motor forward.
      * 
@@ -111,7 +113,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runForwardPivot() {
         return this.run(
-            () -> setTargetPosition(90.0)
+            () -> setTargetPosition(90.0) // TODO: Have SetPos be a constant.
         )
         .withName("Moving Pivot Forward");
     }
@@ -131,7 +133,7 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // Display subsystem values
-        SmartDashboard.putNumber("Intake | Intake | Applied Output", m_intakeMotor.getAppliedOutput());
+       // SmartDashboard.putNumber("Intake | Intake | Applied Output", m_intakeMotor.getAppliedOutput());
         SmartDashboard.putNumber("Pivot | Pivot | Applied Output", m_pivotMotor.getAppliedOutput());
 
 

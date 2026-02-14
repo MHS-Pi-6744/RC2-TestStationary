@@ -6,8 +6,7 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-
-
+// ===== Not used for stationary tests - may need when implements and drivebase are merged
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;  
@@ -32,7 +31,7 @@ public final class Constants {
     /** @apiNote SPARKmax - The competition robot will have 3 Sparkflex controlled motors
      * @apiNote This is the Shooter Motor Can ID */
 
-    public static final int kFlywheelMotorCanId = 4; 
+    public static final int kFlywheelMotorCanId = 8; 
 
     /** @apiNote SPARKmax -
      * @apiNote This is the Intake Motor Can ID */
@@ -42,7 +41,7 @@ public final class Constants {
     /** @apiNote SPARKmax -
      * @apiNote This is the Pivot Motor of Intake Can ID */  
 
-    public static final int kPivotMotorCanId = 2;  
+    public static final int kPivotMotorCanId = 7;  
 
     /** @apiNote SPARKmax - 
      * @apiNote This is the Climber Motor Can ID */  
@@ -58,15 +57,15 @@ public final class Constants {
       /** @apiNote The Command for setting the motor speed
        * @apiNote PERCENTAGE???
        */
-      public static final double kIntake = 0.6; // Intake speed Units???
+      public static final double kIntake = 1; // Intake speed Units???
     }
 
     public static final class PivotSetPoints {
-      public static final double kStartPosition = 0;
+      public static final double kStartPosition = 30; // to stay away from zero encoder reading
       /** @apiNote DEGREES */
-      public static final double kEndPosition = 90; 
+      public static final double kEndPosition = 120; 
 
-      public static final int kCurrentLimit = 50;
+      public static final int kCurrentLimit = 40;
 
       public static final double kZeroOffest = 0.420; //units? For stationary testbed motor
 
@@ -75,7 +74,7 @@ public final class Constants {
 
       public static final IdleMode kIdleMode = IdleMode.kBrake;
 
-      public static final double kMaxVelocity = 3072;
+      public static final double kMaxVelocity = 3072;  // Units? Trying 
       public static final double kMaxAcceleration = 1536;
 
       // PID gains    ======== Will need to be tuned when operating on the climber     -Sr
@@ -127,7 +126,7 @@ public final class Constants {
   }
 
   public static final class ModuleConstants {
-     //The MAXSwerve module can be configured with one of three pinion gears: 12T,
+    // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
     // more teeth will result in a robot that drives faster).
     
@@ -144,7 +143,6 @@ public final class Constants {
         / kDrivingMotorReduction;
   }
 
-
   // Driver interace constants
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
@@ -154,11 +152,11 @@ public final class Constants {
     // An additional driver control TUNING option to try 
     // would be to square controller inputs that vary from 0 t0 1
   }
-
+  // Not used is stationary tests - May be needed later by drive modules?
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 500;
     public static final double kVortexKv = 565;   // rpm/V
-  }
+  //}
 
   // Coral shooter command constants
   public static final class MotorConstants {
@@ -168,7 +166,6 @@ public final class Constants {
     public static final double setpoint = 0;
     public static final double finalpoint = 16 ; 
   }
-
   // CAN ID for shooter
  public static final class ShooterSubsystemConstants {
   // SPARKmax CAN ID (Right)
@@ -177,14 +174,14 @@ public final class Constants {
     public static final class FeederSetpoints {
       public static final double kFeed = 0.15;
     }
-
+    
     // Check these units - it looks to me like ShooterSubsystem is controlling in RPM???  Sr
     public static final class FlywheelSetpoints {
 
       /** @apiNote This controls how much the shooter will spin
        * @apiNote PERCENTAGE */
       
-      public static final double kShootPercent = 50;
+      public static final double kShootPercent = 1000;
       public static final double kVelocityTolerance = 100;
     }
   }
@@ -248,4 +245,5 @@ public static final class ClimbSubsystemConstants {
     }
   }
   
+}
 }
