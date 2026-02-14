@@ -61,11 +61,11 @@ public final class Constants {
     }
 
     public static final class PivotSetPoints {
-      public static final double kStartPosition = 0;
+      public static final double kStartPosition = 30; // to stay away from zero encoder reading
       /** @apiNote DEGREES */
-      public static final double kEndPosition = 90; 
+      public static final double kEndPosition = 120; 
 
-      public static final int kCurrentLimit = 50;
+      public static final int kCurrentLimit = 40;
 
       public static final double kZeroOffest = 0.420; //units? For stationary testbed motor
 
@@ -74,7 +74,7 @@ public final class Constants {
 
       public static final IdleMode kIdleMode = IdleMode.kBrake;
 
-      public static final double kMaxVelocity = 3072;
+      public static final double kMaxVelocity = 3072;  // Units? Trying 
       public static final double kMaxAcceleration = 1536;
 
       // PID gains    ======== Will need to be tuned when operating on the climber     -Sr

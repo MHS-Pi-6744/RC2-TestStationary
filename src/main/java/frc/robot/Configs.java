@@ -50,7 +50,7 @@ private static final  double nominalVoltage = 12.0;
                 .zeroOffset(PivotSetPoints.kZeroOffest)
                 .zeroCentered(false)
                 .positionConversionFactor(360)
-                .velocityConversionFactor(360);
+                .velocityConversionFactor(360); // this may be giving us degrees/min???? -Sr
             pivotConfig.encoder
             .positionConversionFactor(PivotSetPoints.kPositionConversionFactor)
             .velocityConversionFactor(PivotSetPoints.kVelocityConversionFactor);
