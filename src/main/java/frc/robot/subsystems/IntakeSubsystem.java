@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //import frc.robot.Constants.IntakeSubsystemConstants;
 import frc.robot.Constants.canIDs;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
-//import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
+import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
 import frc.robot.Configs;
 
 public class IntakeSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
-    /*private SparkMax m_intakeMotor =
+    private SparkMax m_intakeMotor =
         new SparkMax(canIDs.kIntakeMotorCanId, MotorType.kBrushless);
-*/
+
     private SparkMax m_pivotMotor =
         new SparkMax(canIDs.kPivotMotorCanId, MotorType.kBrushless);
 
@@ -45,26 +45,24 @@ public class IntakeSubsystem extends SubsystemBase {
         * the SPARK loses power. This is useful for power cycles that may occur
         * mid-operation.
         */
-       /* m_intakeMotor.configure(
+        m_intakeMotor.configure(
             Configs.IntakeSubsystem.intakeConfig,
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
-        */
+    
         m_pivotMotor.configure(
              Configs.IntakeSubsystem.pivotConfig,
              ResetMode.kResetSafeParameters,
              PersistMode.kPersistParameters);
-
-        m_setpoint = PivotSetPoints.kStartPosition;
 
         p_pivotMotor = m_pivotMotor.getClosedLoopController();
         
         re_pivotMotor = m_pivotMotor.getEncoder();
         ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
 
-        re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
+        setit();  // set relative encoder = absolute encoder
 
-        setit();
+        setTargetPosition(PivotSetPoints.kStartPosition); // set target position to start position and go there
 
         System.out.println("---> IntakeSubsystem initialized");
     }
@@ -74,13 +72,13 @@ public class IntakeSubsystem extends SubsystemBase {
        re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
     }
 
-     public boolean atTargetPoint() {
-         return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
-        }
+    //  public boolean atTargetPoint() {
+    //      return Math.abs(distancePivotAbsAndSetPoint()) < PivotSetPoints.kPositionTolerance;
+    //     }
 
-    public double distancePivotAbsAndSetPoint(){
-       return re_pivotMotor.getPosition() - m_setpoint;
-    }
+    // public double distancePivotAbsAndSetPoint(){
+    //    return re_pivotMotor.getPosition() - m_setpoint;
+    // }
 
     public void setTargetPosition(double setpos) {
         m_setpoint = setpos;
@@ -98,14 +96,14 @@ public class IntakeSubsystem extends SubsystemBase {
      * 
      * @author Pubert
      */
-   /* public Command runIntakeCommand() {
+    public Command runIntakeCommand() {
         return this.startEnd(
             () -> m_intakeMotor.set(IntakeSetpoints.kIntake),
             () -> m_intakeMotor.set(0)
         )
         .withName("Intaking");
     }
-*/
+
     /**
      * {@link Command} to move the Pivot Motor forward.
      * 
@@ -113,7 +111,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runForwardPivot() {
         return this.run(
-            () -> setTargetPosition(90.0) // TODO: Have SetPos be a constant.
+            () -> setTargetPosition(PivotSetPoints.kEndPosition)
         )
         .withName("Moving Pivot Forward");
     }
@@ -125,7 +123,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runBackwardPivot() {
         return this.run(
-                () -> setTargetPosition(0.0)
+                () -> setTargetPosition(PivotSetPoints.kStartPosition)
             )
             .withName("Moving Pivot Backward");
     }
@@ -139,5 +137,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
           SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
           SmartDashboard.putNumber("Pivot Absolute pos", ae_pivotMotor.getPosition());
+          SmartDashboard.putNumber("Setpoint value", m_setpoint);
     }
 }

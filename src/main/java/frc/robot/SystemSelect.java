@@ -8,5 +8,4 @@ public class SystemSelect {
     public static boolean isIntake = true;
     
     public static boolean isShooter = false;
-
 }

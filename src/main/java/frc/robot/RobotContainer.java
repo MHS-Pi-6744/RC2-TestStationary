@@ -115,48 +115,53 @@ public class RobotContainer {
       
 
 
-    if(SystemSelect.isIntake){
-      // m_controller1.a().whileTrue(
-      // m_intake.runIntakeCommand());
+if(SystemSelect.isIntake){
+    m_controller1.a().whileTrue(
+      m_intake.runIntakeCommand());
 
-      m_controller1.povUp().whileTrue(
-        m_intake.runForwardPivot());
+    m_controller1.povUp().whileTrue(
+      m_intake.runForwardPivot());
 
-      m_controller1.povDown().whileTrue(
-        m_intake.runBackwardPivot());
-    }
+    m_controller1.povDown().whileTrue(
+      m_intake.runBackwardPivot());
+}
 
-    if(SystemSelect.isClimber){
-      m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
-      m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
-    }
+if(SystemSelect.isClimber){
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+}
 
-    if(SystemSelect.isFeeder){
-      m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
-    }
+if(SystemSelect.isFeeder){
+  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+}
 
-    if(SystemSelect.isClimber){
-      m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
-      m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
-    }
+if(SystemSelect.isClimber){
+    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+}
 
-    if(SystemSelect.isShooter){
-      m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
-      m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
-      m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
-    }
+if(SystemSelect.isShooter){
+    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
+    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
+    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
+}
 
-  }
+}
 
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
   }
 
-  public void printGitData() {
+  public void PrintData() {
     System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
     System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
     System.out.println("Git Date:" + BuildConstants.GIT_DATE);
     System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
+
+    System.out.println("Climber Enabled: " + SystemSelect.isClimber);
+    System.out.println("Feeder Enabled: " + SystemSelect.isFeeder);
+    System.out.println("Intake Enabled: " + SystemSelect.isIntake);
+    System.out.println("Shooter Enabled: " + SystemSelect.isShooter);
   };
 
 

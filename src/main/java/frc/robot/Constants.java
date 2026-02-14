@@ -36,7 +36,7 @@ public final class Constants {
     /** @apiNote SPARKmax -
      * @apiNote This is the Intake Motor Can ID */
 
-    public static final int kIntakeMotorCanId = 11;
+    public static final int kIntakeMotorCanId = 9;
 
     /** @apiNote SPARKmax -
      * @apiNote This is the Pivot Motor of Intake Can ID */  
@@ -69,16 +69,16 @@ public final class Constants {
 
       public static final double kZeroOffest = 0.420; //units? For stationary testbed motor
 
-      public static final double kPositionConversionFactor = 360/16; // For stationary test bed motor
-      public static final double kVelocityConversionFactor = 360/16;
+      public static final double kPositionConversionFactor = 360/16; // For stationary test bed motor in deg
+      public static final double kVelocityConversionFactor = 360/16/60; // This is deg/sec 
 
       public static final IdleMode kIdleMode = IdleMode.kBrake;
 
-      public static final double kMaxVelocity = 3072;  // Units? Trying 
-      public static final double kMaxAcceleration = 1536;
+      public static final double kMaxVelocity = 90;  // Units deg/sec  
+      public static final double kMaxAcceleration = 500; //Units deg/sec^2
 
       // PID gains    ======== Will need to be tuned when operating on the climber     -Sr
-      public static final double kP = 0.50000000;
+      public static final double kP = 0.01000000;
       public static final double kI = 0.00000000;
       public static final double kD = 0.00000000;
     
@@ -86,16 +86,16 @@ public final class Constants {
       //        We do need to make sure it doesn't travel too far either way  -Sr
       /** The soft limit for the elevator going forward.
       * @apiNote This soft limit should NEVER go above 24 */
-      public static final double kFwdSoftLimit = 23;
+      public static final double kFwdSoftLimit = 125;
       /** The soft limit for the elevator going backward.
       * @apiNote This soft limit should NEVER go below 1  */
-      public static final double kRevSoftLimit = -23;
+      public static final double kRevSoftLimit = 25;
 
       /** The allowed tolerance for the elevator  !!!!!!!! needs fixed for Pivot  -SR
       * @apiNote This value is in inches
       * @apiNote This really shouldn't ever go above an inch.
       */
-      public static final double kPositionTolerance = 0.75;
+      public static final double kPositionTolerance = 1; // Units deg
     }
   }
 
