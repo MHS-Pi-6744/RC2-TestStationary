@@ -63,11 +63,11 @@ public final class Configs {
                 .maxAcceleration(PivotSetPoints.kMaxAcceleration)
                 .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal);
                // .allowedProfileError(PivotSetPoints.kPositionTolerance);
-            pivotConfig.softLimit
-                .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
-                .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
-                .reverseSoftLimitEnabled(true)
-                .forwardSoftLimitEnabled(true);
+            // pivotConfig.softLimit
+            //     .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
+            //     .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
+            //     .reverseSoftLimitEnabled(true)
+            //     .forwardSoftLimitEnabled(true);
         }
     }
 public static final class ShooterSubsystem {
@@ -128,11 +128,11 @@ public static final class ShooterSubsystem {
                 .maxAcceleration(PivotSetPoints.kMaxAcceleration)
                 .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal);
                // .allowedProfileError(PivotSetPoints.kPositionTolerance);
-            pivotConfig.softLimit
-                .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
-                .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
-                .reverseSoftLimitEnabled(true)
-                .forwardSoftLimitEnabled(true);
+            // pivotConfig.softLimit
+            //     .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
+            //     .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
+            //     .reverseSoftLimitEnabled(true)
+            //     .forwardSoftLimitEnabled(true);
         }
     }
 }

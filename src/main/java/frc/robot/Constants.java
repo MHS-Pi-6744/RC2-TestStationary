@@ -67,33 +67,30 @@ public final class Constants {
 
       public static final int kCurrentLimit = 40;
 
-      public static final double kZeroOffest = 0.420; //units? For stationary testbed motor
+      public static final double kZeroOffest = 0.0; //units? For stationary testbed motor
 
       public static final double kPositionConversionFactor = 360/16; // For stationary test bed motor in deg
       public static final double kVelocityConversionFactor = kPositionConversionFactor/60; // This is deg/sec 
 
-      public static final IdleMode kIdleMode = IdleMode.kBrake;
+      public static final IdleMode kIdleMode = IdleMode.kCoast;
 
       public static final double kMaxVelocity = 90;  // Units deg/sec  
       public static final double kMaxAcceleration = 500; //Units deg/sec^2
 
       // PID gains    ======== Will need to be tuned when operating on the climber     -Sr
-      public static final double kP = 0.01000000;
+      public static final double kP = 0.00100000;
       public static final double kI = 0.00000000;
       public static final double kD = 0.00000000;
     
       // !!!!!! These soft limits need to be checked. Are they needed for pivot? 
       //        We do need to make sure it doesn't travel too far either way  -Sr
-      /** The soft limit for the elevator going forward.
-      * @apiNote This soft limit should NEVER go above 24 */
-      public static final double kFwdSoftLimit = 125;
-      /** The soft limit for the elevator going backward.
-      * @apiNote This soft limit should NEVER go below 1  */
-      public static final double kRevSoftLimit = 25;
+      /** The soft limit for the pivot going forward.
+      // public static final double kFwdSoftLimit = 125;
+      /** The soft limit for the pivot going backward.
+      // public static final double kRevSoftLimit = 25;
 
-      /** The allowed tolerance for the elevator  !!!!!!!! needs fixed for Pivot  -SR
-      * @apiNote This value is in inches
-      * @apiNote This really shouldn't ever go above an inch.
+      /** The allowed tolerance for the pivot  !!!!!!!! needs fixed for Pivot  -SR
+      * @apiNote This value is in Degrees
       */
       public static final double kPositionTolerance = 1; // Units deg
     }
