@@ -124,6 +124,9 @@ if(SystemSelect.isIntake){
 
     m_controller1.povDown().whileTrue(
       m_intake.runBackwardPivot());
+
+    m_controller1.b().whileTrue(
+      m_intake.calPivotMotor());
 }
 
 if(SystemSelect.isClimber){

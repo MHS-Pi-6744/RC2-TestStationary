@@ -59,10 +59,10 @@ public final class Configs {
                 .pid(PivotSetPoints.kP, PivotSetPoints.kI, PivotSetPoints.kD)
                 .outputRange(-1, 1)
                 .maxMotion    
-                .cruiseVelocity(PivotSetPoints.kMaxVelocity)
-                .maxAcceleration(PivotSetPoints.kMaxAcceleration)
-                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal);
-               // .allowedProfileError(PivotSetPoints.kPositionTolerance);
+                    .cruiseVelocity(PivotSetPoints.kMaxVelocity)
+                    .maxAcceleration(PivotSetPoints.kMaxAcceleration)
+                    .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
+                    .allowedProfileError(PivotSetPoints.kPositionTolerance);
             // pivotConfig.softLimit
             //     .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
             //     .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)

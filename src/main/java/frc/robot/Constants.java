@@ -74,25 +74,20 @@ public final class Constants {
 
       public static final IdleMode kIdleMode = IdleMode.kCoast;
 
-      public static final double kMaxVelocity = 14;  // Units deg/sec  
-      public static final double kMaxAcceleration = 14; //Units deg/sec^2
+      public static final double kMaxVelocity = 1;  // Units deg/sec  
+      public static final double kMaxAcceleration = 1; //Units deg/sec^2
+      public static final double kPositionTolerance = 90; // Units deg
 
       // PID gains    ======== Will need to be tuned when operating on the climber     -Sr
-      public static final double kP = 0.00100000;
+      public static final double kP = 0.0100000;
       public static final double kI = 0.00000000;
       public static final double kD = 0.00000000;
     
-      // !!!!!! These soft limits need to be checked. Are they needed for pivot? 
-      //        We do need to make sure it doesn't travel too far either way  -Sr
-      /** The soft limit for the pivot going forward.
+      // MAYBE LATER!
+      // The pivot is expected to have hard stops
       // public static final double kFwdSoftLimit = 125;
-      /** The soft limit for the pivot going backward.
       // public static final double kRevSoftLimit = 25;
 
-      /** The allowed tolerance for the pivot  !!!!!!!! needs fixed for Pivot  -SR
-      * @apiNote This value is in Degrees
-      */
-      public static final double kPositionTolerance = 1; // Units deg
     }
   }
 
@@ -156,7 +151,7 @@ public final class Constants {
   //  public static final double kVortexKv = 565;   // rpm/V
   //}
 
-  // Coral shooter command constants
+  // MotorController command constants
   public static final class MotorConstants {
     public static final double k_motorSpeed = 0.4; // percent
     public static final double k_slowMotor = 0.1; // percent
@@ -164,8 +159,8 @@ public final class Constants {
     public static final double setpoint = 0;
     public static final double finalpoint = 16 ; 
   }
-  // CAN ID for shooter
- public static final class ShooterSubsystemConstants {
+
+public static final class ShooterSubsystemConstants {
   // SPARKmax CAN ID (Right)
    // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
 

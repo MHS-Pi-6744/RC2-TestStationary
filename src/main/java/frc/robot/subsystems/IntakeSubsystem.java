@@ -20,7 +20,8 @@ import frc.robot.Constants.IntakeSubsystemConstants.IntakeSetpoints;
 import frc.robot.Configs;
 
 public class IntakeSubsystem extends SubsystemBase {
-    // Initialize intake Spark. We will use open loop control for this
+
+    // Initialize Intake and Pivot SparkMax 
     private SparkMax m_intakeMotor =
         new SparkMax(canIDs.kIntakeMotorCanId, MotorType.kBrushless);
 
@@ -30,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private SparkAbsoluteEncoder ae_pivotMotor;
     private RelativeEncoder re_pivotMotor;
 
-    private SparkClosedLoopController p_pivotMotor;
+    private SparkClosedLoopController p_pivotMotor; 
 
     private double m_setpoint;
 
@@ -126,6 +127,18 @@ public class IntakeSubsystem extends SubsystemBase {
                 () -> setTargetPosition(PivotSetPoints.kStartPosition)
             )
             .withName("Moving Pivot Backward");
+    }
+
+    /**
+     * {@link Command} to calibrate the Pivot Motor
+     * 
+     * @author Pubert
+     */
+    public Command calPivotMotor() {
+        return this.runEnd(
+            () -> setit(),
+            () -> setTargetPosition(PivotSetPoints.kStartPosition)
+        ).withName("Calibrate Pivot Motor");
     }
 
     @Override
