@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
+import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.MotorController;
 
 /**
@@ -30,7 +31,7 @@ import frc.robot.subsystems.MotorController;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
+  Flywheel m_flywheel = new Flywheel(8, Motor.defaultConfig);
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
@@ -51,13 +52,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
-    NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
-    NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-    NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());
-
-    //m_chooser
-
     m_chooser.addOption("Do Nothing", new Command(){});
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
@@ -75,8 +69,19 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+
+    m_controller1.a()
+      .onTrue(m_flywheel.runPercent(35))
+      .onFalse(m_flywheel.stopMotor());
+
+    m_controller1.rightBumper()
+      .onTrue(m_flywheel.runAtSet())
+      .onFalse(m_flywheel.stopMotor());
+
+    m_controller1.povUp()
+      .toggleOnTrue(m_flywheel.incrSet(5));
+    m_controller1.povDown()
+      .toggleOnTrue(m_flywheel.incrSet(-5));
   }
 
   public Command getAutonomousCommand() {
