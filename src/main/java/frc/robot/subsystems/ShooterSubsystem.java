@@ -9,7 +9,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
@@ -21,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs;
 import frc.robot.Constants.ShooterSubsystemConstants.FeederSetpoints;
 import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints;
-import frc.robot.Constants.ShooterSubsystemConstants;
 import frc.robot.Constants.canIDs;
 
 public class ShooterSubsystem extends SubsystemBase {

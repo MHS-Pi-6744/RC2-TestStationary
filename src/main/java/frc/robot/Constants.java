@@ -32,7 +32,7 @@ public final class Constants {
     /** @apiNote SPARKmax - The competition robot will have 3 Sparkflex controlled motors
      * @apiNote This is the Shooter Motor Can ID */
 
-    public static final int kFlywheelMotorCanId = 8; 
+    public static final int kFlywheelMotorCanId = 7; 
 
     /** @apiNote SPARKmax -
      * @apiNote This is the Intake Motor Can ID */
@@ -170,21 +170,21 @@ public final class Constants {
   }
 
   // CAN ID for shooter
- public static final class ShooterSubsystemConstants {
+  public static final class ShooterSubsystemConstants {
   // SPARKmax CAN ID (Right)
    // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
 
     public static final class FeederSetpoints {
       public static final double kFeed = 0.15;
     }
-
+    
     // Check these units - it looks to me like ShooterSubsystem is controlling in RPM???  Sr
     public static final class FlywheelSetpoints {
 
       /** @apiNote This controls how much the shooter will spin
        * @apiNote PERCENTAGE */
       
-      public static final double kShootPercent = 50;
+      public static final double kShootPercent = 100;
       public static final double kVelocityTolerance = 100;
     }
   }
