@@ -106,6 +106,21 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     /**
+     * {@link Command} to run the intake motor power {@link Command}. When the
+     * {@link Command} is interrupted, e.g. the button is released,
+     * the motors will stop
+     * 
+     * @author Pubert
+     */
+    public Command runExtakeCommand() {
+        return this.startEnd(
+            () -> m_intakeMotor.set(IntakeSetpoints.kIntake * -1),
+            () -> m_intakeMotor.set(0)
+        )
+        .withName("Intaking");
+    }
+
+    /**
      * {@link Command} to move the Pivot Motor forward.
      * 
      * @author Pubert
