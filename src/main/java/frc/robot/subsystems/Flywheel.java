@@ -64,7 +64,7 @@ public class Flywheel extends SubsystemBase {
     }
     
     public void percentCtl(double percent) {
-        rpmCtl((percent / 100) * NeoVortexConstants.kMaxRPM);
+        rpmCtl(percent * NeoVortexConstants.kMaxRPM);
     }
     
     public Command stopMotor() {

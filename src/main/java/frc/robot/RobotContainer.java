@@ -71,7 +71,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     m_controller1.a()
-      .onTrue(m_flywheel.runPercent(35))
+      .onTrue(m_flywheel.runPercent(0.35))
       .onFalse(m_flywheel.stopMotor());
 
     m_controller1.rightBumper()
@@ -79,9 +79,9 @@ public class RobotContainer {
       .onFalse(m_flywheel.stopMotor());
 
     m_controller1.povUp()
-      .toggleOnTrue(m_flywheel.incrSet(5));
+      .toggleOnTrue(m_flywheel.incrSet(0.05));
     m_controller1.povDown()
-      .toggleOnTrue(m_flywheel.incrSet(-5));
+      .toggleOnTrue(m_flywheel.incrSet(-0.05));
   }
 
   public Command getAutonomousCommand() {
