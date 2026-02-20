@@ -31,7 +31,7 @@ import frc.robot.subsystems.MotorController;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  Flywheel m_flywheel = new Flywheel(8, Motor.defaultConfig);
+  Flywheel m_flywheel = new Flywheel(7, Motor.defaultConfig);
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
