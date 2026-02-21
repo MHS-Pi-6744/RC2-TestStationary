@@ -87,7 +87,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void moveToSetPoint() {
-        p_pivotMotor.setSetpoint(m_setpoint, ControlType.kPosition);
+        p_pivotMotor.setSetpoint(m_setpoint, ControlType.kPosition); // USING PID POSITION CONTROL
     }
 
     /**
