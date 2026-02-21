@@ -116,14 +116,20 @@ public class RobotContainer {
 
 
 if(SystemSelect.isIntake){
-    m_controller1.a().whileTrue(
+    m_controller1.povRight().whileTrue(
       m_intake.runIntakeCommand());
+
+    m_controller1.povLeft().whileTrue(
+      m_intake.runExtakeCommand());
 
     m_controller1.povUp().whileTrue(
       m_intake.runForwardPivot());
 
     m_controller1.povDown().whileTrue(
       m_intake.runBackwardPivot());
+
+    m_controller1.b().whileTrue(
+      m_intake.calPivotMotor());
 }
 
 if(SystemSelect.isClimber){
@@ -152,11 +158,16 @@ if(SystemSelect.isShooter){
     return m_chooser.getSelected();
   }
 
-  public void printGitData() {
+  public void PrintData() {
     System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
     System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
     System.out.println("Git Date:" + BuildConstants.GIT_DATE);
     System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
+
+    System.out.println("Climber Enabled: " + SystemSelect.isClimber);
+    System.out.println("Feeder Enabled: " + SystemSelect.isFeeder);
+    System.out.println("Intake Enabled: " + SystemSelect.isIntake);
+    System.out.println("Shooter Enabled: " + SystemSelect.isShooter);
   };
 
 

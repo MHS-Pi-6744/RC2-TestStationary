@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.Constants.ClimbSubsystemConstants;
+//import frc.robot.Constants.ClimbSubsystemConstants;
 import frc.robot.Constants.canIDs;
 import frc.robot.Constants.ClimbSubsystemConstants.PivotSetPoints;
 import frc.robot.Configs;
@@ -22,7 +22,7 @@ public class ClimberSubsystem extends SubsystemBase {
     // Initialize intake Spark. We will use open loop control for this
 
     private SparkMax m_pivotMotor =
-        new SparkMax(canIDs.climbmotor, MotorType.kBrushless);
+        new SparkMax(canIDs.kClimbMotorCanId, MotorType.kBrushless);
 
     private SparkAbsoluteEncoder ae_pivotMotor;
     private RelativeEncoder re_pivotMotor;

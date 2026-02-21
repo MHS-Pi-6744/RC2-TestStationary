@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
     WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
     m_robotContainer = new RobotContainer();
 
-    m_robotContainer.printGitData();
+    m_robotContainer.PrintData();
     
   }
 
