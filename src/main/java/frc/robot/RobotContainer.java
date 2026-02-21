@@ -8,6 +8,7 @@ import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.auto.NamedCommands;
 
+import au.grapplerobotics.LaserCan;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -27,7 +28,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.SystemSelect;
-
+import au.grapplerobotics.LaserCan;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -48,6 +49,10 @@ public class RobotContainer {
     public static ShooterSubsystem m_shooter;
 
         public static ClimberSubsystem m_climbMotor;
+        public static LaserCan lc;
+
+
+
         public static IntakeSubsystem m_intake;
       
         public void updateshuffleboard(){
@@ -64,6 +69,10 @@ public class RobotContainer {
 
           public final Trigger isFlywheelSpinning = new Trigger(
       () -> SystemSelect.isShooter = true
+  );
+
+  public final Trigger isClimbLazer = new Trigger(
+  () -> SystemSelect.isClimber = true
   );
         
         /**
@@ -91,6 +100,9 @@ public class RobotContainer {
 
     if(SystemSelect.isClimber){
         m_climbMotor = new ClimberSubsystem();
+        lc = new LaserCan(0);
+        LaserCan.Measurement measurement = lc.getMeasurement();
+        final Trigger isClimbLazer = new Trigger( () -> measurement.status != LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT);  
     }
 
     if(SystemSelect.isIntake){
@@ -134,7 +146,7 @@ if(SystemSelect.isIntake){
 
 if(SystemSelect.isClimber){
     m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
-    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot().onlyWhile(isClimbLazer));
 }
 
 if(SystemSelect.isFeeder){
@@ -143,18 +155,23 @@ if(SystemSelect.isFeeder){
 
 if(SystemSelect.isClimber){
     m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
-    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
-}
-
-if(SystemSelect.isShooter){
-    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
-    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
-    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
-}
-
-}
-
-  public Command getAutonomousCommand() {
+    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot()); 
+    }
+    
+    if(SystemSelect.isShooter){
+        m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
+        m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
+        m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
+    }
+    
+    }
+    
+      private Object onlyWhile(boolean b) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onlyWhile'");
+      }
+    
+      public Command getAutonomousCommand() {
     return m_chooser.getSelected();
   }
 
