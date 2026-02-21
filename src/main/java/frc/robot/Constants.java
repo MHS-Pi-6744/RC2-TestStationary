@@ -6,11 +6,10 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-// ===== Not used for stationary tests - may need when implements and drivebase are merged
-//import edu.wpi.first.math.geometry.Translation2d;
-//import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-//import edu.wpi.first.math.trajectory.TrapezoidProfile;  
-//import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;  
+import edu.wpi.first.math.util.Units;
 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
@@ -93,8 +92,8 @@ public final class Constants {
 
   // Drive constants are not used for stationary tests, and they will change for the new RC2 drive train.
   
-  /*   public static final class DriveConstants {
-  /*     // Maximum driving speed commands - These are the maximum speeds that can be requested by 
+     public static final class DriveConstants {
+     // Maximum driving speed commands - These are the maximum speeds that can be requested by 
     // the driver or autonomous, they are not the maximum speed cababiity of the robot.
     public static final double kMaxSpeedMetersPerSecond = 3; // originally 4.8    TUNING
     public static final double kMaxAngularSpeed = 1.5*Math.PI ; // radians per second    originally 2*Pi   TUNING
@@ -118,9 +117,7 @@ public final class Constants {
   }
 
   public static final class ModuleConstants {
-    / The MAXSwerve module can be configured with one of three pinion gears: 12T,
-    / 13T, or 14T. This changes the drive speed of the module (a pinion gear with
-    / more teeth will result in a robot that drives faster).
+
     
     public static final int kDrivingMotorPinionTeeth = 12;
 
@@ -134,7 +131,6 @@ public final class Constants {
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
   }
-  */
 
   // Driver interace constants
   public static final class OIConstants {
@@ -145,11 +141,11 @@ public final class Constants {
     // An additional driver control TUNING option to try 
     // would be to square controller inputs that vary from 0 t0 1
   }
-  // Not used is stationary tests - May be needed later by drive modules?
-  //public static final class NeoMotorConstants {
-  //  public static final double kFreeSpeedRpm = 500;
-  //  public static final double kVortexKv = 565;   // rpm/V
-  //}
+
+  public static final class NeoMotorConstants {
+    public static final double kFreeSpeedRpm = 500;
+    public static final double kVortexKv = 565;   // rpm/V
+  }
 
   // MotorController command constants
   public static final class MotorConstants {

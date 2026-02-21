@@ -75,6 +75,15 @@ public class FeederSubsystem extends SubsystemBase {
             }).withName("Feeding");
   }
 
+  public Command runFeederReverseCommand() {
+    return this.startEnd(
+    () -> {
+      this.setFeederPower(FeederSetpoints.kFeed*-1);
+    }, () -> {
+      this.setFeederPower(0.0);
+    }).withName("Reverse Feeding");
+  }
+
   /**
    * Meta-command to operate the shooter. The Flywheel starts spinning up and when it reaches
    * the desired speed it starts the Feeder.
