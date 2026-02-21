@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     CanBridge.runTCP();
 
-    m_robotContainer.printGitData();
+    m_robotContainer.PrintData();
     
   }
 

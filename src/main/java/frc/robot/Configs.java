@@ -3,17 +3,19 @@ package frc.robot;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.FeedbackSensor;
+//import com.revrobotics.spark.FeedbackSensor;
 
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
+//import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
 import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
+
+//import frc.robot.Constants.IntakeSubsystemConstants.PivotSetPoints;
 
 //import frc.robot.Constants.ModuleConstants; Doesn't do anything
 
 public final class Configs {
-private static final  double nominalVoltage = 12.0;
+//private static final  double nominalVoltage = 12.0;
 
 
     public static final class Motor {
@@ -46,9 +48,9 @@ private static final  double nominalVoltage = 12.0;
             pivotConfig.absoluteEncoder
                 .inverted(false)
                 .zeroOffset(PivotSetPoints.kZeroOffest)
-                .zeroCentered(true)
+                .zeroCentered(false)
                 .positionConversionFactor(360)
-                .velocityConversionFactor(360);
+                .velocityConversionFactor(360); // this may be giving us degrees/min???? -Sr
             pivotConfig.encoder
             .positionConversionFactor(PivotSetPoints.kPositionConversionFactor)
             .velocityConversionFactor(PivotSetPoints.kVelocityConversionFactor);
@@ -57,15 +59,15 @@ private static final  double nominalVoltage = 12.0;
                 .pid(PivotSetPoints.kP, PivotSetPoints.kI, PivotSetPoints.kD)
                 .outputRange(-1, 1)
                 .maxMotion    
-                .cruiseVelocity(PivotSetPoints.kMaxVelocity)
-                .maxAcceleration(PivotSetPoints.kMaxAcceleration)
-                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
-                .allowedProfileError(PivotSetPoints.kPositionTolerance);
-            pivotConfig.softLimit
-                .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
-                .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
-                .reverseSoftLimitEnabled(true)
-                .forwardSoftLimitEnabled(true);
+                    .cruiseVelocity(PivotSetPoints.kMaxVelocity)
+                    .maxAcceleration(PivotSetPoints.kMaxAcceleration)
+                    .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
+                    .allowedProfileError(PivotSetPoints.kPositionTolerance);
+            // pivotConfig.softLimit
+            //     .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
+            //     .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
+            //     .reverseSoftLimitEnabled(true)
+            //     .forwardSoftLimitEnabled(true);
         }
     }
 public static final class ShooterSubsystem {
@@ -124,13 +126,13 @@ public static final class ShooterSubsystem {
                 .maxMotion    
                 .cruiseVelocity(PivotSetPoints.kMaxVelocity)
                 .maxAcceleration(PivotSetPoints.kMaxAcceleration)
-                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
-                .allowedProfileError(PivotSetPoints.kPositionTolerance);
-            pivotConfig.softLimit
-                .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
-                .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
-                .reverseSoftLimitEnabled(true)
-                .forwardSoftLimitEnabled(true);
+                .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal);
+               // .allowedProfileError(PivotSetPoints.kPositionTolerance);
+            // pivotConfig.softLimit
+            //     .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
+            //     .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
+            //     .reverseSoftLimitEnabled(true)
+            //     .forwardSoftLimitEnabled(true);
         }
     }
 }
