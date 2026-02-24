@@ -20,21 +20,23 @@ public class Flywheel extends SubsystemBase {
     private SparkMax m_otor;
     private RelativeEncoder e_ncoder;
     private SparkClosedLoopController m_pidController;
-    private double kP, kI, kD, kIz, kMaxOutput, kMinOutput, percSet;
+    private double kP, kI, kD, kV, kA, kIz, kMaxOutput, kMinOutput, rpmSet;
 
     private String s_motorName;
 
     // DriveSubsystem constructor - creates & initializes DriveSubsystem object
     public Flywheel(int canID, SparkMaxConfig config) {
-        percSet = 0;
+        rpmSet = 0;
         s_motorName = "Flywheel #" + canID;
         m_otor = new SparkMax(canID, MotorType.kBrushless);
         m_pidController = m_otor.getClosedLoopController();
         e_ncoder = m_otor.getEncoder();
 
-        kP = 0.00009;
-        kI = 0.0000001;
-        kD = 0.0005;
+        kP = 0.000000;
+        kI = 0.000000;
+        kD = 0.000000;
+        kV = 0.44;
+        kA = 0.71;
         kIz = 0;
         kMaxOutput = 1;
         kMinOutput = -1;
@@ -45,7 +47,12 @@ public class Flywheel extends SubsystemBase {
                 .d(kD)
                 .minOutput(kMinOutput)
                 .maxOutput(kMaxOutput)
-                .iZone(kIz);
+                .iZone(kIz).feedForward
+                .kA(kA)
+                .kV(kV);
+        config.encoder
+                .positionConversionFactor(0.75)
+                .velocityConversionFactor(0.75);
 
         // Apply the configuration settings to the shooter motor SPARK MAX
         // - kResetSafeParameters is used to get the SPARK MAX to a known state. This
@@ -58,26 +65,15 @@ public class Flywheel extends SubsystemBase {
         e_ncoder.setPosition(0);
     }
 
-    
     private void rpmCtl(double rpm) {
         m_pidController.setSetpoint(rpm, ControlType.kVelocity);
     }
-    
-    public void percentCtl(double percent) {
-        rpmCtl(percent * NeoVortexConstants.kMaxRPM);
-    }
-    
+
     public Command stopMotor() {
         return run(
-                () -> rpmCtl(0)
-                );
+                () -> rpmCtl(0));
     }
 
-    public Command runPercent(double percent) {
-        return run(
-                () -> percentCtl(percent));
-    }
-    
     public Command runRPM(double rpm) {
         return run(
                 () -> rpmCtl(rpm));
@@ -85,17 +81,16 @@ public class Flywheel extends SubsystemBase {
 
     public Command runAtSet() {
         return run(
-                () -> percentCtl(percSet));
+                () -> rpmCtl(rpmSet));
     }
 
     private void addToSet(double inc) {
-        percSet += inc;
+        rpmSet += inc;
     }
 
     public Command incrSet(double inc) {
         return new InstantCommand(
-            () -> addToSet(inc)
-        );
+                () -> addToSet(inc));
     }
 
     @Override
@@ -110,7 +105,7 @@ public class Flywheel extends SubsystemBase {
 
         SmartDashboard.putBoolean(s_motorName + " At Setpoint", m_pidController.isAtSetpoint());
         SmartDashboard.putNumber(s_motorName + " Setpoint", m_pidController.getSetpoint());
-        
-        SmartDashboard.putNumber(s_motorName + " Internal Perc Setpoint", percSet);
+
+        SmartDashboard.putNumber(s_motorName + " Internal Perc Setpoint", rpmSet);
     }
 }
