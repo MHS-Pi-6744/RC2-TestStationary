@@ -33,6 +33,8 @@ public final class Constants {
      * @apiNote This is the Shooter Motor Can ID */
 
     public static final int kFlywheelMotorCanId = 7; 
+    public static final int kFlywheelFollowerMotorCanId = 8;
+    public static final int kReverseFlywheelFollowerMotorCanId = 9;
 
     /** @apiNote SPARKmax -
      * @apiNote This is the Intake Motor Can ID */

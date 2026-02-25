@@ -72,6 +72,7 @@ private static final  double nominalVoltage = 12.0;
     public static final class ShooterSubsystem {
     public static final SparkFlexConfig flywheelConfig = new SparkFlexConfig();
     public static final SparkFlexConfig flywheelFollowerConfig = new SparkFlexConfig();
+    public static final SparkFlexConfig reverseFlyWheelFollowerConfig = new SparkFlexConfig();
     public static final SparkFlexConfig feederConfig = new SparkFlexConfig();
 
     static {
@@ -108,6 +109,9 @@ private static final  double nominalVoltage = 12.0;
 
       // Configure the follower flywheel motor to follow the main flywheel motor
       flywheelFollowerConfig.apply(flywheelConfig)
+        .follow(Constants.canIDs.kFlywheelMotorCanId, false);
+
+     reverseFlyWheelFollowerConfig.apply(flywheelConfig)
         .follow(Constants.canIDs.kFlywheelMotorCanId, true);
 
       // Configure basic setting of the feeder motor
