@@ -63,7 +63,7 @@ public final class Constants {
     public static final class PivotSetPoints {
       public static final double kStartPosition = 30; // to stay away from zero encoder reading
       /** @apiNote DEGREES */
-      public static final double kEndPosition = 120; 
+      public static final double kEndPosition = 120 * 5; 
 
       public static final int kCurrentLimit = 40;
 
@@ -74,8 +74,8 @@ public final class Constants {
 
       public static final IdleMode kIdleMode = IdleMode.kCoast;
 
-      public static final double kMaxVelocity = 1;  // Units deg/sec  
-      public static final double kMaxAcceleration = 1; //Units deg/sec^2
+      public static final double kMaxVelocity = 150 * 60;  // Units deg/min 
+      public static final double kMaxAcceleration = 5*60; //Units deg/min/sec
       public static final double kPositionTolerance = 90; // Units deg
 
       // PID gains    ======== Will need to be tuned when operating on the climber     -Sr

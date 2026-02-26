@@ -63,6 +63,8 @@ public final class Configs {
                     .maxAcceleration(PivotSetPoints.kMaxAcceleration)
                     .positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal)
                     .allowedProfileError(PivotSetPoints.kPositionTolerance);
+
+                    
             // pivotConfig.softLimit
             //     .forwardSoftLimit(PivotSetPoints.kFwdSoftLimit)
             //     .reverseSoftLimit(PivotSetPoints.kRevSoftLimit)
