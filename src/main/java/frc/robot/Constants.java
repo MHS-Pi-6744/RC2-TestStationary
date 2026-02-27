@@ -32,9 +32,9 @@ public final class Constants {
     /** @apiNote SPARKmax - The competition robot will have 3 Sparkflex controlled motors
      * @apiNote This is the Shooter Motor Can ID */
 
-    public static final int kFlywheelMotorCanId = 7; 
-    public static final int kFlywheelFollowerMotorCanId = 8;
-    public static final int kReverseFlywheelFollowerMotorCanId = 9;
+    public static final int kFlywheelMotorCanId = 18; 
+    public static final int kFlywheelFollowerMotorCanId = 17;
+    public static final int kReverseFlywheelFollowerMotorCanId = 19;
 
     /** @apiNote SPARKmax -
      * @apiNote This is the Intake Motor Can ID */
@@ -186,7 +186,7 @@ public final class Constants {
       /** @apiNote This controls how much the shooter will spin
        * @apiNote PERCENTAGE */
       
-      public static final double kShootPercent = 100;
+      public static final double kShootPercent = 35;
       public static final double kVelocityTolerance = 100;
     }
   }
