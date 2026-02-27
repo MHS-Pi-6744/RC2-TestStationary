@@ -10,7 +10,7 @@ public final class Configs {
         static {
             // Use module constants to calculate conversion factors and feed forward gain.
             defaultConfig
-                .idleMode(IdleMode.kBrake)
+                .idleMode(IdleMode.kCoast)
                 .smartCurrentLimit(50);
         }
     }

@@ -5,55 +5,58 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.NeoVortexConstants;
 
 public class Flywheel extends SubsystemBase {
     // The shooter motor
-    private SparkMax m_otor;
+    private SparkFlex m_otor, m_followLeft, m_followRight;
     private RelativeEncoder e_ncoder;
     private SparkClosedLoopController m_pidController;
-    private double kP, kI, kD, kV, kA, kIz, kMaxOutput, kMinOutput, rpmSet;
+    private double kP, kI, kD, kV, kIz, kMaxOutput, kMinOutput, rpmSet;
 
     private String s_motorName;
 
     // DriveSubsystem constructor - creates & initializes DriveSubsystem object
-    public Flywheel(int canID, SparkMaxConfig config) {
+    public Flywheel(int mainCanID, SparkMaxConfig config, int leftCanID, int rightCanID) {
         rpmSet = 0;
-        s_motorName = "Flywheel #" + canID;
-        m_otor = new SparkMax(canID, MotorType.kBrushless);
+        s_motorName = "Flywheel #" + mainCanID;
+        m_otor = new SparkFlex(mainCanID, MotorType.kBrushless);
+        m_followLeft = new SparkFlex(leftCanID, MotorType.kBrushless);
+        m_followRight = new SparkFlex(rightCanID, MotorType.kBrushless);
         m_pidController = m_otor.getClosedLoopController();
         e_ncoder = m_otor.getEncoder();
 
-        kP = 0.000000;
+        kP = 0.001000;
         kI = 0.000000;
         kD = 0.000000;
-        kV = 0.44;
-        kA = 0.71;
+        kV = 0.59;
         kIz = 0;
         kMaxOutput = 1;
         kMinOutput = -1;
 
+        config
+            .smartCurrentLimit(35);
         config.closedLoop
                 .p(kP)
                 .i(kI)
                 .d(kD)
                 .minOutput(kMinOutput)
                 .maxOutput(kMaxOutput)
-                .iZone(kIz).feedForward
-                .kA(kA)
-                .kV(kV);
+                .iZone(kIz)/* *.feedForward
+                .kV(kV)
+                //*/
+                ;
         config.encoder
                 .positionConversionFactor(0.75)
                 .velocityConversionFactor(0.75);
-
+        
         // Apply the configuration settings to the shooter motor SPARK MAX
         // - kResetSafeParameters is used to get the SPARK MAX to a known state. This
         // is useful in case the SPARK MAX is replaced.
@@ -62,6 +65,8 @@ public class Flywheel extends SubsystemBase {
         // mid-operation.
 
         m_otor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followLeft.configure(config.follow(m_otor), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_followRight.configure(config.follow(m_otor, true), ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         e_ncoder.setPosition(0);
     }
 
@@ -71,7 +76,7 @@ public class Flywheel extends SubsystemBase {
 
     public Command stopMotor() {
         return run(
-                () -> rpmCtl(0));
+                () -> m_otor.setVoltage(0));
     }
 
     public Command runRPM(double rpm) {

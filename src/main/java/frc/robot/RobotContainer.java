@@ -31,7 +31,7 @@ import frc.robot.subsystems.MotorController;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  Flywheel m_flywheel = new Flywheel(7, Motor.defaultConfig);
+  Flywheel m1 = new Flywheel(18, Motor.defaultConfig, 17, 19);
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
@@ -70,18 +70,16 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    m_controller1.a()
-      .onTrue(m_flywheel.runRPM(5000))
-      .onFalse(m_flywheel.stopMotor());
-
-    m_controller1.rightBumper()
-      .onTrue(m_flywheel.runAtSet())
-      .onFalse(m_flywheel.stopMotor());
-
     m_controller1.povUp()
-      .toggleOnTrue(m_flywheel.incrSet(500));
+      .toggleOnTrue(m1.incrSet(500));
     m_controller1.povDown()
-      .toggleOnTrue(m_flywheel.incrSet(-500));
+      .toggleOnTrue(m1.incrSet(-500));
+    m_controller1.rightBumper()
+      .onTrue(m1.runAtSet())
+      .onFalse(m1.stopMotor());
+    m_controller1.a()
+      .onTrue(m1.runRPM(100))
+      .onFalse(m1.stopMotor());
   }
 
   public Command getAutonomousCommand() {
