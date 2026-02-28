@@ -40,6 +40,7 @@ public class CommandGuitarHero extends CommandGenericHID {
 
     public enum Axis {
         kStrumBar(1),
+        kTilt(2),
         kWhammyBar(3);
 
         public final int value;
@@ -147,8 +148,38 @@ public class CommandGuitarHero extends CommandGenericHID {
 
     // Axis
 
+    public Trigger tilt(double threshold, EventLoop loop) {
+        return threshold > 0 ? axisGreaterThan(Axis.kTilt.value, threshold, loop)
+                : axisLessThan(Axis.kTilt.value, threshold, loop);
+    }
+
+    public Trigger tilt(double threshold) {
+        return tilt(threshold, CommandScheduler.getInstance().getDefaultButtonLoop());
+    }
+
+    public Trigger tiltUp(EventLoop loop) {
+        return tilt(-0.5, loop);
+    }
+
+    public Trigger tiltUp() {
+        return tiltUp(CommandScheduler.getInstance().getDefaultButtonLoop());
+    }
+
+    public Trigger tiltDown(EventLoop loop) {
+        return tilt(0.5, loop);
+    }
+
+    public Trigger tiltDown() {
+        return tiltDown(CommandScheduler.getInstance().getDefaultButtonLoop());
+    }
+
+    public double getTilt() {
+        return getRawAxis(Axis.kTilt.value);
+    }
+
     public Trigger strumBar(double threshold, EventLoop loop) {
-        return threshold > 0 ? axisGreaterThan(Axis.kStrumBar.value, threshold, loop) : axisLessThan(Axis.kStrumBar.value, threshold, loop);
+        return threshold > 0 ? axisGreaterThan(Axis.kStrumBar.value, threshold, loop)
+                : axisLessThan(Axis.kStrumBar.value, threshold, loop);
     }
 
     public Trigger strumBar(double threshold) {
