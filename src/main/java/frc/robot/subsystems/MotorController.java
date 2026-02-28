@@ -42,6 +42,16 @@ public class MotorController extends SubsystemBase{
     }
 
     /**
+     * @param speed the speed the motor should go
+     * @return a {@link Command} that sets the motor speed to the input speed
+     */
+    public Command run(double speed) {
+        return run(
+            () -> m_otor.set(speed)
+        );
+    }    
+
+    /**
      * @return a {@link Command} that sets the motor speed to {@link MotorConstants#k_motorSpeed}
      */
     public Command runForward() {
