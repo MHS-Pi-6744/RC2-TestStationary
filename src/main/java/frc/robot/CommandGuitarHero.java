@@ -5,6 +5,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+/**
+ * A fully self-contained class for using the guitar that came with
+ * Guitar Hero: Live for the PS3.
+ * 
+ * @apiNote Only supports Command-Based operation
+ * @author MattheDev53
+ */
 public class CommandGuitarHero extends CommandGenericHID {
     public enum Button {
         kTopWhite(1),
@@ -48,6 +55,12 @@ public class CommandGuitarHero extends CommandGenericHID {
         }
     }
 
+    /**
+     * Construct an instance of a controller.
+     *
+     * @param port The port index on the Driver Station that the controller is
+     *             plugged into.
+     */
     public CommandGuitarHero(int port) {
         super(port);
     }
@@ -115,7 +128,7 @@ public class CommandGuitarHero extends CommandGenericHID {
     public Trigger pause() {
         return pause(CommandScheduler.getInstance().getDefaultButtonLoop());
     }
-    
+
     public Trigger diamond(EventLoop loop) {
         return button(Button.kDiamond.value, loop);
     }
@@ -123,7 +136,7 @@ public class CommandGuitarHero extends CommandGenericHID {
     public Trigger diamond() {
         return diamond(CommandScheduler.getInstance().getDefaultButtonLoop());
     }
-    
+
     public Trigger restart(EventLoop loop) {
         return button(Button.kRestart.value, loop);
     }
@@ -141,11 +154,23 @@ public class CommandGuitarHero extends CommandGenericHID {
     public Trigger strumBar(double threshold) {
         return strumBar(threshold, CommandScheduler.getInstance().getDefaultButtonLoop());
     }
-    
-    public Trigger strumBar() {
-        return strumBar(0.5);
+
+    public Trigger strumUp(EventLoop loop) {
+        return strumBar(-0.5, loop);
     }
-    
+
+    public Trigger strumUp() {
+        return strumUp(CommandScheduler.getInstance().getDefaultButtonLoop());
+    }
+
+    public Trigger strumDown(EventLoop loop) {
+        return strumBar(0.5, loop);
+    }
+
+    public Trigger strumDown() {
+        return strumDown(CommandScheduler.getInstance().getDefaultButtonLoop());
+    }
+
     public double getStrumBar() {
         return getRawAxis(Axis.kStrumBar.value);
     }
@@ -161,7 +186,7 @@ public class CommandGuitarHero extends CommandGenericHID {
     public Trigger whammyBar() {
         return whammyBar(0.5);
     }
-    
+
     public double getWhammyBar() {
         return getRawAxis(Axis.kWhammyBar.value);
     }

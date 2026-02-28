@@ -77,8 +77,11 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_guitar.lowBlack()
+    m_guitar.strumUp()
       .onTrue(m_motor1.walkForward())
+      .onFalse(m_motor1.stopMotor());
+    m_guitar.strumDown()
+      .onTrue(m_motor1.walkReverse())
       .onFalse(m_motor1.stopMotor());
   }
 
