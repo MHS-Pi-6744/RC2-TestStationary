@@ -148,7 +148,7 @@ public class CommandGuitarHero extends CommandGenericHID {
     // Axis
 
     public Trigger strumBar(double threshold, EventLoop loop) {
-        return axisGreaterThan(Axis.kStrumBar.value, threshold, loop);
+        return threshold > 0 ? axisGreaterThan(Axis.kStrumBar.value, threshold, loop) : axisLessThan(Axis.kStrumBar.value, threshold, loop);
     }
 
     public Trigger strumBar(double threshold) {

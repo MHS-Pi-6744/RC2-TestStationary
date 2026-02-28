@@ -33,7 +33,7 @@ import frc.robot.subsystems.MotorController;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
+  MotorController m_motor1 = new MotorController(7, Motor.defaultConfig);
 
   public void updateshuffleboard() {
     SmartDashboard.updateValues();
