@@ -21,44 +21,46 @@ import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot
+ * (including subsystems, commands, and button mappings) should be declared
+ * here.
  */
-
 
 @SuppressWarnings("unused")
 public class RobotContainer {
   MotorController m_motor1 = new MotorController(2, Motor.defaultConfig);
 
-  public void updateshuffleboard(){
+  public void updateshuffleboard() {
     SmartDashboard.updateValues();
   }
 
- 
   // The driver's controller
-  CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
-  CommandGenericHID m_controller2 = new CommandGenericHID(OIConstants.kDriverController2Port);
+  // CommandXboxController m_controller1 = new
+  // CommandXboxController(OIConstants.kDriverControllerPort);
   // TODO: Make Guitar Hero Guitar work somehow
-  // CommandGenericHID m_guitar = new CommandGenericHID(3);
+  CommandGuitarHero m_guitar = new CommandGuitarHero(0);
 
-  //m_chooser
+  // m_chooser
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
-    NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
+    NamedCommands.registerCommand("Run Forward", m_motor1.runForward());
+    NamedCommands.registerCommand("Run Reverse", m_motor1.runReverse());
     NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
     NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());
 
-    //m_chooser
+    // m_chooser
 
-    m_chooser.addOption("Do Nothing", new Command(){});
+    m_chooser.addOption("Do Nothing", new Command() {
+    });
     SmartDashboard.putData("Auto Chooser", m_chooser);
 
     // Configure the button bindings
@@ -75,14 +77,14 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_controller1.leftBumper().onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
-    m_controller2.button(1).onTrue(m_motor1.walkForward()).onFalse(m_motor1.stopMotor());
+    m_guitar.lowBlack()
+      .onTrue(m_motor1.walkForward())
+      .onFalse(m_motor1.stopMotor());
   }
 
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();
   }
-
 
   public void printGitData() {
     System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
@@ -90,5 +92,5 @@ public class RobotContainer {
     System.out.println("Git Date:" + BuildConstants.GIT_DATE);
     System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
   };
-  
+
 }
