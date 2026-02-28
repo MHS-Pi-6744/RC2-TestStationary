@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.MotorController;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
+  MotorController feeder = new MotorController(20, Motor.defaultConfig);
   Flywheel m1 = new Flywheel(18, Motor.defaultConfig, 17, 19);
 
   public void updateshuffleboard(){
@@ -78,8 +80,11 @@ public class RobotContainer {
       .onTrue(m1.runAtSet())
       .onFalse(m1.stopMotor());
     m_controller1.a()
-      .onTrue(m1.runRPM(100))
+      .onTrue(m1.runRPM(200))
       .onFalse(m1.stopMotor());
+    m_controller1.x()
+      .toggleOnTrue(feeder.runForward())
+      .toggleOnFalse(feeder.stopMotor());
   }
 
   public Command getAutonomousCommand() {

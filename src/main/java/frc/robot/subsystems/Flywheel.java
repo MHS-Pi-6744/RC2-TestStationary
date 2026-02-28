@@ -19,7 +19,7 @@ public class Flywheel extends SubsystemBase {
     private SparkFlex m_otor, m_followLeft, m_followRight;
     private RelativeEncoder e_ncoder;
     private SparkClosedLoopController m_pidController;
-    private double kP, kI, kD, kV, kIz, kMaxOutput, kMinOutput, rpmSet;
+    private double kP, kI, kD, kIz, kMaxOutput, kMinOutput, rpmSet;
 
     private String s_motorName;
 
@@ -33,13 +33,16 @@ public class Flywheel extends SubsystemBase {
         m_pidController = m_otor.getClosedLoopController();
         e_ncoder = m_otor.getEncoder();
 
-        kP = 0.001000;
-        kI = 0.000000;
-        kD = 0.000000;
-        kV = 0.59;
+        kP = 0.0060;
+        kI = 0.000001;
+        kD = 0.10;
         kIz = 0;
         kMaxOutput = 1;
         kMinOutput = -1;
+
+        SmartDashboard.putNumber(s_motorName + " kP", kP);
+        SmartDashboard.putNumber(s_motorName + " kI", kI);
+        SmartDashboard.putNumber(s_motorName + " kD", kD);
 
         config
             .smartCurrentLimit(35);
@@ -49,10 +52,7 @@ public class Flywheel extends SubsystemBase {
                 .d(kD)
                 .minOutput(kMinOutput)
                 .maxOutput(kMaxOutput)
-                .iZone(kIz)/* *.feedForward
-                .kV(kV)
-                //*/
-                ;
+                .iZone(kIz);
         config.encoder
                 .positionConversionFactor(0.75)
                 .velocityConversionFactor(0.75);
