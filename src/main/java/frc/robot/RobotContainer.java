@@ -42,7 +42,6 @@ public class RobotContainer {
   // The driver's controller
   // CommandXboxController m_controller1 = new
   // CommandXboxController(OIConstants.kDriverControllerPort);
-  // TODO: Make Guitar Hero Guitar work somehow
   CommandGuitarHero m_guitar = new CommandGuitarHero(0);
 
   // m_chooser
