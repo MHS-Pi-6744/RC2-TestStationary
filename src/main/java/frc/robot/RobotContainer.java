@@ -132,7 +132,7 @@ if(SystemSelect.isClimber){
 }
 
 if(SystemSelect.isFeeder){
-  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand()); 
 }
 
 if(SystemSelect.isClimber){

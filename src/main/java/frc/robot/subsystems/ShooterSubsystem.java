@@ -38,8 +38,8 @@ public class ShooterSubsystem extends SubsystemBase {
     
       // Initialize feeder SPARK. We will use open loop control for this so we don't need a closed loop
       // controller like above.
-      private SparkMax feederMotor =
-          new SparkMax(canIDs.kFeederMotorCanId, MotorType.kBrushless);
+     // private SparkMax feederMotor =
+        //  new SparkMax(canIDs.kFeederMotorCanId, MotorType.kBrushless);
     
       // Member variables for subsystem state management
       private double flywheelTargetVelocity = 0.0;
@@ -64,10 +64,10 @@ public class ShooterSubsystem extends SubsystemBase {
             Configs.ShooterSubsystem.flywheelFollowerConfig,
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
-        feederMotor.configure(
+      /*  feederMotor.configure(
             Configs.ShooterSubsystem.feederConfig,
             ResetMode.kResetSafeParameters,
-            PersistMode.kPersistParameters);
+            PersistMode.kPersistParameters); */
     
         // Zero flywheel encoder on initialization
         flywheelEncoder.setPosition(0);
@@ -84,11 +84,11 @@ public class ShooterSubsystem extends SubsystemBase {
        * Trigger: Is the flywheel spinning at the required velocity?
        */
       public final Trigger isFlywheelSpinning = new Trigger(
-          () -> isFlywheelAt(5000) || flywheelEncoder.getVelocity() > 5000
+          () -> isFlywheelAt(5000) || flywheelEncoder.getVelocity() > 0
       );
     
       public final Trigger isFlywheelSpinningBackwards = new Trigger(
-          () -> isFlywheelAt(-5000) || flywheelEncoder.getVelocity() < -5000
+          () -> isFlywheelAt(-5000) || flywheelEncoder.getVelocity() < -10
       );
     
       /** 
@@ -108,7 +108,7 @@ public class ShooterSubsystem extends SubsystemBase {
     
       /** Set the feeder motor power in the range of [-1, 1]. */
       private void setFeederPower(double power) {
-        feederMotor.set(power);
+       // feederMotor.set(power);
       }
       
       /**
