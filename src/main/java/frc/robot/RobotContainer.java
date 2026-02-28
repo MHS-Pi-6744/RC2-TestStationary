@@ -83,9 +83,6 @@ public class RobotContainer {
     m_guitar.strumDown()
       .onTrue(m_motor1.walkReverse())
       .onFalse(m_motor1.stopMotor());
-    m_guitar.diamond()
-      .onTrue(m_motor1.run(() -> m_guitar.getWhammyBar()))
-      .onFalse(m_motor1.stopMotor());
   }
 
   public Command getAutonomousCommand() {
