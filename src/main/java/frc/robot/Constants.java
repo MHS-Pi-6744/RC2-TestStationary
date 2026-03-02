@@ -74,7 +74,7 @@ public final class Constants {
 
       public static final IdleMode kIdleMode = IdleMode.kCoast;
 
-      public static final double kMaxVelocity = 150 * 60;  // Units deg/min 
+      public static final double kMaxVelocity = 100 ; //percent per min
       public static final double kMaxAcceleration = 5*60; //Units deg/min/sec
       public static final double kPositionTolerance = 90; // Units deg
 
