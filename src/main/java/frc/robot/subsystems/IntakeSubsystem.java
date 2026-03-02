@@ -28,7 +28,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private SparkMax m_pivotMotor =
         new SparkMax(canIDs.kPivotMotorCanId, MotorType.kBrushless);
 
-    private SparkAbsoluteEncoder ae_pivotMotor;
     private RelativeEncoder re_pivotMotor;
 
     private SparkClosedLoopController p_pivotMotor; 
@@ -59,18 +58,15 @@ public class IntakeSubsystem extends SubsystemBase {
         p_pivotMotor = m_pivotMotor.getClosedLoopController();
         
         re_pivotMotor = m_pivotMotor.getEncoder();
-        ae_pivotMotor = m_pivotMotor.getAbsoluteEncoder();
-
-        setit();  // set relative encoder = absolute encoder
 
         setTargetPosition(PivotSetPoints.kStartPosition); // set target position to start position and go there
 
         System.out.println("---> IntakeSubsystem initialized");
     }
 
-    public void setit()
+    public void slowMoveBack()
     {
-       re_pivotMotor.setPosition(ae_pivotMotor.getPosition());
+       re_pivotMotor.setPosition(-.5);
     }
 
     //  public boolean atTargetPoint() {
@@ -150,10 +146,9 @@ public class IntakeSubsystem extends SubsystemBase {
      * @author Pubert
      */
     public Command calPivotMotor() {
-        return this.runEnd(
-            () -> setit(),
-            () -> setTargetPosition(PivotSetPoints.kStartPosition)
-        ).withName("Calibrate Pivot Motor");
+        return this.run(
+            () -> slowMoveBack()
+        ).withName("Slowly move pivot back");
     }
 
     @Override
@@ -164,7 +159,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
           SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
-          SmartDashboard.putNumber("Pivot Absolute pos", ae_pivotMotor.getPosition());
           SmartDashboard.putNumber("Setpoint value", m_setpoint);
     }
 }

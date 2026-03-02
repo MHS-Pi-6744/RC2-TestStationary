@@ -61,15 +61,15 @@ public final class Constants {
     }
 
     public static final class PivotSetPoints {
-      public static final double kStartPosition = 30; // to stay away from zero encoder reading
+      public static final double kStartPosition = 0; // to stay away from zero encoder reading
       /** @apiNote DEGREES */
-      public static final double kEndPosition = 120; 
+      public static final double kEndPosition = 100; 
 
       public static final int kCurrentLimit = 40;
 
       public static final double kZeroOffest = 0.0; //units? For stationary testbed motor
 
-      public static final double kPositionConversionFactor = 360/16; // For stationary test bed motor in deg
+      public static final double kPositionConversionFactor = 100/2.524; // For stationary test bed motor in deg
       public static final double kVelocityConversionFactor = kPositionConversionFactor/60; // This is deg/sec 
 
       public static final IdleMode kIdleMode = IdleMode.kCoast;
