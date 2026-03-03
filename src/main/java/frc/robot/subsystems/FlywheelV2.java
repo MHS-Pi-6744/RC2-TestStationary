@@ -8,7 +8,6 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -99,7 +98,7 @@ public class FlywheelV2 extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         // m_shooterMotor.getOutputCurrent();
-        SmartDashboard.putNumber(s_motorName+ "Output", m_otor.getAppliedOutput());
+        SmartDashboard.putNumber(s_motorName + "Output", m_otor.getAppliedOutput());
         SmartDashboard.putNumber(s_motorName + "Current", m_otor.getOutputCurrent());
         SmartDashboard.putNumber(s_motorName + "Position", e_ncoder.getPosition());
         SmartDashboard.putNumber(s_motorName + "Velocity", e_ncoder.getVelocity());
