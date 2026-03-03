@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
@@ -19,7 +20,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
-import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.FlywheelV1;
+import frc.robot.subsystems.FlywheelV2;
 import frc.robot.subsystems.MotorController;
 
 /**
@@ -33,7 +35,10 @@ import frc.robot.subsystems.MotorController;
 @SuppressWarnings("unused")
 public class RobotContainer {
   MotorController feeder = new MotorController(20, Motor.defaultConfig);
-  Flywheel m1 = new Flywheel(18, Motor.defaultConfig, 17, 19);
+  // FlywheelV1 m1 = new FlywheelV1(18, Motor.defaultConfig, 17, 19);
+  FlywheelV2 f_left = new FlywheelV2(17, Motor.defaultConfig);
+  FlywheelV2 f_center = new FlywheelV2(18, Motor.defaultConfig);
+  FlywheelV2 f_right = new FlywheelV2(19, Motor.defaultConfig.inverted(true));
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
@@ -73,15 +78,36 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     m_controller1.povUp()
-      .toggleOnTrue(m1.incrSet(500));
+      .toggleOnTrue(
+        new ParallelCommandGroup(
+          f_left.incrSet(500),
+          f_center.incrSet(500),
+          f_right.incrSet(500)
+        )
+      );
     m_controller1.povDown()
-      .toggleOnTrue(m1.incrSet(-500));
+      .toggleOnTrue(
+        new ParallelCommandGroup(
+          f_left.incrSet(-500),
+          f_center.incrSet(-500),
+          f_right.incrSet(-500)
+        )
+      );
     m_controller1.rightBumper()
-      .onTrue(m1.runAtSet())
-      .onFalse(m1.stopMotor());
-    m_controller1.a()
-      .onTrue(m1.runRPM(200))
-      .onFalse(m1.stopMotor());
+      .onTrue(
+        new ParallelCommandGroup(
+          f_left.runAtSet(),
+          f_center.runAtSet(),
+          f_right.runAtSet()
+        )
+      )
+      .onFalse(
+        new ParallelCommandGroup(
+          f_left.stopMotor(),
+          f_center.stopMotor(),
+          f_right.stopMotor()
+        )
+      );
     m_controller1.x()
       .toggleOnTrue(feeder.runForward())
       .toggleOnFalse(feeder.stopMotor());
