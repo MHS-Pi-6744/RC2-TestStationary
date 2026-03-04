@@ -38,8 +38,8 @@ public class FeederSubsystem extends SubsystemBase {
   private SparkMax feederMotor =
       new SparkMax(canIDs.kFeederMotorBeltCanId, MotorType.kBrushless);
 
-  private SparkMax feederMotor2 = 
-      new SparkMax(canIDs.kFeederMotorWheelCanId, MotorType.kBrushless);
+ // private SparkMax feederMotor2 = 
+     // new SparkMax(canIDs.kFeederMotorWheelCanId, MotorType.kBrushless);
 
   // Member variables for subsystem state management
 
@@ -60,15 +60,15 @@ public class FeederSubsystem extends SubsystemBase {
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
   
-    feederMotor2.configure(
+   /* feederMotor2.configure(
       Configs.ShooterSubsystem.feederConfig,
       ResetMode.kResetSafeParameters,
-      PersistMode.kPersistParameters);
-  }
+      PersistMode.kPersistParameters); */
+  } 
   /** Set the feeder motor power in the range of [-1, 1]. */
   private void setFeederPower(double power) {
         feederMotor.set(power);
-        feederMotor2.set(power);
+       // feederMotor2.set(power);
   }
 
   /**

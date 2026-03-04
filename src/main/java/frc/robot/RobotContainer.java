@@ -23,7 +23,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.MotorController;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+//import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.SystemSelect;
@@ -45,7 +45,7 @@ public class RobotContainer {
 
     public static FeederSubsystem m_feeder;
 
-    public static ShooterSubsystem m_shooter;
+   // public static ShooterSubsystem m_shooter;
 
         public static ClimberSubsystem m_climbMotor;
         public static IntakeSubsystem m_intake;
@@ -85,8 +85,8 @@ public class RobotContainer {
     }
 
     if(SystemSelect.isShooter){
-      m_shooter = new ShooterSubsystem();
-      final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
+     // m_shooter = new ShooterSubsystem();
+     // final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
     }
 
     if(SystemSelect.isClimber){
@@ -138,7 +138,7 @@ if(SystemSelect.isClimber){
 }
 
 if(SystemSelect.isFeeder){
-  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
+  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand()); 
 }
 
 if(SystemSelect.isClimber){
@@ -147,9 +147,9 @@ if(SystemSelect.isClimber){
 }
 
 if(SystemSelect.isShooter){
-    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
-    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
-    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
+//    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
+  //  m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
+ //   m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
 }
 
 }

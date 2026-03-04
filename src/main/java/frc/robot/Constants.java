@@ -25,7 +25,7 @@ public final class Constants {
     /** @apiNote SPARKmax - The competition robot will have 2 motors - conveyer and feeder to shooter
      *  @apiNote This is the Feeder Motor Can ID */
 
-    public static final int kFeederMotorBeltCanId = 15;  
+    public static final int kFeederMotorBeltCanId = 14;  
 
     public static final int kFeederMotorWheelCanId = 16;
 
@@ -163,7 +163,7 @@ public static final class ShooterSubsystemConstants {
    // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
 
     public static final class FeederSetpoints {
-      public static final double kFeed = 0.15;
+      public static final double kFeed = 0.5;
     }
     
     // Check these units - it looks to me like ShooterSubsystem is controlling in RPM???  Sr
