@@ -159,6 +159,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
           SmartDashboard.putNumber("Pivot relative pos", re_pivotMotor.getPosition());
+          SmartDashboard.putNumber("Pivot Current", m_pivotMotor.getOutputCurrent());
           SmartDashboard.putNumber("Setpoint value", m_setpoint);
     }
 }
