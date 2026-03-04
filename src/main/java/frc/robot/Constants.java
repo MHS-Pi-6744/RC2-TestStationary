@@ -74,12 +74,12 @@ public final class Constants {
 
       public static final IdleMode kIdleMode = IdleMode.kCoast;
 
-      public static final double kMaxVelocity = 9000 ; //percent per min
-      public static final double kMaxAcceleration = 300; //Units deg/min/sec
+      public static final double kMaxVelocity = 2000 ; //percent per min
+      public static final double kMaxAcceleration = 3600; //Units deg/min/sec
       public static final double kPositionTolerance = 90; // Units deg
 
       // PID gains    ======== Will need to be tuned when operating on the climber     -Sr
-      public static final double kP = 0.05000000;
+      public static final double kP = 0.10000000;
       public static final double kI = 0.00000000;
       public static final double kD = 0.00000000;
     
