@@ -54,10 +54,8 @@ public final class Constants {
   public static final class IntakeSubsystemConstants {
 
     public static final class IntakeSetpoints {
-      /** @apiNote The Command for setting the motor speed
-       * @apiNote PERCENTAGE???
-       */
-      public static final double kIntake = 0.1; // Intake speed Units???
+      /** @apiNote The Command for setting the motor speed*/
+      public static final double kIntake = 0.1; // Intake speed Units are percentage
     }
 
     public static final class PivotSetPoints {
@@ -190,8 +188,8 @@ public static final class ClimbSubsystemConstants {
 
       public static final double kZeroOffest = 0.420;
 
-      public static final double kPositionConversionFactor = 360/41;
-      public static final double kVelocityConversionFactor = 360/41;
+      public static final double kPositionConversionFactor = 360/41; // Deg/sec
+      public static final double kVelocityConversionFactor = 360/41; // Deg/sec
 
 
       /** Sets the Idle mode of the motors.

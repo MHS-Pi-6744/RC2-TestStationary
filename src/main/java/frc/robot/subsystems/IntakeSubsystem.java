@@ -95,8 +95,8 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runIntakeCommand() {
         return this.startEnd(
-            () -> m_intakeMotor.set(IntakeSetpoints.kIntake),
-            () -> m_intakeMotor.set(0)
+            () -> m_intakeMotor.set(IntakeSetpoints.kIntake), // Make it constantly move fwd
+            () -> m_intakeMotor.set(0) // Make it stop
         )
         .withName("Intaking");
     }
@@ -110,10 +110,10 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runExtakeCommand() {
         return this.startEnd(
-            () -> m_intakeMotor.set(IntakeSetpoints.kIntake * -1),
-            () -> m_intakeMotor.set(0)
+            () -> m_intakeMotor.set(IntakeSetpoints.kIntake * -1), // Make it constantly move bwd
+            () -> m_intakeMotor.set(0) // Make it stop
         )
-        .withName("Intaking");
+        .withName("Extaking");
     }
 
     /**
@@ -123,7 +123,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runForwardPivot() {
         return this.run(
-            () -> setTargetPosition(PivotSetPoints.kEndPosition)
+            () -> setTargetPosition(PivotSetPoints.kEndPosition) // Snap to the end position with trapazoidal movement
         )
         .withName("Moving Pivot Forward");
     }
@@ -135,7 +135,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command runBackwardPivot() {
         return this.run(
-                () -> setTargetPosition(PivotSetPoints.kStartPosition)
+                () -> setTargetPosition(PivotSetPoints.kStartPosition) // Snap to the starting position with the trapazoidal movement
             )
             .withName("Moving Pivot Backward");
     }
@@ -147,7 +147,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public Command calPivotMotor() {
         return this.run(
-            () -> slowMoveBack()
+            () -> slowMoveBack() // Have the Pivot Motor slowly move back so that it can be at the starting position without knowing where it really is.
         ).withName("Slowly move pivot back");
     }
 
