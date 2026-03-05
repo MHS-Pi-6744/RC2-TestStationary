@@ -4,18 +4,95 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+// ===== Not used for stationary tests - may need when implements and drivebase are merged
+//import edu.wpi.first.math.geometry.Translation2d;
+//import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+//import edu.wpi.first.math.trajectory.TrapezoidProfile;  
+//import edu.wpi.first.math.util.Units;
 
 /**
  * Robot-wide constants. This class should not be used for any other purpose. All constants
  * should be declared globally (i.e. public static). Do not put anything functional in this class.
  */
 public final class Constants {
-  public static final class DriveConstants {
-    // Maximum driving speed commands - These are the maximum speeds that can be requested by 
+
+  // CAN IDs ========================================
+  //    For the new stationary test board set up (Feb12) the SPARKmaxes will have CAN IDs 5, 6, 7, 8, 9, 10
+  //    Select the CAN ID that corresponds to your test set up here:
+  public static final class canIDs{
+
+    /** @apiNote SPARKmax - The competition robot will have 2 motors - conveyer and feeder to shooter
+     *  @apiNote This is the Feeder Motor Can ID */
+
+    public static final int kFeederMotorCanId = 6;  
+
+    /** @apiNote SPARKmax - The competition robot will have 3 Sparkflex controlled motors
+     * @apiNote This is the Shooter Motor Can ID */
+
+    public static final int kFlywheelMotorCanId = 4; 
+
+    /** @apiNote SPARKmax -
+     * @apiNote This is the Intake Motor Can ID */
+
+    public static final int kIntakeMotorCanId = 13;
+
+    /** @apiNote SPARKmax -
+     * @apiNote This is the Pivot Motor of Intake Can ID */  
+
+    public static final int kPivotMotorCanId = 14;  
+
+    /** @apiNote SPARKmax - 
+     * @apiNote This is the Climber Motor Can ID */  
+
+    public static final int kClimbMotorCanId = 15; 
+
+    // Others? PHD, RoboRio?
+  }
+
+  public static final class IntakeSubsystemConstants {
+
+    public static final class IntakeSetpoints {
+      /** @apiNote The Command for setting the motor speed*/
+      public static final double kIntake = 0.1; // Intake speed Units are percentage
+    }
+
+    public static final class PivotSetPoints {
+      public static final double kStartPosition = 5; // to stay away from zero encoder reading
+      /** @apiNote DEGREES */
+      public static final double kEndPosition = 98.571; 
+
+      public static final int kCurrentLimit = 40;
+
+      public static final double kZeroOffest = 0.0; //units? For stationary testbed motor
+
+      public static final double kPositionConversionFactor = 360/41; // For stationary test bed motor in deg
+      public static final double kVelocityConversionFactor = 360/41; // This is deg/sec 
+
+      public static final IdleMode kIdleMode = IdleMode.kCoast;
+
+      public static final double kMaxVelocity = 2000 ; //percent per min
+      public static final double kMaxAcceleration = 3600; //Units deg/min/sec
+      public static final double kPositionTolerance = 90; // Units deg
+
+      // PID gains    ======== Will need to be tuned when operating on the climber     -Sr
+      public static final double kP = 0.10000000;
+      public static final double kI = 0.00000000;
+      public static final double kD = 0.00000000;
+    
+      // MAYBE LATER!
+      // The pivot is expected to have hard stops
+      // public static final double kFwdSoftLimit = 125;
+      // public static final double kRevSoftLimit = 25;
+
+    }
+  }
+
+  // Drive constants are not used for stationary tests, and they will change for the new RC2 drive train.
+  
+  /*   public static final class DriveConstants {
+  /*     // Maximum driving speed commands - These are the maximum speeds that can be requested by 
     // the driver or autonomous, they are not the maximum speed cababiity of the robot.
     public static final double kMaxSpeedMetersPerSecond = 3; // originally 4.8    TUNING
     public static final double kMaxAngularSpeed = 1.5*Math.PI ; // radians per second    originally 2*Pi   TUNING
@@ -39,10 +116,10 @@ public final class Constants {
   }
 
   public static final class ModuleConstants {
-    /** The MAXSwerve module can be configured with one of three pinion gears: 12T,
-    * 13T, or 14T. This changes the drive speed of the module (a pinion gear with
-    * more teeth will result in a robot that drives faster).
-    */
+    / The MAXSwerve module can be configured with one of three pinion gears: 12T,
+    / 13T, or 14T. This changes the drive speed of the module (a pinion gear with
+    / more teeth will result in a robot that drives faster).
+    
     public static final int kDrivingMotorPinionTeeth = 12;
 
     // Calculations required for driving motor conversion factors and feed forward
@@ -55,29 +132,42 @@ public final class Constants {
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
   }
+  */
 
+  // Driver interace constants
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverController2Port = 1;
-    public static final double kDriveDeadband = 0.05;   //  TUNING
+    /** @apiNote TUNING */
+    public static final double kDriveDeadband = 0.05;
     // An additional driver control TUNING option to try 
     // would be to square controller inputs that vary from 0 t0 1
   }
+  // Not used is stationary tests - May be needed later by drive modules?
+  //public static final class NeoMotorConstants {
+  //  public static final double kFreeSpeedRpm = 500;
+  //  public static final double kVortexKv = 565;   // rpm/V
+  //}
 
-  public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 1;  // originally 3  TUNING
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1; // originally 3  TUNING
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI/2; // originally Pi  TUNING
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI; // originally Pi  TUNING
-
-    public static final double kPXController = 1;  //  TUNING
-    public static final double kPYController = 1;  //  TUNING
-    public static final double kPThetaController = 1; //   TUNING
-
-    // Constraint for the motion profiled robot angle controller
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
-        kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+  // MotorController command constants
+  public static final class MotorConstants {
+    public static final double k_motorSpeed = 0.4; // percent
+    public static final double k_slowMotor = 0.1; // percent
+    // 1:16 Ratio
+    public static final double setpoint = 0;
+    public static final double finalpoint = 16 ; 
   }
+
+public static final class ShooterSubsystemConstants {
+  // SPARKmax CAN ID (Right)
+   // public static final int kFlywheelFollowerMotorCanId = 16;  // SPARKmax CAN ID (Left)
+
+    public static final class FeederSetpoints {
+      public static final double kFeed = 0.15;
+    }
+    
+    // Check these units - it looks to me like ShooterSubsystem is controlling in RPM???  Sr
+    public static final class FlywheelSetpoints {
 
   public static final class NeoVortexConstants {
     public static final double kMaxRPM = 6749;
@@ -85,10 +175,64 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+  
+public static final class ClimbSubsystemConstants {
+  
+    public static final class PivotSetPoints {
+      public static final double kStartPosition = 0;
+      public static final double kEndPosition = 90;
 
-  // Coral shooter command constants
-  public static final class MotorConstants {
-    public static final double k_motorSpeed = 0.6; // percent
-    public static final double k_slowMotor = 0.1; // percent
+      public static final int kStartingPosition = 0;
+      public static final int kCurrentLimit = 50;
+
+      public static final double kZeroOffest = 0.420;
+
+      public static final double kPositionConversionFactor = 360/41; // Deg/sec
+      public static final double kVelocityConversionFactor = 360/41; // Deg/sec
+
+
+      /** Sets the Idle mode of the motors.
+      * @apiNote This should remain as {@link IdleMode#kBrake}
+      * unless you want to manually rotate the motors
+      */
+      public static final IdleMode kIdleMode = IdleMode.kBrake;
+
+      // Deprecated, but still nice:
+      // In Desmos,
+      // y=0.37037x+19.5\left\{0<\ x<27\right\}
+      // y=0.6842x+11.0265\left\{27<x<65\right\}
+      // is the approximate position curve for the elevator
+      // where x is in Degrees of PCF1 and y is in Inches
+      // Measured from the top of the shooter
+
+      public static final double kMaxVelocity = 3072;
+      public static final double kMaxAcceleration = 1536;
+
+      public static final double kP = 0.50000000;
+      public static final double kI = 0.00000000;
+      public static final double kD = 0.00000000;
+    
+      /** The soft limit for the elevator going forward.
+      * @apiNote This soft limit should NEVER go above 24
+      */
+      public static final double kFwdSoftLimit = 23;
+      /** The soft limit for the elevator going backward.
+      * @apiNote This soft limit should NEVER go below 1
+      */
+      public static final double kRevSoftLimit = -23;
+
+      /** The allowed tolerance for the elevator
+      * @apiNote This value is in inches
+      * @apiNote This really shouldn't ever go above an inch.
+      */
+      public static final double kPositionTolerance = 0.75;
+
+      public static final double kStageLoad = 7.86;
+      public static final double kStageL1 = 6.61;
+      public static final double kStageL2 = 13.65;
+      public static final double kStageL3 = 22;
+      public static final double kStageAlgae = 6.61;
+    }
   }
+  
 }

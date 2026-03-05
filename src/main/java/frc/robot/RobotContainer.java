@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import com.pathplanner.lib.auto.NamedCommands;
 
 //import edu.wpi.first.wpilibj.Joystick;
@@ -17,12 +19,19 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
 import frc.robot.subsystems.FlywheelV1;
 import frc.robot.subsystems.FlywheelV2;
 import frc.robot.subsystems.MotorController;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.SystemSelect;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -51,9 +60,12 @@ public class RobotContainer {
   // TODO: Make Guitar Hero Guitar work somehow
   // CommandGenericHID m_guitar = new CommandGenericHID(3);
 
-  //m_chooser
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+    m_chooser.addOption("Do Nothing", new Command(){});
+    SmartDashboard.putData("Auto Chooser", m_chooser);
 
+    if(SystemSelect.isFeeder){
+      m_feeder = new FeederSubsystem();
+    }
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -117,12 +129,22 @@ public class RobotContainer {
     return m_chooser.getSelected();
   }
 
-
-  public void printGitData() {
+  public void PrintData() {
     System.out.println("Repo:" + BuildConstants.MAVEN_NAME);
     System.out.println("Branch:" + BuildConstants.GIT_BRANCH);
     System.out.println("Git Date:" + BuildConstants.GIT_DATE);
     System.out.println("Build Date:" + BuildConstants.BUILD_DATE);
+
+    System.out.println("Climber Enabled: " + SystemSelect.isClimber);
+    System.out.println("Feeder Enabled: " + SystemSelect.isFeeder);
+    System.out.println("Intake Enabled: " + SystemSelect.isIntake);
+    System.out.println("Shooter Enabled: " + SystemSelect.isShooter);
   };
+
+
+ 
+  
+
+
   
 }
