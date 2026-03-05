@@ -34,7 +34,7 @@ import frc.robot.subsystems.MotorController;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  MotorController feeder = new MotorController(20, Motor.defaultConfig);
+  MotorController feeder = new MotorController(16, Motor.defaultConfig);
   // FlywheelV1 m1 = new FlywheelV1(18, Motor.defaultConfig, 17, 19);
   FlywheelV2 f_left = new FlywheelV2(17, Motor.defaultConfig);
   FlywheelV2 f_center = new FlywheelV2(18, Motor.defaultConfig);
