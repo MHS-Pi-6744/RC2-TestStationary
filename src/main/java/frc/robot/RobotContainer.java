@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 //  import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -21,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Configs.Motor;
 import frc.robot.Constants.OIConstants;
 import frc.robot.BuildConstants;
+import frc.robot.subsystems.FlywheelV1;
+import frc.robot.subsystems.FlywheelV2;
 import frc.robot.subsystems.MotorController;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -39,43 +43,22 @@ import frc.robot.SystemSelect;
 
 @SuppressWarnings("unused")
 public class RobotContainer {
-  //MotorController m_motor1 = new MotorController(6, Motor.defaultConfig);
+  MotorController feeder = new MotorController(16, Motor.defaultConfig);
+  // FlywheelV1 m1 = new FlywheelV1(18, Motor.defaultConfig, 17, 19);
+  FlywheelV2 f_left = new FlywheelV2(17, Motor.defaultConfig);
+  FlywheelV2 f_center = new FlywheelV2(18, Motor.defaultConfig);
+  FlywheelV2 f_right = new FlywheelV2(19, Motor.defaultConfig.inverted(true));
 
+  public void updateshuffleboard(){
+    SmartDashboard.updateValues();
+  }
 
-
-    public static FeederSubsystem m_feeder;
-
-    public static ShooterSubsystem m_shooter;
-
-        public static ClimberSubsystem m_climbMotor;
-        public static IntakeSubsystem m_intake;
-      
-        public void updateshuffleboard(){
-          SmartDashboard.updateValues();
-        }
-        // The driver's controller
-        CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
-        // TODO: Make Guitar Hero Guitar work somehow
-      
-      
-        //m_chooser
-        SendableChooser<Command> m_chooser = new SendableChooser<>();
-      
-
-          public final Trigger isFlywheelSpinning = new Trigger(
-      () -> SystemSelect.isShooter = true
-  );
-        
-        /**
-         * The container for the robot. Contains subsystems, OI devices, and commands.
-         */
-        public RobotContainer() {
-        /*  NamedCommands.registerCommand( "Run Forward", m_motor1. runForward());
-          NamedCommands.registerCommand( "Run Reverse", m_motor1. runReverse());
-          NamedCommands.registerCommand("Walk Forward", m_motor1.walkForward());
-          NamedCommands.registerCommand("Walk Reverse", m_motor1.walkReverse());*/ 
-      
-          //m_chooser
+ 
+  // The driver's controller
+  CommandXboxController m_controller1 = new CommandXboxController(OIConstants.kDriverControllerPort);
+  CommandGenericHID m_controller2 = new CommandGenericHID(OIConstants.kDriverController2Port);
+  // TODO: Make Guitar Hero Guitar work somehow
+  // CommandGenericHID m_guitar = new CommandGenericHID(3);
 
     m_chooser.addOption("Do Nothing", new Command(){});
     SmartDashboard.putData("Auto Chooser", m_chooser);
@@ -84,18 +67,12 @@ public class RobotContainer {
       m_feeder = new FeederSubsystem();
     }
 
-    if(SystemSelect.isShooter){
-      m_shooter = new ShooterSubsystem();
-      final Trigger isFlywheelSpinning = new Trigger(m_shooter.isFlywheelSpinning);
-    }
-
-    if(SystemSelect.isClimber){
-        m_climbMotor = new ClimberSubsystem();
-    }
-
-    if(SystemSelect.isIntake){
-      m_intake = new IntakeSubsystem();
-    }
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
+  public RobotContainer() {
+    m_chooser.addOption("Do Nothing", new Command(){});
+    SmartDashboard.putData("Auto Chooser", m_chooser);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -112,47 +89,41 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-      
-
-
-if(SystemSelect.isIntake){
-    m_controller1.povRight().whileTrue(
-      m_intake.runIntakeCommand());
-
-    m_controller1.povLeft().whileTrue(
-      m_intake.runExtakeCommand());
-
-    m_controller1.povUp().whileTrue(
-      m_intake.runForwardPivot());
-
-    m_controller1.povDown().whileTrue(
-      m_intake.runBackwardPivot());
-
-    m_controller1.b().whileTrue(
-      m_intake.calPivotMotor());
-}
-
-if(SystemSelect.isClimber){
-    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
-    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
-}
-
-if(SystemSelect.isFeeder){
-  m_controller1.x().toggleOnTrue(m_feeder.runFeederCommand().onlyWhile(isFlywheelSpinning)); 
-}
-
-if(SystemSelect.isClimber){
-    m_controller1.leftBumper().toggleOnTrue(m_climbMotor.runBackwardPivot());
-    m_controller1.rightBumper().toggleOnTrue(m_climbMotor.runForwardPivot());
-}
-
-if(SystemSelect.isShooter){
-    m_controller1.leftTrigger().whileTrue(m_shooter.slowDownCommand());
-    m_controller1.rightTrigger().whileTrue(m_shooter.speedUpCommand());
-    m_controller1.y().toggleOnTrue(m_shooter.runShooterCommand());
-}
-
-}
+    m_controller1.povUp()
+      .toggleOnTrue(
+        new ParallelCommandGroup(
+          f_left.incrSet(500),
+          f_center.incrSet(500),
+          f_right.incrSet(500)
+        )
+      );
+    m_controller1.povDown()
+      .toggleOnTrue(
+        new ParallelCommandGroup(
+          f_left.incrSet(-500),
+          f_center.incrSet(-500),
+          f_right.incrSet(-500)
+        )
+      );
+    m_controller1.rightBumper()
+      .onTrue(
+        new ParallelCommandGroup(
+          f_left.runAtSet(),
+          f_center.runAtSet(),
+          f_right.runAtSet()
+        )
+      )
+      .onFalse(
+        new ParallelCommandGroup(
+          f_left.stopMotor(),
+          f_center.stopMotor(),
+          f_right.stopMotor()
+        )
+      );
+    m_controller1.x()
+      .toggleOnTrue(feeder.runForward())
+      .toggleOnFalse(feeder.stopMotor());
+  }
 
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();

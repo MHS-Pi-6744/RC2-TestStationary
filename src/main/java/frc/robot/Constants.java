@@ -169,12 +169,11 @@ public static final class ShooterSubsystemConstants {
     // Check these units - it looks to me like ShooterSubsystem is controlling in RPM???  Sr
     public static final class FlywheelSetpoints {
 
-      /** @apiNote This controls how much the shooter will spin
-       * @apiNote PERCENTAGE */
-      
-      public static final double kShootPercent = 50;
-      public static final double kVelocityTolerance = 100;
-    }
+  public static final class NeoVortexConstants {
+    public static final double kMaxRPM = 6749;
+  }
+  public static final class NeoMotorConstants {
+    public static final double kFreeSpeedRpm = 5676;
   }
   
 public static final class ClimbSubsystemConstants {
