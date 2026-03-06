@@ -27,7 +27,6 @@ import frc.robot.subsystems.FlywheelV1;
 import frc.robot.subsystems.FlywheelV2;
 import frc.robot.subsystems.MotorController;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.SystemSelect;
@@ -48,6 +47,8 @@ public class RobotContainer {
   FlywheelV2 f_left = new FlywheelV2(17, Motor.defaultConfig);
   FlywheelV2 f_center = new FlywheelV2(18, Motor.defaultConfig);
   FlywheelV2 f_right = new FlywheelV2(19, Motor.defaultConfig.inverted(true));
+
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   public void updateshuffleboard(){
     SmartDashboard.updateValues();
