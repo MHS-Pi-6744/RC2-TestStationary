@@ -1,137 +1,90 @@
 package frc.robot.subsystems;
-
-
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkAbsoluteEncoder;
-import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//import frc.robot.Configs;
-//import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.MotorConstants;
 
-public class MotorController extends SubsystemBase {
-  private SparkMax m_otor;
+public class MotorController extends SubsystemBase{
+    // The shooter motor
+    private SparkMax m_otor;
+    private RelativeEncoder e_ncoder;
 
-  private SparkClosedLoopController p_motor;
+    private String s_motorName;
 
-  private SparkAbsoluteEncoder e_cal;
+    // DriveSubsystem constructor - creates & initializes DriveSubsystem object
+    public MotorController(int canID, SparkMaxConfig config){
+        s_motorName = "Motor #" + canID;
+        m_otor = new SparkMax(canID, MotorType.kBrushless);
+        e_ncoder = m_otor.getEncoder(); 
 
-  private RelativeEncoder e_ncoder;
+        // Apply the configuration settings to the shooter motor SPARK MAX   
+        // - kResetSafeParameters is used to get the SPARK MAX to a known state. This
+        //     is useful in case the SPARK MAX is replaced.
+        // - kPersistParameters is used to ensure the configuration is not lost when
+        //     the SPARK MAX loses power. This is useful for power cycles that may occur
+        //     mid-operation.
+     
+        m_otor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        e_ncoder.setPosition(0);
+    }
 
-  //private SparkMaxConfig c_shepherd;
+    //Shooter Commands
+    public Command stopMotor(){
+        return run(
+        () -> m_otor.set(0));
+    }
 
-  private double m_setpoint;
-
-  private String s_motorName;
-
-  public boolean ran;
-
-  public MotorController(int canID, SparkMaxConfig config) {
-    s_motorName = "Motor #" + canID;
-    m_otor = new SparkMax(canID, MotorType.kBrushless);
-
-    //c_shepherd = Configs.ElevatorSubsystem.shepherdConfig;
-
-   // m_otor.configure(c_shepherd, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    /**
+     * @return a {@link Command} that sets the motor speed to {@link MotorConstants#k_motorSpeed}
+     */
+    public Command runForward() {
+        return run(
+            () -> m_otor.set(MotorConstants.k_motorSpeed)
+        );
+    }    
     
-    m_setpoint = MotorConstants.setpoint;
+    /**
+     * @return a {@link Command} that sets the motor speed to -{@link MotorConstants#k_motorSpeed}
+     */
+    public Command runReverse() {
+        return run(
+            () -> m_otor.set(-MotorConstants.k_motorSpeed)
+        );
+    }    
 
-    p_motor = m_otor.getClosedLoopController();
+    /**
+     * @return a {@link Command} that sets the motor speed to {@link MotorConstants#k_motorSpeed}
+     */
+    public Command walkForward() {
+        return run(
+            () -> m_otor.set(MotorConstants.k_slowMotor)
+        );
+    }    
+    
+    /**
+     * @return a {@link Command} that sets the motor speed to -{@link MotorConstants#k_slowMotor}
+     */
+    public Command walkReverse() {
+        return run(
+            () -> m_otor.set(-MotorConstants.k_slowMotor)
+        );
+    }    
 
-    e_ncoder = m_otor.getEncoder();
-
-    e_cal = m_otor.getAbsoluteEncoder();
-
-    //e_ncoder.setPosition(0);
-
-    e_ncoder.setPosition(e_cal.getPosition());
-
-  }
-
-  public boolean atTargetPosition() {
-    return Math.abs(avgEncoderPos() - m_setpoint) < 1;
-  }
-
-  public void setthepos() {
-    while(e_ncoder.getPosition() < MotorConstants.finalpoint-5){
-      m_otor.set(MotorConstants.k_motorSpeed);
-    }
-    m_otor.set(0);
-  }
-
-  public void resetthepos() {
-    while(e_ncoder.getPosition() > MotorConstants.setpoint+5){
-      m_otor.set(-MotorConstants.k_motorSpeed);
-    }
-    m_otor.set(0);
-    }
-
-  public double avgEncoderPos() {
-    return (e_ncoder.getPosition() / 2);
-  }
-
-  public void setTargetPosition(double setpoint) {
-    m_setpoint = setpoint;
-    moveToSetpoint();
-  }
-
-  private void moveToSetpoint() {
-    p_motor.setReference(m_setpoint, ControlType.kMAXMotionPositionControl);
-  }
-
-  public void stickControl(double stick) {
-    m_otor.set(stick);
-  }
-
-  public Command resetElevator() {
-    return run(
-      () -> resetthepos());
-  }
-
-  public Command slowBottom() {
-    return startEnd(
-      () -> m_otor.set(-0.1),
-      () -> m_otor.set(0)
-      );
-  }
-
-  public Command setElevator() {
-    return run(
-      () -> setthepos());
-  }
-  public void setArmCoastMode(){
-    SparkMaxConfig c_mod = new SparkMaxConfig();
-    c_mod.idleMode(IdleMode.kCoast);
-    m_otor.configure(c_mod, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-  }
-
-  public void setArmBrakeMode(){
-    SparkMaxConfig c_mod = new SparkMaxConfig();
-    c_mod.idleMode(IdleMode.kBrake);
-    m_otor.configure(c_mod, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-  }
-  
-  @Override
-  public void periodic() { // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Calibrator Position", e_cal.getPosition());
-    SmartDashboard.putNumber("Calibrator Velocity", e_cal.getVelocity());
-    SmartDashboard.putNumber("Shepherd Position", e_ncoder.getPosition());
-    SmartDashboard.putNumber("Shepherd Velocity", e_ncoder.getVelocity());
-    SmartDashboard.putNumber("Setpoint", m_setpoint);
-    SmartDashboard.putBoolean("At Target", atTargetPosition());
+    @Override
+    public void periodic() {
+    // This method will be called once per scheduler run
+    // m_shooterMotor.getOutputCurrent();
     SmartDashboard.putNumber(s_motorName + " Output", m_otor.getAppliedOutput());
     SmartDashboard.putNumber(s_motorName + " Current", m_otor.getOutputCurrent());
+
     SmartDashboard.putNumber(s_motorName + " Position", e_ncoder.getPosition());
     SmartDashboard.putNumber(s_motorName + " Velocity", e_ncoder.getVelocity());
-  }
+    }
 }

@@ -63,11 +63,7 @@ public class RobotContainer {
 
     m_chooser.addOption("Do Nothing", new Command(){});
     SmartDashboard.putData("Auto Chooser", m_chooser);
-
-    if(SystemSelect.isFeeder){
-      m_feeder = new FeederSubsystem();
-    }
-
+}
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
