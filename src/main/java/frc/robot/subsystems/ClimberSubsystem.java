@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //import frc.robot.Constants.ClimbSubsystemConstants;
 import frc.robot.Constants.canIDs;
-import frc.robot.Constants.ClimbSubsystemConstants.PivotSetPoints;
+import frc.robot.Constants.ShooterSubsystemConstants.FlywheelSetpoints.ClimbSubsystemConstants.PivotSetPoints;
 import frc.robot.Configs;
 
 public class ClimberSubsystem extends SubsystemBase {
